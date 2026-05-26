@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSB - X-Shadow Betting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>منصة <span class="logo-highlight">XXSB</span></h1>
+            <p>المراهنة بين الصحاب.. الموقع مجرد وسيط مؤمن</p>
+        </header>
+
+        <section class="dashboard">
+            <div class="card">
+                <h3>حالة الغرفة الحالية</h3>
+                <div id="room-status" class="status active">نشطة 🟢</div>
+            </div>
+            <div class="card">
+                <h3>إجمالي الخزنة (Pool)</h3>
+                <p id="total-pool">$0</p>
+            </div>
+        </section>
+
+        <section id="frozen-section" class="frozen-zone hidden">
+            <h2>⚠️ تجميد كلي للغرفة!</h2>
+            <p>خسر جميع اللاعبين. متبقي <span id="countdown">15:00</span> لشراء تذكرة العودة</p>
+            <button id="btn-ticket" class="btn-danger">شراء تذكرة العودة 🎫</button>
+        </section>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
