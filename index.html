@@ -36,11 +36,46 @@
             font-size: 16px;
         }
         .auth-buttons { display: flex; justify-content: space-around; margin-top: 15px; }
+        
+        /* فواصل لتنظيم الواجهة */
+        .divider {
+            margin: 20px 0;
+            color: #8b949e;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            background: #30363d;
+            height: 1px;
+            margin: 0 10px;
+        }
+
         button { cursor: pointer; font-weight: bold; border-radius: 6px; font-size: 15px; transition: 0.2s; }
         .btn-primary { background: #00ff66; color: #0d0f12; border: none; padding: 12px 25px; }
         .btn-primary:hover { background: #00cc52; }
         .btn-secondary { background: transparent; color: #00ff66; border: 1px solid #00ff66; padding: 12px 20px; }
         .btn-secondary:hover { background: rgba(0, 255, 102, 0.1); }
+        
+        /* زرار جوجل الجديد */
+        .btn-google {
+            width: 96%;
+            background: #ffffff;
+            color: #1f2328;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+        .btn-google:hover { background: #f6f8fa; }
+
         .btn-small { background: #ff3e3e; color: white; border: none; padding: 6px 12px; font-size: 13px; }
         .user-bar {
             display: flex;
@@ -77,6 +112,14 @@
                 <button id="btn-login" class="btn-primary">دخول</button>
                 <button id="btn-register" class="btn-secondary">إنشاء حساب</button>
             </div>
+
+            <div class="divider">أو يمكنك التسجيل عبر</div>
+
+            <button id="btn-google" class="btn-google">
+                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google">
+                الدخول بواسطة Google
+            </button>
+
             <p id="auth-error" class="error-msg"></p>
         </div>
 
@@ -105,12 +148,19 @@
     </div>
 
     <script type="module">
-        // استدعاء المكتبات بالروابط المباشرة والنسخة المطلوبة
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut,
+            GoogleAuthProvider,
+            signInWithPopup 
+        } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-        // الـ Configuration الجديدة بتاعتك بالملي
+        // الـ Configuration المحدثة بتاعتك
         const firebaseConfig = {
             apiKey: "AIzaSyCyiLPBJ0qDVZhAtW5r0psuvz8iyIy8VLI",
             authDomain: "xxsb-6bd79.firebaseapp.com",
@@ -121,10 +171,13 @@
             measurementId: "G-QV7BZPPCPK"
         };
 
-        // تهيئة Firebase
+        // تهيئة الـ Services
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        
+        // تجهيز ميزود جوجل
+        const googleProvider = new GoogleAuthProvider();
 
         // عناصر الواجهة
         const authScreen = document.getElementById("auth-screen");
@@ -133,30 +186,29 @@
         const passwordInput = document.getElementById("auth-password");
         const errorMsg = document.getElementById("auth-error");
 
-        // ================= 🔄 مراقبة حالة جلسة اللاعب لحظة بلحظة =================
+        // ================= 🔄 مراقبة الجلسة والتحقق من المحفظة =================
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // لو مسجل دخول: يخفي شاشة الدخول ويفتح المنصة
                 authScreen.classList.add("hidden");
                 mainPlatform.classList.remove("hidden");
-                document.getElementById("user-display-name").innerText = `👤 اللاعب: ${user.email}`;
-                errorMsg.innerText = ""; // تصفية أي أخطاء قديمة
+                document.getElementById("user-display-name").innerText = `👤 اللاعب: ${user.email || user.displayName}`;
+                errorMsg.innerText = "";
 
-                // الإشارة لوثيقة المستخدم في الـ Database
                 const userDocRef = doc(db, "users", user.uid);
                 const userSnap = await getDoc(userDocRef);
 
-                // لو الحساب لسه جديد تماماً، ننشئ له ملف مالي بهدية ترحيبية لتجربة الألعاب
+                // لو الحساب جديد (سواء بجوجل أو إيميل)، بنأسس محفظته بـ 5000 جنيه كاش تجريبي
                 if (!userSnap.exists()) {
                     await setDoc(userDocRef, {
                         email: user.email,
-                        balance: 5000, // الهدية الترحيبية (5000 جنيه)
+                        displayName: user.displayName || "",
+                        balance: 5000,
                         vipStatus: false,
                         totalWagered: 0
                     });
                 }
 
-                // استماع لحظي (Realtime) لتحديثات المحفظة
+                // مراقبة المحفظة لايف
                 onSnapshot(userDocRef, (docSnap) => {
                     if (docSnap.exists()) {
                         document.getElementById("user-balance").innerText = `${docSnap.data().balance} جنيه`;
@@ -164,20 +216,25 @@
                 });
 
             } else {
-                // لو مش مسجل أو عمل Logout: يرجع لشاشة الـ Auth
                 authScreen.classList.remove("hidden");
                 mainPlatform.classList.add("hidden");
             }
         });
 
-        // ================= 🛠️ أزرار التحكم (الدخول والإنشاء) =================
+        // ================= 🌐 الـ Logic الخاص بـ زرار Google =================
+        document.getElementById("btn-google").addEventListener("click", async () => {
+            try {
+                await signInWithPopup(auth, googleProvider);
+            } catch (err) {
+                errorMsg.innerText = `فشل تسجيل الدخول بجوجل: ${err.message}`;
+            }
+        });
 
-        // إنشاء حساب جديد
+        // ================= 📝 الـ Logic الخاص بالإيميل والباسورد =================
         document.getElementById("btn-register").addEventListener("click", async () => {
             const email = emailInput.value;
             const password = passwordInput.value;
             if(!email || !password) { errorMsg.innerText = "املا البيانات الأول يا هندسة!"; return; }
-            
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
             } catch (err) {
@@ -185,20 +242,17 @@
             }
         });
 
-        // تسجيل الدخول لحساب موجود
         document.getElementById("btn-login").addEventListener("click", async () => {
             const email = emailInput.value;
             const password = passwordInput.value;
             if(!email || !password) { errorMsg.innerText = "اكتب الإيميل والباسورد!"; return; }
-
             try {
                 await signInWithEmailAndPassword(auth, email, password);
             } catch (err) {
-                errorMsg.innerText = "خطأ في بيانات الدخول، تأكد من الإيميل والباسورد!";
+                errorMsg.innerText = "خطأ في البيانات، تأكد من الإيميل والباسورد!";
             }
         });
 
-        // تسجيل الخروج
         document.getElementById("btn-logout").addEventListener("click", () => {
             signOut(auth);
         });
