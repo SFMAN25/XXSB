@@ -22,196 +22,91 @@
             font-family: 'Courier New', Courier, monospace, sans-serif;
         }
 
-        body {
-            background-color: var(--db-bg);
-            color: var(--text-neon);
-            padding: 25px;
-        }
+        body { background-color: var(--db-bg); color: var(--text-neon); padding: 25px; }
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px dashed rgba(0, 243, 255, 0.3);
-            padding-bottom: 20px;
-        }
-
-        header h1 {
-            font-size: 28px;
-            color: var(--neon-blue);
-            text-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
-            letter-spacing: 2px;
-        }
-
-        header p { font-size: 13px; color: #5f758e; margin-top: 5px; }
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed rgba(0, 243, 255, 0.3); padding-bottom: 20px; }
+        header h1 { font-size: 28px; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 243, 255, 0.6); }
 
         .db-section {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-glow);
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.05);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            position: relative;
+            background: var(--panel-bg); border: 1px solid var(--border-glow);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.05); border-radius: 12px;
+            padding: 25px; margin-bottom: 30px; position: relative;
         }
 
         .db-section::before {
-            content: 'ONLINE DATABASE LIVE_FEED';
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            background: var(--db-bg);
-            padding: 0 10px;
-            font-size: 11px;
-            color: var(--neon-blue);
-            font-weight: bold;
+            content: 'ONLINE DATABASE LIVE_FEED'; position: absolute;
+            top: -10px; right: 20px; background: var(--db-bg); padding: 0 10px; font-size: 11px; color: var(--neon-blue); font-weight: bold;
         }
-
-        .db-section.bonus::before { content: 'PROMOTIONAL_BONUS_VERIFICATION'; color: #ffaa00; }
+        .db-section.users-list::before { content: 'REGISTERED_ACCOUNTS_DATABASE'; color: var(--neon-cyan); }
         .db-section.direct::before { content: 'DIRECT_CORE_DB_MUTATION'; color: var(--neon-green); }
 
-        h3.sec-title {
-            font-size: 18px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 10px;
-        }
-
+        h3.sec-title { font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
         .table-responsive { overflow-x: auto; width: 100%; }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            background: rgba(0,0,0,0.3);
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: rgba(0,0,0,0.3); }
+        th, td { padding: 14px; border: 1px solid rgba(0, 243, 255, 0.1); text-align: center; font-size: 14px; }
+        th { background: rgba(0, 243, 255, 0.05); color: var(--neon-blue); font-weight: bold; }
 
-        th, td {
-            padding: 14px;
-            border: 1px solid rgba(0, 243, 255, 0.1);
-            text-align: center;
-            font-size: 14px;
-        }
-
-        th {
-            background: rgba(0, 243, 255, 0.05);
-            color: var(--neon-blue);
-            font-weight: bold;
-        }
-
-        tr:hover { background: rgba(255, 255, 255, 0.02); }
-
-        input.db-input {
-            background: #030408;
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            color: #fff;
-            padding: 8px;
-            border-radius: 6px;
-            width: 100px;
-            text-align: center;
-        }
-        input.db-input:focus { border-color: var(--neon-blue); outline: none; }
-
-        .btn-neon {
-            padding: 8px 16px;
-            border: 1px solid transparent;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 12px;
-            margin: 2px;
-            background: transparent;
-        }
-
-        .btn-neon.approve {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-        }
+        .btn-neon { padding: 8px 16px; border: 1px solid transparent; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; background: transparent; }
+        .btn-neon.approve { border-color: var(--neon-green); color: var(--neon-green); }
         .btn-neon.approve:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
-
-        .btn-neon.reject {
-            border-color: var(--neon-red);
-            color: var(--neon-red);
-        }
+        .btn-neon.reject { border-color: var(--neon-red); color: var(--neon-red); }
         .btn-neon.reject:hover { background: var(--neon-red); color: #fff; box-shadow: 0 0 15px var(--neon-red); }
 
         .flex-inputs { display: block; margin-top: 15px; }
-        .flex-inputs input {
-            padding: 12px;
-            background: #030408;
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            color: #fff;
-            border-radius: 6px;
-            margin-left: 10px;
-            margin-bottom: 10px;
-        }
-        .flex-inputs input[type="email"] { width: 300px; }
-        .flex-inputs input[type="number"] { width: 150px; }
-
-        .btn-submit-direct {
-            padding: 12px 25px;
-            background: transparent;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .btn-submit-direct:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 20px var(--neon-green); }
+        .flex-inputs input { padding: 12px; background: #030408; border: 1px solid rgba(0, 243, 255, 0.3); color: #fff; border-radius: 6px; margin-left: 10px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>SYSTEM_MASTER_TERMINAL // XXSB v2.0</h1>
-        <p>لوحة التحكم الفورية المباشرة - وضع مزامنة قاعدة البيانات الحي بدون خوادم خارجية</p>
+        <h1>SYSTEM_MASTER_TERMINAL // XXSB v2.5</h1>
+        <p>لوحة بيانات متفاعلة بالكامل - قايمة الحسابات المسجلة والطلبات المالية الحية</p>
     </header>
 
-    <div class="db-grid">
-        <div class="db-section">
-            <h3 class="sec-title" style="color: var(--neon-blue);">⚡ العمليات المالية المعلقة (شحن / سحب) لايف</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>اللاعب الحساب</th>
-                            <th>نوع العملية</th>
-                            <th>المبلغ الخام</th>
-                            <th>تعديل وتدقيق القيمة</th>
-                            <th>إجراء أمر الشبكة</th>
-                        </tr>
-                    </thead>
-                    <tbody id="req-list">
-                        <tr><td colspan="5" style="color: #5f758e;">[STATUS] بانتظار بث أي إشارات أو طلبات معلقة من خادم العميل...</td></tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="db-section users-list">
+        <h3 class="sec-title" style="color: var(--neon-blue);">👥 قايمة الحسابات المسجلة لايف وإجمالي أرصدتها</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>البريد الإلكتروني للاعب</th>
+                        <th>الرصيد الحالي بالداتابيز</th>
+                        <th>حالة الهدية الترحيبية</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    <tr><td colspan="3" style="color: #5f758e;">[STATUS] جاري استدعاء خلايا المستخدمين من السيرفر المباشر...</td></tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <div class="db-section bonus">
-            <h3 class="sec-title" style="color: #ffaa00;">🎁 الحسابات الجديدة وبث هدية الـ 50 جنيه الترحيبية</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>رقم معرف العميل الجديد</th>
-                            <th>تحديث حقل الهدية الترحيبية الدفعة الأولي</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bonus-list">
-                        <tr><td colspan="2" style="color: #5f758e;">[STATUS] لا توجد حسابات مسجلة جديدة بانتظار مراجعة الهدية الترحيبية...</td></tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="db-section">
+        <h3 class="sec-title" style="color: var(--neon-blue);">⚡ العمليات المالية المعلقة (شحن / سحب) لايف</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>اللاعب الحساب</th>
+                        <th>نوع العملية</th>
+                        <th>المبلغ الخام</th>
+                        <th>إجراء أمر الشبكة</th>
+                    </tr>
+                </thead>
+                <tbody id="req-list">
+                    <tr><td colspan="4" style="color: #5f758e;">[STATUS] بانتظار بث أي إشارات أو طلبات معلقة من خادم العميل...</td></tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <div class="db-section direct">
-            <h3 class="sec-title" style="color: var(--neon-green);">📡 تعديل فوري ومباشر في خلايا قاعدة البيانات (شحن / خصم)</h3>
-            <p style="font-size: 12px; color: #5f758e; margin-bottom: 15px;">تعديل قيم المحفظة الحالية لأي لاعب يدوياً بالزيادة أو النقصان عبر كتابة البريد والمقدار الرياضي للمقاصة.</p>
-            <div class="flex-inputs">
-                <input type="email" id="direct-email" placeholder="اكتب البريد الإلكتروني للاعب بدقة...">
-                <input type="number" id="direct-amt" placeholder="المبلغ المطلوب (+ أو -)">
-                <button class="btn-submit-direct" onclick="handleDirectDeposit()">تنفيذ تعديل الخلايا الفوري 🚀</button>
-            </div>
+    <div class="db-section direct">
+        <h3 class="sec-title" style="color: var(--neon-green);">📡 تعديل فوري ومباشر في خلايا قاعدة البيانات (شحن / خصم)</h3>
+        <div class="flex-inputs">
+            <input type="email" id="direct-email" placeholder="اكتب البريد الإلكتروني للاعب...">
+            <input type="number" id="direct-amt" placeholder="المبلغ المطلوبة (+ أو -)">
+            <button class="btn-neon approve" onclick="handleDirectDeposit()">تنفيذ تعديل الخلايا الفوري 🚀</button>
         </div>
     </div>
 
@@ -231,103 +126,76 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // 1. مراقبة طلبات الشحن والسحب الحي وتعديلها
+    // سحب وعرض قايمة الحسابات المسجلة تلقائياً وبدون ريفريش
+    onSnapshot(collection(db, "users"), snap => {
+        const uBody = document.getElementById("users-table-body");
+        uBody.innerHTML = "";
+        snap.forEach(d => {
+            const user = d.data();
+            const bStatusText = user.bonusStatus === 'approved' ? '✅ تم تفعيلها' : (user.bonusStatus === 'pending' ? '⏳ قيد المراجعة' : '❌ ملغية');
+            uBody.innerHTML += `<tr>
+                <td style="color:#fff; font-weight:bold;">${user.email}</td>
+                <td style="color:var(--neon-green); font-weight:bold;">${parseFloat(user.balance || 0).toFixed(2)} ج.م</td>
+                <td>${bStatusText}</td>
+            </tr>`;
+        });
+    });
+
+    // مراقبة طلبات الشحن والسحب
     onSnapshot(query(collection(db, "requests"), where("status", "==", "pending")), snap => {
         const tbody = document.getElementById("req-list");
-        tbody.innerHTML = snap.empty ? `<tr><td colspan="5" style="color: #5f758e;">[STATUS] بانتظار بث أي إشارات أو طلبات معلقة من خادم العميل...</td></tr>` : "";
+        tbody.innerHTML = snap.empty ? `<tr><td colspan="4" style="color: #5f758e;">[STATUS] بانتظار بث أي إشارات أو طلبات معلقة من خادم العميل...</td></tr>` : "";
         
         snap.forEach(d => {
             const req = d.data();
             const typeText = req.type === 'deposit' ? '🟩 إيداع شحن رصيد' : '🟧 سحب كاش فوري';
             tbody.innerHTML += `<tr>
-                <td style="color: #fff; font-weight: bold;">${req.email}</td>
+                <td style="color: #fff;">${req.email}</td>
                 <td>${typeText}</td>
                 <td style="color: var(--neon-blue); font-weight: bold;">${req.amount} ج.م</td>
-                <td><input type="number" id="input-${d.id}" class="db-input" value="${req.amount}"></td>
                 <td>
-                    <button class="btn-neon approve" onclick="approveReq('${d.id}', '${req.uid}', '${req.type}')">ACCEPT</button>
+                    <button class="btn-neon approve" onclick="approveReq('${d.id}', '${req.uid}', '${req.type}', ${req.amount})">ACCEPT</button>
                     <button class="btn-neon reject" onclick="rejectReq('${d.id}', '${req.uid}', '${req.type}', ${req.amount})">DENY</button>
                 </td>
             </tr>`;
         });
     });
 
-    window.approveReq = async function(reqId, uid, type) {
-        const finalAmt = parseInt(document.getElementById(`input-${reqId}`).value);
-        if(!finalAmt || finalAmt <= 0) { alert("⚠️ يرجى كتابة مبلغ صحيح أكبر من الصفر."); return; }
-        
+    window.approveReq = async function(reqId, uid, type, amt) {
         try {
-            await updateDoc(doc(db, "requests", reqId), { status: "approved", amount: finalAmt });
-            if(type === 'deposit') {
-                await updateDoc(doc(db, "users", uid), { balance: increment(finalAmt) });
-            }
-            alert("✅ تم إمضاء الأمر والموافقة وتحديث رصيد محفظة اللاعب بنجاح.");
-        } catch(e) { alert("خطأ في معالجة الأمر: " + e.message); }
+            await updateDoc(doc(db, "requests", reqId), { status: "approved" });
+            if(type === 'deposit') { await updateDoc(doc(db, "users", uid), { balance: increment(amt) }); }
+            alert("✅ تم تنفيذ وقبول الأمر وتحديث رصيد محفظة اللاعب بنجاح.");
+        } catch(e) { alert("خطأ: " + e.message); }
     }
 
     window.rejectReq = async function(reqId, uid, type, origAmt) {
         try {
             await updateDoc(doc(db, "requests", reqId), { status: "rejected" });
-            if(type === 'withdraw') {
-                await updateDoc(doc(db, "users", uid), { balance: increment(origAmt) });
-            }
-            alert("❌ تم رفض الطلب وإلغاء حجز القيمة المالية بنجاح.");
-        } catch(e) { alert("خطأ في معالجة الأمر: " + e.message); }
-    }
-
-    // 2. مراجعة الحسابات الجديدة والـ 50 جنيه
-    onSnapshot(query(collection(db, "users"), where("bonusStatus", "==", "pending")), snap => {
-        const tbody = document.getElementById("bonus-list");
-        tbody.innerHTML = snap.empty ? `<tr><td colspan="2" style="color: #5f758e;">[STATUS] لا توجد حسابات مسجلة جديدة بانتظار مراجعة الهدية الترحيبية...</td></tr>` : "";
-        
-        snap.forEach(d => {
-            const user = d.data();
-            tbody.innerHTML += `<tr>
-                <td style="color: #fff; text-align: right; padding-right: 25px;">${user.email}</td>
-                <td>
-                    <button class="btn-neon approve" onclick="handleBonus('${d.id}', true)">🟢 تفعيل الـ 50ج</button>
-                    <button class="btn-neon reject" onclick="handleBonus('${d.id}', false)">🔴 حظر وحذف الهدية</button>
-                </td>
-            </tr>`;
-        });
-    });
-
-    window.handleBonus = async function(uid, isApproved) {
-        try {
-            if(isApproved) {
-                await updateDoc(doc(db, "users", uid), { balance: increment(50), bonusStatus: "approved" });
-            } else {
-                await updateDoc(doc(db, "users", uid), { bonusStatus: "rejected" });
-            }
-            alert("⚙️ تم تحديث حالة الهدية الترحيبية بنجاح في قاعدة البيانات.");
+            if(type === 'withdraw') { await updateDoc(doc(db, "users", uid), { balance: increment(origAmt) }); }
+            alert("❌ تم رفض الطلب بنجاح.");
         } catch(e) { alert("خطأ: " + e.message); }
     }
 
-    // 3. التعديل المباشر الفوري في الداتابيز
     window.handleDirectDeposit = async function() {
         const emailInput = document.getElementById("direct-email");
         const amtInput = document.getElementById("direct-amt");
         const email = emailInput.value.trim().toLowerCase();
         const amt = parseInt(amtInput.value);
 
-        if(!email || !amt) { alert("⚠️ يرجى تعبئة البريد الإلكتروني والقيمة المالية المراد التعديل بها!"); return; }
+        if(!email || !amt) { alert("⚠️ يرجى تعبئة البريد الإلكتروني والقيمة المالية!"); return; }
 
         try {
             const q = query(collection(db, "users"), where("email", "==", email));
             const querySnapshot = await getDocs(q);
-            
-            if(querySnapshot.empty) { 
-                alert("❌ فشل العثور على أي خلية باسم هذا اللاعب في السجلات المفتوحة."); 
-                return; 
-            }
+            if(querySnapshot.empty) { alert("❌ لم يتم العثور على اللاعب."); return; }
             
             querySnapshot.forEach(async (d) => {
                 await updateDoc(doc(db, "users", d.id), { balance: increment(amt) });
-                alert(`📡 تم التعديل المباشر لمحفظة الحساب: (${amt > 0 ? '+' : ''}${amt}) ج.م بنجاح.`);
-                emailInput.value = "";
-                amtInput.value = "";
+                alert(`📡 تم تعديل رصيد الحساب بنجاح بنجاح.`);
+                emailInput.value = ""; amtInput.value = "";
             });
-        } catch(e) { alert("🚨 فشل التعديل المباشر: " + e.message); }
+        } catch(e) { alert("🚨 خطأ: " + e.message); }
     }
 </script>
 </body>
