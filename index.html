@@ -43,7 +43,6 @@
             border: 2px solid #ff3e3e;
         }
 
-        /* أزرار التنقل بين الدخول وإنشاء الحساب */
         .auth-tabs {
             display: flex;
             background: #0d0f12;
@@ -60,6 +59,7 @@
             border: none;
             font-size: 14px;
             transition: 0.3s;
+            cursor: pointer;
         }
         .auth-tab.active {
             background: #ff3e3e;
@@ -397,7 +397,6 @@
         let currentUserRef = null;
         let currentUserBalance = 0;
 
-        // تبديل واجهات الـ Auth ديناميكياً
         window.switchAuthTab = function(mode) {
             currentAuthMode = mode;
             document.getElementById('tab-login').classList.toggle('active', mode === 'login');
@@ -405,7 +404,24 @@
             document.getElementById('btn-auth-submit').innerText = mode === 'login' ? 'تسجيل الدخول للمنصة' : 'إنشاء الحساب وهدية 50ج 🎁';
         };
 
-        // ================= 🔄 تتبع اللاعب والتحقق من الهدية الترحيبية =================
+        // دالة موحدة لإنشاء مستند اللاعب بالرصيد الترحيبي إذا لم يكن موجوداً
+        async function ensureUserDocument(user) {
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            
+            if (!docSnap.exists()) {
+                await setDoc(docRef, {
+                    email: user.email || "",
+                    displayName: user.displayName || "لاعب XXSB",
+                    balance: 50, 
+                    createdAt: new Date().toISOString()
+                });
+                // إظهار البوب أب الترحيبية فوراً
+                document.getElementById("welcome-modal-overlay").classList.remove("hidden");
+            }
+        }
+
+        // ================= 🔄 تتبع اللاعب وتحديث الرصيد لايف =================
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById("auth-screen").classList.add("hidden");
@@ -414,21 +430,11 @@
                 document.getElementById("auth-error").innerText = "";
 
                 currentUserRef = doc(db, "users", user.uid);
-                const userSnap = await getDoc(currentUserRef);
+                
+                // التأكد من وجود ملف اللاعب في الداتابيز وهدية الـ 50 جنيه
+                await ensureUserDocument(user);
 
-                // لو مستخدم جديد تماماً، بيسجل وياخد الـ 50 جنيه فوراً ونعرضله بوب اب الترحيب
-                if (!userSnap.exists()) {
-                    await setDoc(currentUserRef, {
-                        email: user.email || "",
-                        displayName: user.displayName || "لاعب XXSB",
-                        balance: 50, // الهدية الجديدة
-                        createdAt: new Date().toISOString()
-                    });
-                    // إظهار نافذة الترحيب بالهدية
-                    document.getElementById("welcome-modal-overlay").classList.remove("hidden");
-                }
-
-                // مراقبة المحفظة لايف بدون ريفريش للرصيد
+                // الاستماع اللحظي لأي تغيير في الرصيد
                 onSnapshot(currentUserRef, (docSnap) => {
                     if (docSnap.exists()) {
                         currentUserBalance = docSnap.data().balance;
@@ -443,93 +449,93 @@
             }
         });
 
-        // ================= 💳 نظام العمليات المالية الذكي =================
-        
-        // هندسة الإيداع (شحن)
-        document.getElementById("btn-do-deposit").addEventListener("click", async () => {
-            const amountInput = document.getElementById("deposit-amount");
-            const amount = parseInt(amountInput.value);
-
-            if (!amount || amount < 150) {
-                alert("❌ فشلت العملية: أقل قيمة للإيداع مسموح بها هي 150 جنيه مصري!");
-                return;
-            }
-
-            if (currentUserRef) {
-                try {
-                    await updateDoc(currentUserRef, { balance: increment(amount) });
-                    alert(`✅ تم شحن محفظتك بنجاح بقيمة ${amount} جنيه!`);
-                    amountInput.value = "";
-                } catch (err) {
-                    alert("حدث خطأ أثناء معالجة الإيداع، يرجى المحاولة لاحقاً.");
-                }
-            }
-        });
-
-        // هندسة السحب كاش
-        document.getElementById("btn-do-withdraw").addEventListener("click", async () => {
-            const amountInput = document.getElementById("withdraw-amount");
-            const amount = parseInt(amountInput.value);
-
-            if (!amount || amount < 150) {
-                alert("❌ فشلت العملية: أقل قيمة للسحب النقدي هي 150 جنيه مصري!");
-                return;
-            }
-
-            if (amount > currentUserBalance) {
-                alert(`❌ رصيدك غير كافي! محفظتك بها ${currentUserBalance} جنيه فقط، ولا يمكنك سحب ${amount} جنيه.`);
-                return;
-            }
-
-            if (currentUserRef) {
-                try {
-                    await updateDoc(currentUserRef, { balance: increment(-amount) });
-                    alert(`✅ تم تسجيل طلب السحب بقيمة ${amount} جنيه بنجاح!`);
-                    amountInput.value = "";
-                } catch (err) {
-                    alert("حدث خطأ أثناء معالجة السحب.");
-                }
-            }
-        });
-
-        // إغلاق نافذة الترحيب
-        document.getElementById("btn-close-welcome").addEventListener("click", () => {
-            document.getElementById("welcome-modal-overlay").classList.add("hidden");
-        });
-
-        // ================= 🔐 معالجة زر الـ Auth الرئيسي (دخول / إنشاء) =================
+        // ================= 🔐 معالجة أزرار الـ Auth (دخول / إنشاء حساب عادي) =================
         document.getElementById("btn-auth-submit").addEventListener("click", async () => {
             const email = document.getElementById("auth-email").value;
             const password = document.getElementById("auth-password").value;
             const errorField = document.getElementById("auth-error");
 
-            if(!email || !password) { errorField.innerText = "اكتب الإيميل والباسورد أولاً يا هندسة!"; return; }
+            if(!email || !password) { errorField.innerText = "اكتب البيانات كاملة أولاً!"; return; }
 
             try {
+                errorField.innerText = "جاري المعالجة... ⏳";
+                errorField.style.color = "#00ff66";
+                
                 if (currentAuthMode === 'login') {
                     await signInWithEmailAndPassword(auth, email, password);
                 } else {
-                    await createUserWithEmailAndPassword(auth, email, password);
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    // حفظ الحساب فوراً بالهدية الترحيبية
+                    await ensureUserDocument(userCredential.user);
                 }
             } catch (err) {
                 console.error(err);
+                errorField.style.color = "#ff3e3e";
                 errorField.innerText = currentAuthMode === 'login' ? 
                     "بيانات الدخول خاطئة أو الحساب غير موجود." : 
-                    "فشل الإنشاء: تأكد أن الإيميل صحيح والباسورد لا تقل عن 6 أحرف.";
+                    "فشل الإنشاء: البريد مستخدم بالفعل أو كلمة المرور أقل من 6 أحرف.";
             }
         });
 
-        // تسجيل الدخول السريع بجوجل
+        // ================= 🌐 الدخول السريع بجوجل =================
         document.getElementById("btn-google").addEventListener("click", async () => {
             const errorField = document.getElementById("auth-error");
             try {
-                await signInWithPopup(auth, googleProvider);
+                errorField.innerText = "جاري الاتصال بجوجل... ⏳";
+                errorField.style.color = "#00ff66";
+                
+                const result = await signInWithPopup(auth, googleProvider);
+                // فحص الحساب وإيداع الهدية في حال كان مستخدم جديد عبر جوجل
+                await ensureUserDocument(result.user);
             } catch (err) {
-                errorField.innerText = `فشل التسجيل بجوجل: تأكد من تشغيل المشروع عبر الـ Live Server!`;
+                console.error(err);
+                errorField.style.color = "#ff3e3e";
+                errorField.innerText = `لم يشتغل: تأكد من تفعيل Google في كونسول Firebase وتشغيل الـ Live Server!`;
             }
         });
 
-        // خروج
+        // ================= 💳 نظام العمليات المالية =================
+        document.getElementById("btn-do-deposit").addEventListener("click", async () => {
+            const amountInput = document.getElementById("deposit-amount");
+            const amount = parseInt(amountInput.value);
+
+            if (!amount || amount < 150) {
+                alert("❌ فشلت العملية: أقل قيمة للإيداع مسموح بها هي 150 جنيه!");
+                return;
+            }
+
+            if (currentUserRef) {
+                await updateDoc(currentUserRef, { balance: increment(amount) });
+                alert(`✅ تم شحن محفظتك بنجاح بقيمة ${amount} جنيه!`);
+                amountInput.value = "";
+            }
+        });
+
+        document.getElementById("btn-do-withdraw").addEventListener("click", async () => {
+            const amountInput = document.getElementById("withdraw-amount");
+            const amount = parseInt(amountInput.value);
+
+            if (!amount || amount < 150) {
+                alert("❌ فشلت العملية: أقل قيمة للسحب النقدي هي 150 جنيه!");
+                return;
+            }
+
+            if (amount > currentUserBalance) {
+                alert(`❌ رصيدك غير كافي!`);
+                return;
+            }
+
+            if (currentUserRef) {
+                await updateDoc(currentUserRef, { balance: increment(-amount) });
+                alert(`✅ تم تسجيل طلب السحب بقيمة ${amount} جنيه بنجاح!`);
+                amountInput.value = "";
+            }
+        });
+
+        document.getElementById("btn-close-welcome").addEventListener("click", () => {
+            document.getElementById("welcome-modal-overlay").classList.add("hidden");
+        });
+
         document.getElementById("btn-logout").addEventListener("click", () => {
             signOut(auth);
         });
