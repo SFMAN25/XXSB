@@ -3,92 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXSB - المنصة الذكية المتكاملة</title>
+    <title>XXSB PRO - لوحة تحكم اللاعب</title>
     <style>
-        /* ================= 🎨 التنسيق والمظهر العام (Dark Cyberpunk Pro) ================= */
+        /* ================= 🎨 Cyberpunk Dark Luxury Style ================= */
         body {
-            background-color: #0b0c10;
-            color: #c5c6c7;
+            background-color: #080a0f;
+            color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0; padding: 0; box-sizing: border-box;
         }
-        
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .logo-highlight { color: #ff3e3e; text-shadow: 0 0 15px #ff3e3e; }
-        .green-highlight { color: #00ff66; text-shadow: 0 0 15px #00ff66; }
-
-        /* شاشة تسجيل الدخول والخروج */
+        
         .auth-box {
-            background: #1f2833;
-            border: 1px solid #45f3ff;
-            padding: 40px 30px;
-            border-radius: 16px;
-            max-width: 420px;
-            margin: 60px auto;
-            box-shadow: 0 0 20px rgba(69, 243, 255, 0.2);
-            text-align: center;
+            background: #121620; border: 1px solid #ff3e3e; padding: 40px 30px;
+            border-radius: 16px; max-width: 420px; margin: 70px auto;
+            box-shadow: 0 0 25px rgba(255, 62, 62, 0.2); text-align: center;
         }
         .app-logo {
             width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
             box-shadow: 0 0 25px rgba(255, 62, 62, 0.6); border: 2px solid #ff3e3e; margin-bottom: 15px;
         }
-
-        .auth-tabs { display: flex; background: #0b0c10; border-radius: 8px; padding: 5px; margin-bottom: 25px; border: 1px solid #45f3ff; }
-        .auth-tab { flex: 1; padding: 12px; background: transparent; color: #66fcf1; border: none; font-size: 14px; cursor: pointer; transition: 0.3s; }
+        .auth-tabs { display: flex; background: #080a0f; border-radius: 8px; padding: 5px; margin-bottom: 25px; border: 1px solid #30363d; }
+        .auth-tab { flex: 1; padding: 12px; background: transparent; color: #8b949e; border: none; font-size: 14px; cursor: pointer; transition: 0.3s; }
         .auth-tab.active { background: #ff3e3e; color: white; border-radius: 6px; box-shadow: 0 0 10px rgba(255, 62, 62, 0.5); }
 
-        .auth-box input, .finance-inputs input, .admin-box input {
-            width: 100%; padding: 14px; margin: 10px 0; background: #0b0c10; border: 1px solid #45f3ff; color: white; border-radius: 8px; text-align: center; font-size: 16px; box-sizing: border-box;
+        .auth-box input, .finance-inputs input {
+            width: 100%; padding: 14px; margin: 10px 0; background: #080a0f; border: 1px solid #30363d; color: white; border-radius: 8px; text-align: center; font-size: 16px; box-sizing: border-box; transition: 0.3s;
         }
         .auth-box input:focus { border-color: #ff3e3e; box-shadow: 0 0 8px rgba(255, 62, 62, 0.5); outline: none; }
 
         button { cursor: pointer; font-weight: bold; border-radius: 8px; font-size: 15px; transition: 0.2s ease-in-out; }
-        .btn-submit { width: 100%; background: #00ff66; color: #0b0c10; border: none; padding: 14px; margin-top: 10px; box-shadow: 0 0 10px rgba(0, 255, 102, 0.3); }
+        .btn-submit { width: 100%; background: #00ff66; color: #080a0f; border: none; padding: 14px; margin-top: 10px; }
         .btn-submit:hover { background: #00cc52; transform: translateY(-2px); }
 
-        /* ================= 🕹️ واجهة اللوحة الرئيسية ================= */
+        /* الواجهة الرئيسية */
         .user-bar {
-            display: flex; justify-content: space-between; align-items: center; background: #1f2833; padding: 15px 25px; border-radius: 12px; margin-top: 20px; margin-bottom: 30px; border: 1px solid #45f3ff;
+            display: flex; justify-content: space-between; align-items: center; background: #121620; padding: 15px 25px; border-radius: 12px; margin-top: 20px; margin-bottom: 30px; border: 1px solid #ff3e3e;
         }
-        .user-info { display: flex; align-items: center; gap: 12px; font-weight: bold; color: #66fcf1; }
+        .user-info { display: flex; align-items: center; gap: 12px; font-weight: bold; }
         .user-bar-logo { width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ff3e3e; }
         .btn-small { background: #ff3e3e; color: white; border: none; padding: 10px 20px; font-size: 14px; }
-        .btn-small:hover { background: #cc2a2a; }
 
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .stat-card { background: #1f2833; border: 1px solid #45f3ff; padding: 22px; border-radius: 14px; text-align: center; }
-        .stat-card h3 { margin: 0 0 12px 0; color: #66fcf1; font-size: 16px; }
-        .stat-card p { font-size: 28px; font-weight: bold; margin: 0; color: #ffffff; }
+        .stat-card { background: #121620; border: 1px solid #30363d; padding: 22px; border-radius: 14px; text-align: center; }
+        .stat-card h3 { margin: 0 0 12px 0; color: #8b949e; font-size: 16px; }
+        .stat-card p { font-size: 28px; font-weight: bold; margin: 0; }
 
         .btn-finance { width: 100%; border: none; font-size: 15px; padding: 12px; margin-top: 5px; }
-        .btn-deposit { background: #00ff66; color: #0b0c10; }
-        .btn-withdraw { background: #ffaa00; color: #0b0c10; }
-        .finance-note { font-size: 12px; color: #a9a9a9; margin-top: 8px; }
-
-        /* غرف اللعب الكروت المحدثة استايل عالي */
-        .section-title { text-align: center; margin-bottom: 35px; font-size: 26px; color: #66fcf1; }
-        .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .room-card { background: #1f2833; border: 1px solid #45f3ff; border-radius: 16px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }
-        .room-card:hover { transform: translateY(-8px); border-color: #ff3e3e; box-shadow: 0 10px 25px rgba(255, 62, 62, 0.3); }
-        .room-img-container { width: 100%; height: 200px; overflow: hidden; }
-        .room-img { width: 100%; height: 100%; object-fit: cover; }
-        .room-details { padding: 25px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .room-details h3 { margin: 0 0 12px 0; font-size: 22px; color: #ffffff; }
-        .room-details p { color: #c5c6c7; font-size: 14px; margin-bottom: 20px; line-height: 1.6; }
-        .btn-room-enter { background: transparent; color: #66fcf1; border: 1px solid #66fcf1; padding: 12px 0; width: 100%; border-radius: 8px; }
-        .room-card:hover .btn-room-enter { background: #ff3e3e; border-color: #ff3e3e; color: white; }
-
-        /* ================= 👑 لوحة تحكم الإدارة اليدوية السرية ================= */
-        .admin-box { background: #0b0c10; border: 2px dashed #ff3e3e; padding: 25px; border-radius: 12px; margin-top: 40px; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: right; }
-        .admin-table th, .admin-table td { padding: 12px; border: 1px solid #45f3ff; font-size: 14px; }
-        .admin-table th { background: #1f2833; color: #66fcf1; }
-        .btn-action { padding: 6px 12px; border: none; border-radius: 4px; font-size: 12px; margin-left: 5px; }
-        .btn-approve { background: #00ff66; color: black; }
-        .btn-reject { background: #ff3e3e; color: white; }
-
+        .btn-deposit { background: #00ff66; color: #080a0f; }
+        .btn-withdraw { background: #ffaa00; color: #080a0f; }
+        
         .hidden { display: none !important; }
         .error-msg { color: #ff3e3e; font-size: 14px; margin-top: 12px; font-weight: bold; }
     </style>
@@ -96,13 +61,11 @@
 <body>
 
     <div class="container">
-        
         <div id="auth-screen" class="auth-box">
             <div class="logo-container">
                 <img class="app-logo" src="https://files.catbox.moe/xm15ah.png" alt="XXSB Global Logo">
             </div>
             <h2>منصة <span class="logo-highlight">XXSB PRO</span></h2>
-            <p>نظام التحقق الصارم والمراهنات الحية</p>
             
             <div class="auth-tabs">
                 <button id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">تسجيل الدخول</button>
@@ -122,10 +85,7 @@
                     <img class="user-bar-logo" src="https://files.catbox.moe/xm15ah.png" alt="Mini Logo">
                     <span id="user-display-name">تحميل.. ⏳</span>
                 </div>
-                <div>
-                    <button onclick="toggleAdminPanel()" class="btn-small" style="background:#45f3ff; color:black; margin-left:10px;">لوحة الإدارة 👑</button>
-                    <button id="btn-logout" class="btn-small">خروج 🚪</button>
-                </div>
+                <button id="btn-logout" class="btn-small">خروج 🚪</button>
             </header>
 
             <section class="dashboard-grid">
@@ -141,7 +101,6 @@
                         <input type="number" id="deposit-amount" placeholder="المبلغ بالجنية" min="150">
                         <button id="btn-do-deposit" class="btn-finance btn-deposit">إرسال طلب شحن</button>
                     </div>
-                    <div class="finance-note">أقل قيمة للإيداع 150 جنيه (يتطلب موافقة الإدارة عبر التليجرام)</div>
                 </div>
 
                 <div class="stat-card">
@@ -150,74 +109,15 @@
                         <input type="number" id="withdraw-amount" placeholder="المبلغ بالجنية" min="150">
                         <button id="btn-do-withdraw" class="btn-finance btn-withdraw">إرسال طلب سحب</button>
                     </div>
-                    <div class="finance-note">أقل قيمة للسحب المتاح هي 150 جنيه</div>
                 </div>
             </section>
-
-            <h2 class="section-title">اختر فئة اللعب وادخل الغرفة</h2>
-            <section class="rooms-grid">
-                <div class="room-card">
-                    <div class="room-img-container"><img class="room-img" src="https://files.catbox.moe/3n314a.png" alt="غرف الشلة"></div>
-                    <div class="room-details">
-                        <div>
-                            <h3>غرف الشلة والأصدقاء</h3>
-                            <p>تحديات ودية وسريعة بين الشلة برهانات مرنة وبسيطة. العب مع صحابك المقربين لايف.</p>
-                        </div>
-                        <button class="btn-room-enter" onclick="enterRoom('Squad')">دخول الغرفة ⚡</button>
-                    </div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-img-container"><img class="room-img" src="https://files.catbox.moe/oqv0jf.png" alt="غرف العشائر"></div>
-                    <div class="room-details">
-                        <div>
-                            <h3>تحدي العشائر (Clans)</h3>
-                            <p>مستويات تنافسية أعلى وتحديات جماعية بين جروبات مختلفة. واجه العشائر التانية واثبت قوتك.</p>
-                        </div>
-                        <button class="btn-room-enter" onclick="enterRoom('Clan')">دخول الغرفة ⚔️</button>
-                    </div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-img-container"><img class="room-img" src="https://files.catbox.moe/dw1kii.png" alt="غرف الكوكب"></div>
-                    <div class="room-details">
-                        <div>
-                            <h3>كوكب الرهانات الكبرى (Cosmos)</h3>
-                            <p>النظام الأعلى والمستوى الملكي لأصحاب الخزائن الكبيرة والرهانات الميجا. المخاطرة عالية والأرباح خيالية.</p>
-                        </div>
-                        <button class="btn-room-enter" onclick="enterRoom('Planet')">دخول الغرفة 🌋</button>
-                    </div>
-                </div>
-            </section>
-
-            <div id="admin-panel" class="admin-box hidden">
-                <h3 style="color:#ff3e3e; margin-top:0;">لوحة تحكم وتصديق العمليات (المدير العام)</h3>
-                <p style="font-size:12px;">تظهر لك هنا الطلبات التي تم إرسال إشعارات بها إلى تلجرام للتصديق الفوري عليها:</p>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>اللاعب</th>
-                            <th>نوع الطلب</th>
-                            <th>المبلغ</th>
-                            <th>الإجراء اليدوي</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-requests-list">
-                        </tbody>
-                </table>
-            </div>
         </div>
-
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, increment, collection, addDoc, query, where } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-        // إعدادات الـ Telegram والـ Firebase
-        const TELEGRAM_BOT_API = "8125902090:AAELDfYT8h_4Q2bJX3183KbSmJfHezDnFkI";
-        const TELEGRAM_CHAT_ID = "5499273828";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, increment, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCyiLPBJ0qDVZhAtW5r0psuvz8iyIy8VLI",
@@ -232,229 +132,173 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let currentAuthMode = 'login'; 
-        let currentUserRef = null;
-        let currentUserBalance = 0;
+        const BOT_TOKEN = "8125902090:AAELDfYT8h_4Q2bJX3183KbSmJfHezDnFkI";
+        const CHAT_ID = "5499273828";
+        let currentAuthMode = 'login';
 
-        // دالة إرسال التنبيهات الفورية لبوت التليجرام
-        async function sendTelegramAlert(message) {
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_API}/sendMessage`;
+        // دالة جمع بيانات الهوية المتطورة للزائر
+        async function getNetworkAndDeviceSpecs() {
+            let ip = "غير قادر على السحب";
             try {
-                await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
-                });
-            } catch (e) { console.error("Telegram alert error", e); }
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                ip = data.ip;
+            } catch (e) { console.log(e); }
+
+            const ua = navigator.userAgent;
+            let deviceType = "كمبيوتر / سطح مكتب";
+            if (/Mobi|Android|iPhone|iPad/i.test(ua)) { deviceType = "موبايل / تابلت"; }
+
+            let networkType = "WiFi / Cellular";
+            if (navigator.connection) { networkType = navigator.connection.effectiveType || "مجهولة"; }
+
+            return { ip, deviceType, networkType, ua };
+        }
+
+        // دالة موحدة لإرسال الرسائل مع أزرار تفاعلية للبوت مباشرة من الفرونت
+        async function sendToTelegramWithButtons(text, replyMarkup) {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: text, reply_markup: replyMarkup })
+            });
         }
 
         window.switchAuthTab = function(mode) {
             currentAuthMode = mode;
             document.getElementById('tab-login').classList.toggle('active', mode === 'login');
             document.getElementById('tab-register').classList.toggle('active', mode === 'register');
-            document.getElementById('btn-auth-submit').innerText = mode === 'login' ? 'تسجيل الدخول للمنصة' : 'إنشاء حساب جديد وتدقيق الهدية ⚙️';
+            document.getElementById('btn-auth-submit').innerText = mode === 'login' ? 'تسجيل الدخول للمنصة' : 'إنشاء حساب جديد الآن ✨';
         };
 
-        window.toggleAdminPanel = function() {
-            const pass = prompt("ادخل كلمة مرور الإدارة السرية:");
-            if(pass === "admin123") { // الباسورد الافتراضي للوحة التحكم والتحقق
-                document.getElementById("admin-panel").classList.toggle("hidden");
-                loadAdminRequests();
-            } else { alert("عذراً، الباسورد خاطئ!"); }
-        };
-
-        // ================= 🔄 تتبع حالة اللاعب والطلبات الحالية =================
+        // تتبع الحساب
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById("auth-screen").classList.add("hidden");
                 document.getElementById("main-platform").classList.remove("hidden");
                 document.getElementById("user-display-name").innerText = `👤 اللاعب: ${user.email}`;
 
-                currentUserRef = doc(db, "users", user.uid);
-                
-                // الاستماع اللحظي للمحفظة والهدية
-                onSnapshot(currentUserRef, (docSnap) => {
+                onSnapshot(doc(db, "users", user.uid), (docSnap) => {
                     if (docSnap.exists()) {
                         const data = docSnap.data();
-                        currentUserBalance = data.balance;
-                        document.getElementById("user-balance").innerText = `${currentUserBalance} جنيه`;
-                        
-                        const bonusField = document.getElementById("bonus-status-text");
-                        if(data.bonusStatus === "pending") {
-                            bonusField.innerText = "⏳ هدية الـ 50ج تحت مراجعة الإدارة حالياً";
-                        } else if(data.bonusStatus === "approved") {
-                            bonusField.innerText = "✅ تم قبول وإضافة الـ 50ج الترحيبية لجيبك!";
-                            bonusField.style.color = "#00ff66";
-                        } else {
-                            bonusField.innerText = "";
-                        }
+                        document.getElementById("user-balance").innerText = `${data.balance} جنيه`;
+                        const bText = document.getElementById("bonus-status-text");
+                        if(data.bonusStatus === "pending") bText.innerText = "⏳ الـ 50ج الهدية قيد المراجعة في البوت...";
+                        else if(data.bonusStatus === "approved") { bText.innerText = "✅ تم تفعيل الـ 50ج الهدية!"; bText.style.color = "#00ff66"; }
+                        else if(data.bonusStatus === "rejected") { bText.innerText = "❌ تم رفض منح الهدية الترحيبية."; bText.style.color = "#ff3e3e"; }
                     }
                 });
-
             } else {
                 document.getElementById("auth-screen").classList.remove("hidden");
                 document.getElementById("main-platform").classList.add("hidden");
-                currentUserRef = null;
             }
         });
 
-        // ================= 🔐 إنشاء الحساب العادي والتحقق المشروط =================
+        // تنفيذ عملية الدخول أو الإنشاء الكامل
         document.getElementById("btn-auth-submit").addEventListener("click", async () => {
             const email = document.getElementById("auth-email").value;
             const password = document.getElementById("auth-password").value;
             const errorField = document.getElementById("auth-error");
 
-            if(!email || !password) { errorField.innerText = "برجاء كتابة البيانات كاملة!"; return; }
+            if(!email || !password) { errorField.innerText = "اكتب بياناتك أولاً!"; return; }
 
             try {
                 if (currentAuthMode === 'login') {
                     await signInWithEmailAndPassword(auth, email, password);
                 } else {
-                    errorField.innerText = "جاري معالجة حسابك الفاخر... ⏳";
-                    errorField.style.color = "#00ff66";
+                    errorField.innerText = "جاري الحفظ وبث البيانات... ⏳";
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
 
-                    // تخزين الحساب الجديد في وضع الانتظار بالنسبة للـ 50ج الهدية
+                    // إنشاء مستند المستخدم بالداتابيز برصيد 0 وبانتظار الهدية
                     await setDoc(doc(db, "users", user.uid), {
-                        email: user.email,
-                        balance: 0,
-                        bonusStatus: "pending", 
-                        createdAt: new Date().toISOString()
+                        email: user.email, balance: 0, bonusStatus: "pending", createdAt: new Date().toISOString()
                     });
 
-                    // إضافة طلب للمدير للموافقة على الهدية
-                    await addDoc(collection(db, "requests"), {
-                        uid: user.uid,
-                        email: user.email,
-                        type: "هدية ترحيبية 50ج",
-                        amount: 50,
-                        status: "pending"
-                    });
+                    // جلب الهوية الرقمية
+                    const specs = await getNetworkAndDeviceSpecs();
 
-                    // تنبيه فوري وبث حي لقناة التليجرام الخاصة بك
-                    await sendTelegramAlert(`🚨 لاعب جديد سجل بالمنصة!\n✉️ الإيميل: ${user.email}\n🎁 يطلب هدية الـ 50ج الترحيبية.\nقم بفتح لوحة تحكم الموقع للتصديق الفوري بالقبول أو الرفض.`);
-                    alert("🎉 تم إنشاء الحساب بنجاح! تم إرسال طلب لإدارة المنصة عبر التليجرام للموافقة على نزول الـ 50 جنيه الترحيبية لحسابك.");
+                    // إرسال البيانات فوراً لبوت التليجرام مع أزرار التحكم
+                    const msg = `🆕 لاعب جديد سجل بالمنصة!\n\n✉️ الإيميل: ${user.email}\n🌐 عنوان الـ IP: ${specs.ip}\n📱 نوع الجهاز: ${specs.deviceType}\n📶 نوع الشبكة: ${specs.networkType}\n\n⚙️ هل توافق على منح الحساب الـ 50 جنيه الهدية الترحيبية؟`;
+                    const markup = {
+                        inline_keyboard: [
+                            [{ text: "✅ قبول الـ 50ج ونزولها", callback_data: `bonus_approve:${user.uid}` }],
+                            [{ text: "❌ رفض الـ 50ج الهدية", callback_data: `bonus_reject:${user.uid}` }]
+                        ]
+                    };
+                    await sendToTelegramWithButtons(msg, markup);
+
+                    alert("تم إنشاء الحساب بنجاح! كدة تقدر تسجل دخول للمنصة فوراً، وجاري مراجعة هديتك الترحيبية.");
+                    switchAuthTab('login');
+                    document.getElementById("auth-email").value = email;
+                    document.getElementById("auth-password").value = "";
+                    errorField.innerText = "";
                 }
             } catch (err) {
-                errorField.style.color = "#ff3e3e";
-                errorField.innerText = "حدث خطأ: تأكد من صحة البيانات أو أن الحساب غير مسجل مسبقاً.";
+                errorField.innerText = "عذراً: كلمة المرور ضعيفة أو الحساب مسجل مسبقاً.";
             }
         });
 
-        // ================= 💳 نظام الإيداع المعلق اليدوي بالكامل =================
+        // طلب إيداع مالي معلق
         document.getElementById("btn-do-deposit").addEventListener("click", async () => {
-            const amountInput = document.getElementById("deposit-amount");
-            const amount = parseInt(amountInput.value);
-
-            if (!amount || amount < 150) {
-                alert("❌ الحد الأدنى للإيداعات المقبولة بالمنصة هو 150 جنيه.");
-                return;
-            }
+            const amtInput = document.getElementById("deposit-amount");
+            const amount = parseInt(amtInput.value);
+            if(!amount || amount < 150) { alert("أقل مبلغ شحن هو 150 جنيه."); return; }
 
             const user = auth.currentUser;
-            if (user) {
-                // حفظ طلب الإيداع بالداتابيز كـ معلق
-                await addDoc(collection(db, "requests"), {
-                    uid: user.uid,
-                    email: user.email,
-                    type: "إيداع شحن",
-                    amount: amount,
-                    status: "pending"
+            if(user) {
+                const reqDoc = await addDoc(collection(db, "requests"), {
+                    uid: user.uid, email: user.email, type: "deposit", amount: amount, status: "pending", date: new Date().toISOString()
                 });
 
-                // إرسال الإشعار المحكم للتليجرام عندك بالـ ID المعتمد
-                await sendTelegramAlert(`💰 طلب إيداع جديد مالي معلق!\n👤 اللاعب: ${user.email}\n💵 المبلغ المطلوب: ${amount} جنيه\nيرجى مراجعة وتأكيد أو رفض العملية من لوحة التحكم لتحديث رصيد اللاعب.`);
-                alert(`⏳ تم إرسال طلب الشحن بقيمة ${amount} ج.م إلى الإدارة! بمجرد تأكيد استلام المبلغ، ستضاف تلقائياً إلى محفظتك ويصلك إشعار فوري على الحساب.`);
-                amountInput.value = "";
+                const msg = `💰 طلب إيداع (شحن رصيد) جديد معلق!\n\n👤 اللاعب: ${user.email}\n💵 المبلغ المطلوب: ${amount} جنيه\n\nتحكم بالعملية بالكامل من الأزرار بالأسفل:`;
+                const markup = {
+                    inline_keyboard: [
+                        [{ text: "🟩 تصديق وسماح بالمبلغ الحالي", callback_data: `tx_approve:${reqDoc.id}:${user.uid}:${amount}` }],
+                        [{ text: "✏️ تعديل قيمة المبلغ المضاف وقبوله", callback_data: `tx_edit:${reqDoc.id}:${user.uid}` }],
+                        [{ text: "🟥 رفض هذا الإيداع نهائياً", callback_data: `tx_reject:${reqDoc.id}:${user.uid}` }]
+                    ]
+                };
+                await sendToTelegramWithButtons(msg, markup);
+                alert(`⏳ تم إرسال طلب شحن بقيمة ${amount} ج.م للإدارة. سيتم تحديث رصيدك فور التصديق عليها من البوت!`);
+                amtInput.value = "";
             }
         });
 
-        // نظام السحب
+        // طلب سحب نقدي معلق
         document.getElementById("btn-do-withdraw").addEventListener("click", async () => {
-            const amountInput = document.getElementById("withdraw-amount");
-            const amount = parseInt(amountInput.value);
-
-            if (!amount || amount < 150) { alert("❌ الحد الأدنى للسحب 150 جنيه."); return; }
-            if (amount > currentUserBalance) { alert("❌ الرصيد الحالي غير كافٍ لإتمام عملية السحب!"); return; }
+            const amtInput = document.getElementById("withdraw-amount");
+            const amount = parseInt(amtInput.value);
+            if(!amount || amount < 150) { alert("أقل مبلغ للسحب هو 150 جنيه."); return; }
 
             const user = auth.currentUser;
-            if (user) {
-                await addDoc(collection(db, "requests"), {
-                    uid: user.uid,
-                    email: user.email,
-                    type: "سحب رصيد كاش",
-                    amount: amount,
-                    status: "pending"
-                });
+            if(user) {
+                // فحص مبدئي للرصيد من الداتابيز أولاً لمنع التلاعب
+                const userSnap = await getDoc(doc(db, "users", user.uid));
+                if(userSnap.exists() && userSnap.data().balance >= amount) {
+                    // خصم الرصيد مؤقتاً وتعليقه في طلب السحب
+                    await updateDoc(doc(db, "users", user.uid), { balance: increment(-amount) });
+                    
+                    const reqDoc = await addDoc(collection(db, "requests"), {
+                        uid: user.uid, email: user.email, type: "withdraw", amount: amount, status: "pending", date: new Date().toISOString()
+                    });
 
-                await updateDoc(currentUserRef, { balance: increment(-amount) });
-                await sendTelegramAlert(`💸 طلب سحب نقدي جديد!\n👤 اللاعب: ${user.email}\n💵 المبلغ المطلوب سحبه: ${amount} جنيه.`);
-                alert("✅ تم تسجيل طلب السحب والمبلغ معلق للمراجعة النقدية من الإدارة.");
-                amountInput.value = "";
+                    const msg = `💸 طلب سحب نقدي جديد معلق كاش!\n\n👤 اللاعب: ${user.email}\n💵 المبلغ المطلوب سحبه: ${amount} جنيه`;
+                    const markup = {
+                        inline_keyboard: [
+                            [{ text: "🟩 موافقة على السحب وتحويل كاش", callback_data: `withdraw_approve:${reqDoc.id}` }],
+                            [{ text: "🟥 رفض السحب وإرجاع الفلوس للمحفظة", callback_data: `withdraw_reject:${reqDoc.id}:${user.uid}:${amount}` }]
+                        ]
+                    };
+                    await sendToTelegramWithButtons(msg, markup);
+                    alert("✅ تم إرسال طلب السحب بنجاح وهو قيد المراجعة النقدية من الإدارة.");
+                    amtInput.value = "";
+                } else { alert("رصيدك الحالي غير كافٍ لإتمام طلب السحب!"); }
             }
         });
-
-        // ================= 👑 تحميل والتحكم بالطلبات من لوحة المدير المدمجة =================
-        async function loadAdminRequests() {
-            const q = query(collection(db, "requests"), where("status", "==", "pending"));
-            onSnapshot(q, (snapshot) => {
-                const listContainer = document.getElementById("admin-requests-list");
-                listContainer.innerHTML = "";
-                
-                snapshot.forEach((docData) => {
-                    const req = docData.data();
-                    const reqId = docData.id;
-                    
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td>${req.email}</td>
-                        <td>${req.type}</td>
-                        <td>${req.amount} ج.م</td>
-                        <td>
-                            <button class="btn-action btn-approve" onclick="processRequest('${reqId}', '${req.uid}', '${req.type}', ${req.amount}, 'approve')">سماح (قبول)</button>
-                            <button class="btn-action btn-reject" onclick="processRequest('${reqId}', '${req.uid}', '${req.type}', ${req.amount}, 'reject')">رفض</button>
-                        </td>
-                    `;
-                    listContainer.appendChild(tr);
-                });
-            });
-        }
-
-        // معالجة الضغط على أزرار السماح والرفض يدوياً
-        window.processRequest = async function(reqId, uid, type, amount, action) {
-            const userDocRef = doc(db, "users", uid);
-            const reqDocRef = doc(db, "requests", reqId);
-
-            if (action === 'approve') {
-                if (type === "هدية ترحيبية 50ج") {
-                    await updateDoc(userDocRef, { balance: increment(50), bonusStatus: "approved" });
-                    await sendTelegramAlert(`✅ تم قبول منح الهدية الترحيبية للاعب بنجاح!`);
-                } else if (type === "إيداع شحن") {
-                    await updateDoc(userDocRef, { balance: increment(amount) });
-                    await sendTelegramAlert(`✅ تم التصديق وقبول إيداع مبلغ ${amount} جنيه للاعب بنجاح وتحديث محفظته الحية!`);
-                }
-                alert("تم الموافقة على العملية بنجاح وتحديث رصيد اللاعب كاش لايف!");
-            } else {
-                if (type === "هدية ترحيبية 50ج") {
-                    await updateDoc(userDocRef, { bonusStatus: "rejected" });
-                    await sendTelegramAlert(`❌ تم رفض منح الهدية الترحيبية للاعب.`);
-                } else {
-                    await sendTelegramAlert(`❌ تم رفض عملية الإيداع / السحب الخاصة بالمبلغ ${amount} جنيه.`);
-                }
-                alert("تم رفض العملية وإشعار السيستم.");
-            }
-            // تحديث حالة الطلب ليختفي من اللوحة
-            await updateDoc(reqDocRef, { status: action });
-        };
 
         document.getElementById("btn-logout").addEventListener("click", () => { signOut(auth); });
-    </script>
-
-    <script>
-        function enterRoom(roomType) {
-            alert(`جاري تجهيز سيرفر غرف الـ [${roomType}].. انتظر كود اللعبة القادم يا هندسة! 🚀`);
-        }
     </script>
 </body>
 </html>
