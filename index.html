@@ -41,6 +41,11 @@
         
         .hidden { display: none !important; }
         
+        /* الشروط والأحكام */
+        .terms-container { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 15px; padding-right: 10px; }
+        .terms-container input[type="checkbox"] { width: 18px; height: 18px; margin: 0 0 0 10px; cursor: pointer; }
+        .terms-container label { font-size: 13px; color: var(--text-muted); cursor: pointer; }
+
         /* صناديق العرض والمعلومات */
         .balance-box { background: linear-gradient(180deg, rgba(0,255,102,0.02) 0%, rgba(0,255,102,0.06) 100%); border: 1px solid rgba(0,255,102,0.15); border-radius: 18px; padding: 22px; text-align: center; margin-bottom: 20px; }
         .balance-amount { font-size: 34px; font-weight: 900; color: var(--neon-green); letter-spacing: 0.5px; margin-top: 5px; }
@@ -90,6 +95,11 @@
         <input type="password" id="password" placeholder="كلمة المرور">
         <input type="text" id="referral-code" class="hidden" placeholder="كود إحالة صديقك (اختياري)">
         
+        <div id="terms-box" class="terms-container hidden">
+            <input type="checkbox" id="terms-checkbox">
+            <label for="terms-checkbox">أوافق على الشروط والأحكام الخاصة بالمنصة</label>
+        </div>
+        
         <button id="btn-submit" class="btn-action" onclick="handleAuth()">تسجيل الدخول</button>
         <p id="err" style="color:var(--neon-pink); text-align:center; margin-top:10px; font-size:13px;"></p>
     </div>
@@ -113,7 +123,7 @@
             </div>
             
             <h3 style="color:#00ff66; margin-bottom:12px; font-size:15px; text-align:center; font-weight:700;">🎮 تحدي طاولة X-O الذكية</h3>
-            <input type="number" id="xo-bet" placeholder="أدخل مبلغ رهان التحدي">
+            <input type="number" id="xo-bet" placeholder="مبلغ التحدي (الحد الأدنى 5000 ج.م)">
             <button class="btn-action" id="start-xo-btn" onclick="startXO()">ابدأ التحدي الفوري</button>
             
             <div class="xo-board" id="xo-board" style="margin-top: 15px;">
@@ -132,6 +142,7 @@
         <div id="content-wallet" class="hidden">
             <div style="background: rgba(0,243,255,0.02); border: 1px solid rgba(0,243,255,0.08); padding: 15px; border-radius: 16px; margin-bottom: 20px;">
                 <h3 style="color:var(--neon-cyan); margin-bottom:12px; font-size:15px; font-weight:700;">📥 إيداع وشحن الرصيد</h3>
+                <p style="font-size:11px; color:var(--neon-cyan); margin-bottom:12px; text-align:center;">⚠️ الحد الأدنى للإيداع هو 500 ج.م</p>
                 <select id="wallet-type" onchange="updateWalletInfo()">
                     <option value="">-- اختر محفظة التحويل --</option>
                     <option value="فودافون كاش">فودافون كاش</option>
@@ -139,7 +150,7 @@
                     <option value="اتصالات كاش">اتصالات كاش</option>
                 </select>
                 <div id="wallet-details" class="wallet-info hidden">حول بدقة إلى الرقم التالي: <span id="target-number"></span></div>
-                <input type="number" id="dep-amt" placeholder="المبلغ الذي قمت بتحويله">
+                <input type="number" id="dep-amt" placeholder="المبلغ المحول (أقل شيء 500)">
                 <input type="text" id="sender-number" placeholder="رقم المحفظة الذي أرسلت منه">
                 <label style="display:block; margin-bottom:6px; font-size:12px; color:var(--text-muted); text-align:right; padding-right:5px;">ارفه صورة إيصال التحويل الناجح:</label>
                 <input type="file" id="receipt-img" accept="image/*">
@@ -158,7 +169,7 @@
         <div id="content-stats" class="hidden">
             <div class="wallet-info" style="border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.03); margin-bottom:15px;">
                 🔗 كود الإحالة الفريد لحسابك: <span id="my-ref-code" style="color: var(--neon-cyan); font-size: 18px; text-shadow:0 0 10px rgba(0,243,255,0.2)">-</span>
-                <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">انسخه وانشره! ستحصل على بونص بقيمة 1,000 ج.م لكل تسجيل جديد من خلالك.</p>
+                <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">انسخه وانشره! ستحصل على بونص بقيمة 1,000 ج.م، وصديقك 500 ج.م.</p>
             </div>
 
             <div class="stat-section">
@@ -221,6 +232,7 @@
         document.getElementById('tab-login').classList.toggle('active', t==='login');
         document.getElementById('tab-register').classList.toggle('active', t==='register');
         document.getElementById('referral-code').classList.toggle('hidden', t==='login'); 
+        document.getElementById('terms-box').classList.toggle('hidden', t==='login'); 
         document.getElementById('btn-submit').innerText = t==='login' ? 'تسجيل الدخول' : 'إنشاء حساب جديد بونص';
     }
 
@@ -262,6 +274,11 @@
         
         if(!email || !pass) return;
 
+        if (mode === "register" && !document.getElementById("terms-checkbox").checked) {
+            document.getElementById("err").innerText = "⚠️ يجب الموافقة على الشروط والأحكام لإنشاء حساب.";
+            return;
+        }
+
         showLoading("جاري فحص وتأمين البيانات...");
         try {
             if(mode === "login") {
@@ -272,6 +289,7 @@
                 const newRefCode = "XXSB-" + Math.random().toString(36).substring(2, 8).toUpperCase();
                 let referredByUid = null;
 
+                // التحقق من كود الإحالة وإضافة 1000 ج.م لصاحب الكود
                 if(refCodeInput) {
                     const q = query(collection(db, "users"), where("referralCode", "==", refCodeInput));
                     const snap = await getDocs(q);
@@ -282,8 +300,9 @@
                     }
                 }
 
+                // إضافة المستخدم الجديد مع بونص تسجيل 500 ج.م
                 await setDoc(doc(db, "users", cred.user.uid), { 
-                    email: email, balance: 0, referralCode: newRefCode, referredBy: referredByUid,
+                    email: email, balance: 500, referralCode: newRefCode, referredBy: referredByUid,
                     ipAddress: netInfo.ip, networkProvider: netInfo.provider, deviceType: netInfo.device, createdAt: new Date().toISOString() 
                 });
             }
@@ -341,7 +360,6 @@
     // تحميل وتحديث السحوبات الكبرى (>= 25000) وقائمة متصدري الأرباح
     async function loadVipWithdrawalsAndWinners() {
         try {
-            // جلب عينة من طلبات السحب الكبرى لتحديث اللوحة دائمًا ببيانات حقيقية آمنة بدون مشاكل فهارس
             const q = query(collection(db, "requests"), orderBy("date", "desc"), limit(40));
             const snap = await getDocs(q);
             
@@ -352,7 +370,6 @@
             winnersContainer.innerHTML = "";
             
             let hasVip = false;
-            // حلقة بيانات وهمية مبدئية لمتصدري ألعاب XO لتنظيم الواجهة وجعل مظهرها غني جداً بالبيانات
             const defaultWinners = [
                 {name: "Mido_Player", profit: "18,000 ج.م"},
                 {name: "Captain_Alex", profit: "14,500 ج.م"},
@@ -364,7 +381,6 @@
 
             snap.forEach(d => {
                 const data = d.data();
-                // تصفية السحوبات الكبرى التي تبدأ من 25 ألف فما فوق
                 if(data.type === "withdraw" && data.amount >= 25000) {
                     hasVip = true;
                     let row = document.createElement("div");
@@ -389,6 +405,12 @@
 
         if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات أولاً وأرفق صورة التحويل."); return; }
         
+        // التحقق من الحد الأدنى للإيداع
+        if(amt < 500) { 
+            alert("⚠️ خطأ: الحد الأدنى المسموح به لعملية الإيداع هو 500 ج.م."); 
+            return; 
+        }
+        
         showLoading("جاري إرسال البيانات وتأكيد الإيصال...");
         try {
             const formData = new FormData();
@@ -402,9 +424,7 @@
                 uid: user.uid, email: user.email, type: "deposit", amount: amt, senderNumber: senderNum, wallet: walletType, status: "pending", date: new Date().getTime()
             });
 
-            // جملة التنبيه الأصلية المحفوظة بالملي كما هي
             alert("جاري مراجعة بيانات التحويل وإضافة الأموال إلى حسابك.");
-            
             document.getElementById("dep-amt").value = ""; document.getElementById("sender-number").value = ""; fileInput.value = "";
         } catch(e) { alert("حدث خطأ أثناء الإرسال المالي."); } 
         finally { hideLoading(); }
@@ -417,7 +437,7 @@
 
         if(!amt || !wNum) { alert("يرجى ملء جميع حقول السحب."); return; }
         
-        // التحقق الدقيق من الحد الأدنى الجديد للسحب (10,000 جنيه)
+        // التحقق من الحد الأدنى للسحب
         if(amt < 10000) { 
             alert("⚠️ خطأ في السحب: الحد الأدنى المسموح به لتقديم طلب سحب هو 10,000 ج.م."); 
             return; 
@@ -427,17 +447,14 @@
 
         showLoading("جاري مراجعة الأرصدة وتقديم الطلب الإداري...");
         try {
-            // تحديث الرصيد للمستخدم فوراً بالسالب وتثبيت الطلب بالداتابيز
             await updateDoc(doc(db, "users", user.uid), { balance: increment(-amt) });
             
-            // تمييز طلبات السحب الكبرى (25 ألف فأكثر) في كابشن وبينات تليجرام للتنبيه الفوري الخاص بك
             let telegramNotificationTag = (amt >= 25000) ? "🚨 [سحب VIP ضخم بقيمة 25 ألف فما فوق] 🚨\n" : "";
 
             await addDoc(collection(db, "requests"), {
                 uid: user.uid, email: user.email, type: "withdraw", amount: amt, targetNumber: wNum, status: "pending", date: new Date().getTime()
             });
 
-            // إرسال إشعار السحب الإداري إلى تليجرام
             const msgText = encodeURIComponent(`${telegramNotificationTag}📤 طلب سحب جديد قيد الفحص المباشر:\n👤 اللاعب: ${user.email}\n💵 المبلغ المطلوب: ${amt} ج.م\n📞 رقم محفظة الاستلام: ${wNum}`);
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msgText}`);
 
@@ -451,6 +468,9 @@
     const radarPlayers = ["بودا_الزعيم", "Abdo_Fx", "Mido_VIP", "Kareem_X", "Sayed_Pro", "Omar_Bet", "Kimo_99", "Ayman_Max"];
     const radarActions = ["كسب الضعف في لعبة XO 🔥", "سحب أرباحه للمحفظة 💸", "شحن حسابه بونص 💳", "حصل على مكافأة إحالة 🚀"];
     setInterval(() => {
+        // فحص حالة الاتصال بالإنترنت قبل تحديث الرادار
+        if (!navigator.onLine) return;
+        
         const box = document.getElementById("live-feed-box");
         if(!box) return;
         const item = document.createElement("div");
@@ -463,13 +483,21 @@
         if(box.children.length > 3) box.lastChild.remove();
     }, 3000);
 
-    // ================= لعبة X-O الأصلية والثابتة بالميزات والرهان المعتمد =================
+    // ================= لعبة X-O الأصلية =================
     let board = ["", "", "", "", "", "", "", "", ""];
     let gameActive = false; let betAmount = 0;
     
     window.startXO = async function() {
         betAmount = parseInt(document.getElementById("xo-bet").value);
-        if(!betAmount || betAmount <= 0 || currentBalance < betAmount) { alert("الرصيد لا يكفي لبدء التحدي أو مبلغ الرهان غير صحيح."); return; }
+        
+        // شرط الحد الأدنى للعبة X-O (5000 ج.م)
+        if(!betAmount || betAmount < 5000) { 
+            alert("⚠️ الحد الأدنى للرهان في التحدي هو 5,000 ج.م."); 
+            return; 
+        }
+        
+        if(currentBalance < betAmount) { alert("الرصيد لا يكفي لبدء التحدي."); return; }
+        
         await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(-betAmount) });
         board = ["", "", "", "", "", "", "", "", ""]; gameActive = true;
         document.querySelectorAll(".xo-cell").forEach(c => { c.innerText = ""; c.className = "xo-cell"; });
