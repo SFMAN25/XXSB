@@ -31,13 +31,11 @@
         .loader { border: 5px solid rgba(0,243,255,0.2); border-top: 5px solid var(--neon-cyan); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* X-O Game Styles */
         .xo-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; pointer-events: none; opacity: 0.5; }
         .xo-board.active { pointer-events: auto; opacity: 1; }
-        .xo-cell { background: rgba(255,255,255,0.05); border: 1px solid var(--neon-cyan); height: 80px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; border-radius: 10px; cursor: pointer; color: #fff; text-shadow: 0 0 10px var(--neon-cyan); }
-        .xo-cell:hover { background: rgba(0, 243, 255, 0.1); }
-        .xo-cell.x { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
-        .xo-cell.o { color: var(--neon-gold); text-shadow: 0 0 10px var(--neon-gold); }
+        .xo-cell { background: rgba(255,255,255,0.05); border: 1px solid var(--neon-cyan); height: 80px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; border-radius: 10px; cursor: pointer; color: #fff; }
+        .xo-cell.x { color: var(--neon-pink); }
+        .xo-cell.o { color: var(--neon-gold); }
     </style>
 </head>
 <body>
@@ -61,16 +59,16 @@
     </div>
 
     <div id="main-screen" class="glass-card hidden">
-        <p style="color:var(--text-muted); text-align:center;">👤 <span id="user-welcome"></span></p>
+        <p style="color:var(--text-muted); text-align:center;">👤 مرحباً: <span id="user-welcome"></span></p>
         
         <div class="balance-box">
-            <p style="color:var(--text-muted); font-size:14px;">رصيد المحفظة</p>
+            <p style="color:var(--text-muted); font-size:14px;">رصيد الحساب</p>
             <div id="balance" class="balance-amount">0 ج.م</div>
         </div>
 
-        <h3 style="color:#00ff66; margin-bottom:15px; font-size:16px; text-align:center;">🎮 تحدي X-O (الضعف لو كسبت)</h3>
-        <input type="number" id="xo-bet" placeholder="مبلغ الدخول (الرهان)">
-        <button class="btn-action" id="start-xo-btn" onclick="startXO()">ابدأ الجولة</button>
+        <h3 style="color:#00ff66; margin-bottom:15px; font-size:16px; text-align:center;">🎮 تحدي X-O</h3>
+        <input type="number" id="xo-bet" placeholder="مبلغ الرهان">
+        <button class="btn-action" id="start-xo-btn" onclick="startXO()">ابدأ اللعب</button>
         <div class="xo-board" id="xo-board">
             <div class="xo-cell" onclick="makeMove(0)"></div><div class="xo-cell" onclick="makeMove(1)"></div><div class="xo-cell" onclick="makeMove(2)"></div>
             <div class="xo-cell" onclick="makeMove(3)"></div><div class="xo-cell" onclick="makeMove(4)"></div><div class="xo-cell" onclick="makeMove(5)"></div>
@@ -80,28 +78,28 @@
 
         <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
 
-        <h3 style="color:var(--neon-cyan); margin-bottom:15px; font-size:16px;">📥 إيداع وشحن رصيد</h3>
+        <h3 style="color:var(--neon-cyan); margin-bottom:15px; font-size:16px;">📥 إيداع وشحن الرصيد</h3>
         <select id="wallet-type" onchange="updateWalletInfo()">
-            <option value="">-- اختر المحفظة للتحويل إليها --</option>
+            <option value="">-- اختر المحفظة --</option>
             <option value="فودافون كاش">فودافون كاش</option>
             <option value="أورانج كاش">أورانج كاش</option>
             <option value="اتصالات كاش">اتصالات كاش</option>
         </select>
-        <div id="wallet-details" class="wallet-info hidden">التحويل إلى: <span id="target-number"></span></div>
-        <input type="number" id="dep-amt" placeholder="المبلغ المحول">
-        <input type="text" id="sender-number" placeholder="الرقم المحول منه">
-        <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--text-muted);">إيصال التحويل (سكرين شوت):</label>
+        <div id="wallet-details" class="wallet-info hidden">حول إلى رقم: <span id="target-number"></span></div>
+        <input type="number" id="dep-amt" placeholder="المبلغ الذي حولته">
+        <input type="text" id="sender-number" placeholder="رقم محفظتك الذي أرسلت منه">
+        <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--text-muted);">ارفه صورة التحويل (سكرين شوت):</label>
         <input type="file" id="receipt-img" accept="image/*">
-        <button class="btn-action" onclick="submitDeposit()">تأكيد وإرسال الإيصال للإدارة</button>
+        <button class="btn-action" onclick="submitDeposit()">تأكيد وإرسال الإيصال</button>
 
         <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
 
-        <h3 style="color:var(--neon-gold); margin-bottom:15px; font-size:16px;">📤 سحب كاش</h3>
+        <h3 style="color:var(--neon-gold); margin-bottom:15px; font-size:16px;">📤 طلب سحب رصيد</h3>
         <input type="number" id="with-amt" placeholder="المبلغ المراد سحبه">
-        <input type="text" id="withdraw-number" placeholder="رقم محفظتك لاستلام الفلوس">
-        <button class="btn-action btn-withdraw" onclick="submitWithdraw()">طلب سحب الرصيد</button>
+        <input type="text" id="withdraw-number" placeholder="رقم محفظتك لاستلام كاش">
+        <button class="btn-action btn-withdraw" onclick="submitWithdraw()">تأكيد طلب السحب</button>
 
-        <button onclick="logout()" style="width:100%; background:transparent; border:1px solid var(--neon-pink); color:var(--neon-pink); padding:10px; border-radius:10px; margin-top:30px; font-weight:bold;">تسجيل خروج 🚪</button>
+        <button onclick="logout()" style="width:100%; background:transparent; border:1px solid var(--neon-pink); color:var(--neon-pink); padding:10px; border-radius:10px; margin-top:30px; font-weight:bold;">خروج 🚪</button>
     </div>
 </div>
 
@@ -129,9 +127,9 @@
     let currentBalance = 0;
 
     const wallets = {
-        "فودافون كاش": "01000000000", // أرقامك هنا
-        "أورانج كاش": "01200000000",
-        "اتصالات كاش": "01100000000"
+        "فودافون كاش": "01012345678", // اكتب رقمك هنا
+        "أورانج كاش": "01212345678",  // اكتب رقمك هنا
+        "اتصالات كاش": "01112345678"  // اكتب رقمك هنا
     };
 
     window.switchTab = function(t) {
@@ -139,7 +137,6 @@
         document.getElementById('tab-login').classList.toggle('active', t==='login');
         document.getElementById('tab-register').classList.toggle('active', t==='register');
         document.getElementById('btn-submit').innerText = t==='login' ? 'دخول' : 'إنشاء حساب';
-        document.getElementById('err').innerText = "";
     }
 
     window.updateWalletInfo = function() {
@@ -155,20 +152,19 @@
     function hideLoading() { document.getElementById("loading").classList.add("hidden"); }
 
     window.handleAuth = async function() {
-        const email = document.getElementById("email").value.trim().toLowerCase(); // عشان ميعملش مشكلة الكابيتال
+        const email = document.getElementById("email").value.trim().toLowerCase();
         const pass = document.getElementById("password").value;
-        if(!email || !pass) { document.getElementById("err").innerText="املا البيانات!"; return; }
+        if(!email || !pass) return;
 
-        showLoading("جاري المعالجة...");
+        showLoading("جاري التحقق...");
         try {
             if(mode === "login") {
                 await signInWithEmailAndPassword(auth, email, pass);
             } else {
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
                 await setDoc(doc(db, "users", cred.user.uid), { email: email, balance: 0, createdAt: new Date().toISOString() });
-                alert("تم التسجيل!");
             }
-        } catch(e) { document.getElementById("err").innerText = "خطأ في البيانات."; }
+        } catch(e) { document.getElementById("err").innerText = "خطأ في تسجيل الدخول."; }
         finally { hideLoading(); }
     }
 
@@ -177,7 +173,6 @@
             document.getElementById("auth-screen").classList.add("hidden");
             document.getElementById("main-screen").classList.remove("hidden");
             document.getElementById("user-welcome").innerText = user.email;
-            
             onSnapshot(doc(db, "users", user.uid), docSnap => {
                 if(docSnap.exists()) {
                     currentBalance = docSnap.data().balance;
@@ -197,25 +192,27 @@
         const fileInput = document.getElementById("receipt-img");
         const user = auth.currentUser;
 
-        if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات وارفع الإيصال."); return; }
+        if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات أولاً"); return; }
         
-        showLoading("جاري الرفع والإرسال...");
+        showLoading("جاري إرسال البيانات...");
         try {
             const formData = new FormData();
             formData.append("chat_id", CHAT_ID);
             formData.append("photo", fileInput.files[0]);
-            formData.append("caption", `📥 إيداع!\nاللاعب: ${user.email}\nالمبلغ: ${amt}\nمحفظة: ${walletType}\nرقم المرسل: ${senderNum}`);
+            formData.append("caption", `📥 طلب إيداع قيد المراجعة:\n👤 اللاعب: ${user.email}\n💵 المبلغ: ${amt} ج.م\n📱 المحفظة: ${walletType}\n📞 رقم المرسل: ${senderNum}`);
 
-            const tgRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
             
-            // حتى لو التليجرام علق، هنسجلها في الداتابيز عشان مفيش حاجة تضيع
             await addDoc(collection(db, "requests"), {
                 uid: user.uid, email: user.email, type: "deposit", amount: amt, senderNumber: senderNum, wallet: walletType, status: "pending", date: new Date().getTime()
             });
-            alert("✅ تم إرسال الطلب للإدارة.");
+
+            // الجملة اللي طلبتها بالملي يا بودا هنا 👇
+            alert("جاري مراجعة بيانات التحويل وإضافة الأموال إلى حسابك.");
+            
             document.getElementById("dep-amt").value = ""; document.getElementById("sender-number").value = ""; fileInput.value = "";
-        } catch(e) { alert("حدث خطأ أثناء الإرسال، تأكد من اتصالك."); } 
-        finally { hideLoading(); } // ده اللي بيخلي التحميل يقف في كل الحالات
+        } catch(e) { alert("حدث خطأ أثناء الإرسال."); } 
+        finally { hideLoading(); }
     }
 
     window.submitWithdraw = async function() {
@@ -223,93 +220,58 @@
         const wNum = document.getElementById("withdraw-number").value.trim();
         const user = auth.currentUser;
 
-        if(!amt || !wNum) { alert("املا البيانات!"); return; }
-        if(currentBalance < amt) { alert("رصيدك لا يكفي!"); return; }
+        if(!amt || !wNum) return;
+        if(currentBalance < amt) { alert("رصيدك الحالي غير كافٍ!"); return; }
 
-        showLoading("جاري الإرسال...");
+        showLoading("جاري تقديم الطلب...");
         try {
             await updateDoc(doc(db, "users", user.uid), { balance: increment(-amt) });
             await addDoc(collection(db, "requests"), {
                 uid: user.uid, email: user.email, type: "withdraw", amount: amt, targetNumber: wNum, status: "pending", date: new Date().getTime()
             });
-            alert("✅ تم خصم الرصيد وإرسال طلب السحب للإدارة.");
+            alert("تم إرسال طلب السحب وهو قيد المراجعة الآن.");
             document.getElementById("with-amt").value = ""; document.getElementById("withdraw-number").value = "";
         } catch(e) { alert("خطأ في السحب."); }
         finally { hideLoading(); }
     }
 
-    // --- نظام لعبة X-O ---
+    // لعبة X-O
     let board = ["", "", "", "", "", "", "", "", ""];
-    let gameActive = false;
-    let betAmount = 0;
-
+    let gameActive = false; let betAmount = 0;
     window.startXO = async function() {
         betAmount = parseInt(document.getElementById("xo-bet").value);
-        if(!betAmount || betAmount <= 0) { alert("حدد مبلغ الرهان أولاً!"); return; }
-        if(currentBalance < betAmount) { alert("رصيدك لا يكفي!"); return; }
-
-        // خصم الرهان مبدئياً
+        if(!betAmount || betAmount <= 0 || currentBalance < betAmount) { alert("الرصيد لا يكفي أو الرهان غير صحيح"); return; }
         await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(-betAmount) });
-        
-        board = ["", "", "", "", "", "", "", "", ""];
-        gameActive = true;
-        document.querySelectorAll(".xo-cell").forEach(cell => { cell.innerText = ""; cell.className = "xo-cell"; });
+        board = ["", "", "", "", "", "", "", "", ""]; gameActive = true;
+        document.querySelectorAll(".xo-cell").forEach(c => c.innerText = "");
         document.getElementById("xo-board").classList.add("active");
-        document.getElementById("xo-msg").innerText = "دورك يا بطل (أنت X)";
-        document.getElementById("xo-msg").style.color = "var(--neon-cyan)";
-        document.getElementById("start-xo-btn").disabled = true;
+        document.getElementById("xo-msg").innerText = "دورك الآن (X)";
     }
-
-    window.makeMove = function(index) {
-        if(!gameActive || board[index] !== "") return;
-        
-        // لعب المستخدم
-        board[index] = "X";
-        updateCell(index, "X");
+    window.makeMove = function(i) {
+        if(!gameActive || board[i] !== "") return;
+        board[i] = "X"; document.querySelectorAll(".xo-cell")[i].innerText = "X";
         if(checkWin("X")) { endGame("win"); return; }
         if(!board.includes("")) { endGame("draw"); return; }
-
-        // لعب الكمبيوتر (بسيط جداً)
-        let emptyCells = board.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
-        let compMove = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        board[compMove] = "O";
-        setTimeout(() => {
-            updateCell(compMove, "O");
-            if(checkWin("O")) { endGame("lose"); return; }
-        }, 500);
+        let empty = board.map((v, idx) => v === "" ? idx : null).filter(v => v !== null);
+        let move = empty[Math.floor(Math.random() * empty.length)];
+        board[move] = "O"; document.querySelectorAll(".xo-cell")[move].innerText = "O";
+        if(checkWin("O")) { endGame("lose"); }
     }
-
-    function updateCell(idx, player) {
-        const cell = document.querySelectorAll(".xo-cell")[idx];
-        cell.innerText = player;
-        cell.classList.add(player.toLowerCase());
+    function checkWin(p) {
+        const combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        return combos.some(c => c.every(idx => board[idx] === p));
     }
-
-    function checkWin(player) {
-        const winCombos = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
-        return winCombos.some(combo => combo.every(idx => board[idx] === player));
-    }
-
-    async function endGame(result) {
-        gameActive = false;
-        document.getElementById("xo-board").classList.remove("active");
-        document.getElementById("start-xo-btn").disabled = false;
-        const msg = document.getElementById("xo-msg");
-
-        if(result === "win") {
-            msg.innerText = `🎉 عاااش! كسبت ${betAmount * 2} ج.م`;
-            msg.style.color = "var(--neon-green)";
+    async function endGame(r) {
+        gameActive = false; document.getElementById("xo-board").classList.remove("active");
+        if(r === "win") {
+            document.getElementById("xo-msg").innerText = `فزت بربح: ${betAmount*2} ج.م`;
             await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount * 2) });
-        } else if(result === "lose") {
-            msg.innerText = `💀 خسرت! الجولة الجاية هتعوض.`;
-            msg.style.color = "var(--neon-pink)";
-        } else {
-            msg.innerText = `🤝 تعادل! رجعنالك فلوسك.`;
-            msg.style.color = "var(--text-muted)";
+        } else if(r === "lose") { document.getElementById("xo-msg").innerText = "خسرت الجولة، حاول مجدداً!"; }
+        else {
+            document.getElementById("xo-msg").innerText = "تعادل! تم رد الرهان.";
             await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount) });
         }
     }
-
     window.logout = () => signOut(auth);
 </script>
 </body>
