@@ -3,276 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXSB PRO | Premium Gaming & X-O</title>
+    <title>XXSB PRO | منصة الألعاب الحية</title>
     <style>
-        :root {
-            --bg-color: #060913; --glass-bg: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.08);
-            --neon-cyan: #00f3ff; --neon-green: #00ff66; --neon-pink: #ff0055; --neon-gold: #ffaa00;
-            --text-main: #ffffff; --text-muted: #8c9ba5;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; transition: all 0.3s ease; }
-        body { background: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 20px; }
-        .wrapper { max-width: 500px; margin: 40px auto; }
-        .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin-bottom: 25px; }
-        h2.title { font-size: 24px; text-align: center; margin-bottom: 20px; color: var(--neon-cyan); }
-        .tabs { display: flex; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 12px; margin-bottom: 20px; }
-        .tab { flex: 1; padding: 12px; background: transparent; color: var(--text-muted); border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .tab.active { background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); border: 1px solid rgba(0,243,255,0.3); }
-        input, select { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); color: #fff; border-radius: 10px; margin-bottom: 15px; text-align: center; }
-        input[type="file"] { padding: 10px; background: rgba(0, 243, 255, 0.05); border: 1px dashed var(--neon-cyan); }
-        button.btn-action { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--neon-cyan), #00a8ff); color: #000; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 10px;}
-        button.btn-withdraw { background: linear-gradient(135deg, var(--neon-gold), #ff7700); }
-        .hidden { display: none !important; }
-        .balance-box { background: rgba(0,255,102,0.05); border: 1px solid rgba(0,255,102,0.2); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
-        .balance-amount { font-size: 32px; font-weight: 900; color: var(--neon-green); }
-        .wallet-info { background: rgba(255,170,0,0.1); border: 1px solid var(--neon-gold); padding: 15px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; text-align: center; }
-        .wallet-info span { font-weight: bold; font-size: 18px; color: var(--neon-gold); display: block; margin-top: 5px; letter-spacing: 2px;}
-        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; }
-        .loader { border: 5px solid rgba(0,243,255,0.2); border-top: 5px solid var(--neon-cyan); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .xo-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; pointer-events: none; opacity: 0.5; }
-        .xo-board.active { pointer-events: auto; opacity: 1; }
-        .xo-cell { background: rgba(255,255,255,0.05); border: 1px solid var(--neon-cyan); height: 80px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; border-radius: 10px; cursor: pointer; color: #fff; }
-        .xo-cell.x { color: var(--neon-pink); }
-        .xo-cell.o { color: var(--neon-gold); }
+        body { background-color: #0b0f19; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 20px; }
+        .container { max-width: 450px; margin: 0 auto; background: #131a26; padding: 25px; border-radius: 15px; box-shadow: 0 0 15px rgba(0,255,204,0.2); border: 1px solid #1f2d42; }
+        h2, h3 { color: #00ffcc; }
+        input { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #1f2d42; background: #0b0f19; color: #fff; text-align: center; font-size: 16px; }
+        input:focus { border-color: #00ffcc; outline: none; }
+        button { width: 95%; padding: 12px; background: #00ffcc; color: #0b0f19; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #00b38f; box-shadow: 0 0 10px #00ffcc; }
+        .hidden { display: none; }
+        .live-feed { background: #0b0f19; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #00ffcc; height: 120px; overflow: hidden; }
+        .feed-item { padding: 6px; border-bottom: 1px solid #1f2d42; font-size: 14px; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .info-box { background: #1d2736; padding: 10px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #00ffcc; }
     </style>
 </head>
 <body>
 
-<div id="loading" class="loading-overlay hidden">
-    <div class="loader"></div>
-    <p style="margin-top: 15px; color: var(--neon-cyan); font-weight: bold;" id="loading-text">جاري المعالجة...</p>
-</div>
-
-<div class="wrapper">
-    <div id="auth-screen" class="glass-card">
-        <h2 class="title">XXSB PLATFORM</h2>
-        <div class="tabs">
-            <button id="tab-login" class="tab active" onclick="switchTab('login')">دخول</button>
-            <button id="tab-register" class="tab" onclick="switchTab('register')">حساب جديد</button>
+    <div class="container">
+        <div id="auth-screen">
+            <h2>إنشاء حساب جديد 🔥</h2>
+            <input type="email" id="reg-email" placeholder="البريد الإلكتروني للعب" required>
+            <input type="password" id="reg-pass" placeholder="كلمة المرور" required>
+            <input type="text" id="reg-ref" placeholder="كود الإحالة (اختياري)">
+            <button id="btn-register">تسجيل الحساب وابدأ اللعب</button>
         </div>
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-        <input type="password" id="password" placeholder="كلمة المرور">
-        <button id="btn-submit" class="btn-action" onclick="handleAuth()">تسجيل الدخول</button>
-        <p id="err" style="color:var(--neon-pink); text-align:center; margin-top:10px;"></p>
+
+        <div id="dashboard-screen" class="hidden">
+            <h2>مرحباً بك في المنصة 🎉</h2>
+            <div class="info-box">
+                <p>حسابك: <span id="user-email" style="color: #00ffcc;">-</span></p>
+                <h3>رصيدك الحالي: <span id="user-balance" style="color: #ffcc00;">0</span> ج.م</h3>
+            </div>
+            
+            <div class="info-box">
+                <p>كود الإحالة الخاص بك مشاركته تعطيك بونص:</p>
+                <strong id="user-ref-code" style="font-size: 18px; color: #00ffcc; letter-spacing: 2px;">-</strong>
+            </div>
+
+            <div style="margin: 30px 0; padding: 20px; background: #0b0f19; border-radius: 10px; border: 1px dashed #1f2d42;">
+                🟢 نظام تحدي مضاعفة الرصيد (X-O) جاهز للعب بـ 5000 ج.م والربح دبل!
+                <button style="margin-top: 15px; background: #ffcc00; color: #000;">ابدأ اللعب الآن 🎮</button>
+            </div>
+        </div>
+
+        <div class="live-feed">
+            <h4 style="margin: 0 0 10px 0; color: #00ffcc;">🔥 عمليات حية بالمنصة الآن</h4>
+            <div id="live-operations"></div>
+        </div>
     </div>
 
-    <div id="main-screen" class="glass-card hidden">
-        <p style="color:var(--text-muted); text-align:center;">👤 مرحباً: <span id="user-welcome"></span></p>
-        
-        <div class="balance-box">
-            <p style="color:var(--text-muted); font-size:14px;">رصيد الحساب</p>
-            <div id="balance" class="balance-amount">0 ج.م</div>
-        </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        <h3 style="color:#00ff66; margin-bottom:15px; font-size:16px; text-align:center;">🎮 تحدي X-O</h3>
-        <input type="number" id="xo-bet" placeholder="مبلغ الرهان">
-        <button class="btn-action" id="start-xo-btn" onclick="startXO()">ابدأ اللعب</button>
-        <div class="xo-board" id="xo-board">
-            <div class="xo-cell" onclick="makeMove(0)"></div><div class="xo-cell" onclick="makeMove(1)"></div><div class="xo-cell" onclick="makeMove(2)"></div>
-            <div class="xo-cell" onclick="makeMove(3)"></div><div class="xo-cell" onclick="makeMove(4)"></div><div class="xo-cell" onclick="makeMove(5)"></div>
-            <div class="xo-cell" onclick="makeMove(6)"></div><div class="xo-cell" onclick="makeMove(7)"></div><div class="xo-cell" onclick="makeMove(8)"></div>
-        </div>
-        <p id="xo-msg" style="text-align:center; font-weight:bold; margin-bottom:20px;"></p>
+        // الـ Config الخاص بمشروعك xxsb-6bd79
+        const firebaseConfig = {
+            apiKey: "ضع_هنا_الـ_API_KEY_الخاص_بك",
+            authDomain: "xxsb-6bd79.firebaseapp.com",
+            projectId: "xxsb-6bd79",
+            storageBucket: "xxsb-6bd79.appspot.com",
+            messagingSenderId: "ضع_هنا_الـ_SENDER_ID",
+            appId: "ضع_هنا_الـ_APP_ID"
+        };
 
-        <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        <h3 style="color:var(--neon-cyan); margin-bottom:15px; font-size:16px;">📥 إيداع وشحن الرصيد</h3>
-        <select id="wallet-type" onchange="updateWalletInfo()">
-            <option value="">-- اختر المحفظة --</option>
-            <option value="فودافون كاش">فودافون كاش</option>
-            <option value="أورانج كاش">أورانج كاش</option>
-            <option value="اتصالات كاش">اتصالات كاش</option>
-        </select>
-        <div id="wallet-details" class="wallet-info hidden">حول إلى رقم: <span id="target-number"></span></div>
-        <input type="number" id="dep-amt" placeholder="المبلغ الذي حولته">
-        <input type="text" id="sender-number" placeholder="رقم محفظتك الذي أرسلت منه">
-        <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--text-muted);">ارفه صورة التحويل (سكرين شوت):</label>
-        <input type="file" id="receipt-img" accept="image/*">
-        <button class="btn-action" onclick="submitDeposit()">تأكيد وإرسال الإيصال</button>
-
-        <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
-
-        <h3 style="color:var(--neon-gold); margin-bottom:15px; font-size:16px;">📤 طلب سحب رصيد</h3>
-        <input type="number" id="with-amt" placeholder="المبلغ المراد سحبه">
-        <input type="text" id="withdraw-number" placeholder="رقم محفظتك لاستلام كاش">
-        <button class="btn-action btn-withdraw" onclick="submitWithdraw()">تأكيد طلب السحب</button>
-
-        <button onclick="logout()" style="width:100%; background:transparent; border:1px solid var(--neon-pink); color:var(--neon-pink); padding:10px; border-radius:10px; margin-top:30px; font-weight:bold;">خروج 🚪</button>
-    </div>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, addDoc, collection, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCyiLPBJ0qDVZhAtW5r0psuvz8iyIy8VLI",
-        authDomain: "xxsb-6bd79.firebaseapp.com",
-        projectId: "xxsb-6bd79",
-        storageBucket: "xxsb-6bd79.firebasestorage.app",
-        messagingSenderId: "6915419205",
-        appId: "1:6915419205:web:915ec9496f35a3bfb9472c"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const BOT_TOKEN = "8125902090:AAELDfYT8h_4Q2bJX3183KbSmJfHezDnFkI";
-    const CHAT_ID = "5499273828";
-    let mode = "login";
-    let currentBalance = 0;
-
-    const wallets = {
-        "فودافون كاش": "01012345678", // اكتب رقمك هنا
-        "أورانج كاش": "01212345678",  // اكتب رقمك هنا
-        "اتصالات كاش": "01112345678"  // اكتب رقمك هنا
-    };
-
-    window.switchTab = function(t) {
-        mode = t;
-        document.getElementById('tab-login').classList.toggle('active', t==='login');
-        document.getElementById('tab-register').classList.toggle('active', t==='register');
-        document.getElementById('btn-submit').innerText = t==='login' ? 'دخول' : 'إنشاء حساب';
-    }
-
-    window.updateWalletInfo = function() {
-        const type = document.getElementById("wallet-type").value;
-        const details = document.getElementById("wallet-details");
-        if(type && wallets[type]) {
-            document.getElementById("target-number").innerText = wallets[type];
-            details.classList.remove("hidden");
-        } else { details.classList.add("hidden"); }
-    }
-
-    function showLoading(text) { document.getElementById("loading-text").innerText = text; document.getElementById("loading").classList.remove("hidden"); }
-    function hideLoading() { document.getElementById("loading").classList.add("hidden"); }
-
-    window.handleAuth = async function() {
-        const email = document.getElementById("email").value.trim().toLowerCase();
-        const pass = document.getElementById("password").value;
-        if(!email || !pass) return;
-
-        showLoading("جاري التحقق...");
-        try {
-            if(mode === "login") {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } else {
-                const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, "users", cred.user.uid), { email: email, balance: 0, createdAt: new Date().toISOString() });
+        // دالة تتبع الـ IP والشبكة والجهاز للمستخدم
+        async function fetchNetworkData() {
+            try {
+                let response = await fetch('https://ipapi.co/json/');
+                let data = await response.json();
+                return {
+                    ip: data.ip || "غير معروف",
+                    network: data.org || "غير معروف",
+                    device: navigator.userAgent.includes("Mobile") ? "موبايل" : "كمبيوتر / لابتوب"
+                };
+            } catch (e) {
+                return { ip: "مخفي/محظور", network: "غير معروف", device: "متصفح آمن" };
             }
-        } catch(e) { document.getElementById("err").innerText = "خطأ في تسجيل الدخول."; }
-        finally { hideLoading(); }
-    }
+        }
 
-    onAuthStateChanged(auth, user => {
-        if(user) {
-            document.getElementById("auth-screen").classList.add("hidden");
-            document.getElementById("main-screen").classList.remove("hidden");
-            document.getElementById("user-welcome").innerText = user.email;
-            onSnapshot(doc(db, "users", user.uid), docSnap => {
-                if(docSnap.exists()) {
-                    currentBalance = docSnap.data().balance;
-                    document.getElementById("balance").innerText = `${currentBalance} ج.م`;
+        // دالة التسجيل ونظام الإحالات المتكامل
+        document.getElementById('btn-register').addEventListener('click', async () => {
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-pass').value.trim();
+            const refInput = document.getElementById('reg-ref').value.trim().toUpperCase();
+
+            if(!email || !password) return alert("برجاء ملء البيانات كاملة!");
+
+            try {
+                // 1. جلب بيانات جهاز المستخدم وشبكته فوراً
+                const netData = await fetchNetworkData();
+
+                // 2. إنشاء الحساب في الـ Authentication
+                const credential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = credential.user;
+
+                // 3. توليد كود إحالة فريد خاص باللاعب الجديد
+                const newRefCode = "XXSB-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+                // 4. التحقق من كود الإحالة المدخل إذا وجد لمنح الـ 1000 ج.م
+                let referrerUid = null;
+                if(refInput) {
+                    const q = query(collection(db, "users"), where("referralCode", "==", refInput));
+                    const querySnap = await getDocs(q);
+                    if(!querySnap.empty) {
+                        const referrerDoc = querySnap.docs[0];
+                        referrerUid = referrerDoc.id;
+                        // إضافة بونص 1000 ج.م للشخص الذي قام بالإحالة
+                        await updateDoc(doc(db, "users", referrerUid), {
+                            balance: increment(1000)
+                        });
+                    }
                 }
-            });
-        } else {
-            document.getElementById("auth-screen").classList.remove("hidden");
-            document.getElementById("main-screen").classList.add("hidden");
-        }
-    });
 
-    window.submitDeposit = async function() {
-        const walletType = document.getElementById("wallet-type").value;
-        const amt = parseInt(document.getElementById("dep-amt").value);
-        const senderNum = document.getElementById("sender-number").value.trim();
-        const fileInput = document.getElementById("receipt-img");
-        const user = auth.currentUser;
+                // 5. حفظ بيانات اللاعب كاملة بالبونص (5000 ج.م) في الـ Database
+                await setDoc(doc(db, "users", user.uid), {
+                    email: email,
+                    balance: 5000, 
+                    referralCode: newRefCode,
+                    referredBy: referrerUid,
+                    ipAddress: netData.ip,
+                    networkProvider: netData.network,
+                    deviceType: netData.device,
+                    joinedAt: new Date()
+                });
 
-        if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات أولاً"); return; }
-        
-        showLoading("جاري إرسال البيانات...");
-        try {
-            const formData = new FormData();
-            formData.append("chat_id", CHAT_ID);
-            formData.append("photo", fileInput.files[0]);
-            formData.append("caption", `📥 طلب إيداع قيد المراجعة:\n👤 اللاعب: ${user.email}\n💵 المبلغ: ${amt} ج.م\n📱 المحفظة: ${walletType}\n📞 رقم المرسل: ${senderNum}`);
+                alert("تم التسجيل بنجاح وحصلت على بونص 5000 ج.م!");
 
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+            } catch (err) {
+                alert("حدث خطأ أثناء التسجيل: " + err.message);
+            }
+        });
+
+        // مراقبة حالة اللاعب وتحديث الشاشة والرصيد لايف
+        onAuthStateChanged(auth, async (user) => {
+            if(user) {
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if(userDoc.exists()) {
+                    const data = userDoc.data();
+                    document.getElementById('user-email').innerText = data.email;
+                    document.getElementById('user-balance').innerText = data.balance;
+                    document.getElementById('user-ref-code').innerText = data.referralCode;
+                }
+            }
+        });
+
+        // تشغيل شاشة العمليات الوهمية/الحية لزيادة حماس اللاعبين
+        const players = ["بودا_الزعيم", "Mido_2026", "Alex_King", "Sayed_Fx", "Mariam_Bet", "Kms_User"];
+        const actions = ["كسب الضعف في XO 🔥", "سحب أرباح لكاش 💸", "أودع رصيد جديد 💳", "حصل على بونص الإحالة 🚀"];
+        setInterval(() => {
+            const feed = document.getElementById('live-operations');
+            const p = players[Math.floor(Math.random() * players.length)];
+            const a = actions[Math.floor(Math.random() * actions.length)];
+            const amount = Math.floor(Math.random() * 5000) + 1000;
             
-            await addDoc(collection(db, "requests"), {
-                uid: user.uid, email: user.email, type: "deposit", amount: amt, senderNumber: senderNum, wallet: walletType, status: "pending", date: new Date().getTime()
-            });
-
-            // الجملة اللي طلبتها بالملي يا بودا هنا 👇
-            alert("جاري مراجعة بيانات التحويل وإضافة الأموال إلى حسابك.");
+            const item = document.createElement('div');
+            item.className = 'feed-item';
+            item.innerHTML = `اللاعب <span style="color:#ffcc00">${p}</span> ${a} بقيمة <span style="color:#00ffcc">${amount} ج.م</span>`;
             
-            document.getElementById("dep-amt").value = ""; document.getElementById("sender-number").value = ""; fileInput.value = "";
-        } catch(e) { alert("حدث خطأ أثناء الإرسال."); } 
-        finally { hideLoading(); }
-    }
-
-    window.submitWithdraw = async function() {
-        const amt = parseInt(document.getElementById("with-amt").value);
-        const wNum = document.getElementById("withdraw-number").value.trim();
-        const user = auth.currentUser;
-
-        if(!amt || !wNum) return;
-        if(currentBalance < amt) { alert("رصيدك الحالي غير كافٍ!"); return; }
-
-        showLoading("جاري تقديم الطلب...");
-        try {
-            await updateDoc(doc(db, "users", user.uid), { balance: increment(-amt) });
-            await addDoc(collection(db, "requests"), {
-                uid: user.uid, email: user.email, type: "withdraw", amount: amt, targetNumber: wNum, status: "pending", date: new Date().getTime()
-            });
-            alert("تم إرسال طلب السحب وهو قيد المراجعة الآن.");
-            document.getElementById("with-amt").value = ""; document.getElementById("withdraw-number").value = "";
-        } catch(e) { alert("خطأ في السحب."); }
-        finally { hideLoading(); }
-    }
-
-    // لعبة X-O
-    let board = ["", "", "", "", "", "", "", "", ""];
-    let gameActive = false; let betAmount = 0;
-    window.startXO = async function() {
-        betAmount = parseInt(document.getElementById("xo-bet").value);
-        if(!betAmount || betAmount <= 0 || currentBalance < betAmount) { alert("الرصيد لا يكفي أو الرهان غير صحيح"); return; }
-        await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(-betAmount) });
-        board = ["", "", "", "", "", "", "", "", ""]; gameActive = true;
-        document.querySelectorAll(".xo-cell").forEach(c => c.innerText = "");
-        document.getElementById("xo-board").classList.add("active");
-        document.getElementById("xo-msg").innerText = "دورك الآن (X)";
-    }
-    window.makeMove = function(i) {
-        if(!gameActive || board[i] !== "") return;
-        board[i] = "X"; document.querySelectorAll(".xo-cell")[i].innerText = "X";
-        if(checkWin("X")) { endGame("win"); return; }
-        if(!board.includes("")) { endGame("draw"); return; }
-        let empty = board.map((v, idx) => v === "" ? idx : null).filter(v => v !== null);
-        let move = empty[Math.floor(Math.random() * empty.length)];
-        board[move] = "O"; document.querySelectorAll(".xo-cell")[move].innerText = "O";
-        if(checkWin("O")) { endGame("lose"); }
-    }
-    function checkWin(p) {
-        const combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-        return combos.some(c => c.every(idx => board[idx] === p));
-    }
-    async function endGame(r) {
-        gameActive = false; document.getElementById("xo-board").classList.remove("active");
-        if(r === "win") {
-            document.getElementById("xo-msg").innerText = `فزت بربح: ${betAmount*2} ج.م`;
-            await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount * 2) });
-        } else if(r === "lose") { document.getElementById("xo-msg").innerText = "خسرت الجولة، حاول مجدداً!"; }
-        else {
-            document.getElementById("xo-msg").innerText = "تعادل! تم رد الرهان.";
-            await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount) });
-        }
-    }
-    window.logout = () => signOut(auth);
-</script>
+            feed.prepend(item);
+            if(feed.children.length > 4) feed.lastChild.remove();
+        }, 3000);
+    </script>
 </body>
 </html>
