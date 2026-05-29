@@ -6,123 +6,190 @@
     <title>XXSB PRO | Premium Gaming & X-O</title>
     <style>
         :root {
-            --bg-color: #060913; --glass-bg: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-color: #060913; --glass-bg: rgba(255, 255, 255, 0.02); --glass-border: rgba(255, 255, 255, 0.06);
             --neon-cyan: #00f3ff; --neon-green: #00ff66; --neon-pink: #ff0055; --neon-gold: #ffaa00;
             --text-main: #ffffff; --text-muted: #8c9ba5;
+            --card-smooth: rgba(0, 0, 0, 0.4);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; transition: all 0.3s ease; }
-        body { background: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 20px; }
-        .wrapper { max-width: 500px; margin: 40px auto; }
-        .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin-bottom: 25px; }
-        h2.title { font-size: 24px; text-align: center; margin-bottom: 20px; color: var(--neon-cyan); }
-        .tabs { display: flex; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 12px; margin-bottom: 20px; }
-        .tab { flex: 1; padding: 12px; background: transparent; color: var(--text-muted); border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .tab.active { background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); border: 1px solid rgba(0,243,255,0.3); }
-        input, select { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); color: #fff; border-radius: 10px; margin-bottom: 15px; text-align: center; }
-        input[type="file"] { padding: 10px; background: rgba(0, 243, 255, 0.05); border: 1px dashed var(--neon-cyan); }
-        button.btn-action { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--neon-cyan), #00a8ff); color: #000; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 10px;}
-        button.btn-withdraw { background: linear-gradient(135deg, var(--neon-gold), #ff7700); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; transition: all 0.25s ease; }
+        body { background: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 15px; overflow-x: hidden; }
+        .wrapper { max-width: 480px; margin: 20px auto; }
+        
+        /* كروت الجلاس مورفيزم المحسنة */
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 22px; box-shadow: 0 25px 60px rgba(0,0,0,0.6); margin-bottom: 20px; }
+        h2.title { font-size: 26px; text-align: center; margin-bottom: 20px; color: var(--neon-cyan); font-weight: 800; letter-spacing: 1px; text-shadow: 0 0 15px rgba(0,243,255,0.2); }
+        
+        /* نظام التبويبات الرئيسي */
+        .tabs { display: flex; background: rgba(0,0,0,0.5); padding: 4px; border-radius: 14px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.03); }
+        .tab { flex: 1; padding: 12px 8px; background: transparent; color: var(--text-muted); border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .tab.active { background: rgba(0, 243, 255, 0.08); color: var(--neon-cyan); border: 1px solid rgba(0,243,255,0.2); box-shadow: inset 0 0 8px rgba(0,243,255,0.1); }
+        
+        /* تبويبات التنقل داخل الحساب اللوحة الرئيسية */
+        .main-nav { display: flex; gap: 8px; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 16px; }
+        .nav-btn { flex: 1; padding: 12px 5px; background: transparent; border: none; color: var(--text-muted); font-weight: 700; font-size: 13px; border-radius: 12px; cursor: pointer; }
+        .nav-btn.active { background: linear-gradient(135deg, rgba(0,243,255,0.15), rgba(0,168,255,0.05)); color: #fff; border: 1px solid rgba(0,243,255,0.25); }
+
+        /* عناصر الإدخال والأزرار */
+        input, select { width: 100%; padding: 14px; background: var(--card-smooth); border: 1px solid var(--glass-border); color: #fff; border-radius: 12px; margin-bottom: 15px; text-align: center; font-size: 14px; font-weight: 600; }
+        input:focus, select:focus { border-color: var(--neon-cyan); outline: none; box-shadow: 0 0 10px rgba(0,243,255,0.2); }
+        input[type="file"] { padding: 12px; background: rgba(0, 243, 255, 0.02); border: 1px dashed rgba(0,243,255,0.4); cursor: pointer; }
+        
+        button.btn-action { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--neon-cyan), #00a8ff); color: #000; border: none; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,243,255,0.2); }
+        button.btn-action:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,243,255,0.4); }
+        button.btn-withdraw { background: linear-gradient(135deg, var(--neon-gold), #ff7700); color: #fff; box-shadow: 0 4px 15px rgba(FF,119,0,0.2); }
+        button.btn-withdraw:hover { box-shadow: 0 6px 20px rgba(FF,119,0,0.4); }
+        
         .hidden { display: none !important; }
-        .balance-box { background: rgba(0,255,102,0.05); border: 1px solid rgba(0,255,102,0.2); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
-        .balance-amount { font-size: 32px; font-weight: 900; color: var(--neon-green); }
-        .wallet-info { background: rgba(255,170,0,0.1); border: 1px solid var(--neon-gold); padding: 15px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; text-align: center; }
-        .wallet-info span { font-weight: bold; font-size: 18px; color: var(--neon-gold); display: block; margin-top: 5px; letter-spacing: 2px;}
-        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; }
-        .loader { border: 5px solid rgba(0,243,255,0.2); border-top: 5px solid var(--neon-cyan); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        
+        /* صناديق العرض والمعلومات */
+        .balance-box { background: linear-gradient(180deg, rgba(0,255,102,0.02) 0%, rgba(0,255,102,0.06) 100%); border: 1px solid rgba(0,255,102,0.15); border-radius: 18px; padding: 22px; text-align: center; margin-bottom: 20px; }
+        .balance-amount { font-size: 34px; font-weight: 900; color: var(--neon-green); letter-spacing: 0.5px; margin-top: 5px; }
+        
+        .wallet-info { background: rgba(255,170,0,0.04); border: 1px solid rgba(255,170,0,0.15); padding: 15px; border-radius: 14px; margin-bottom: 15px; font-size: 14px; text-align: center; line-height: 1.6; }
+        .wallet-info span { font-weight: 800; font-size: 19px; color: var(--neon-gold); display: block; margin-top: 5px; letter-spacing: 1.5px; }
+        
+        /* قوائم وجداول الإحصائيات الدقيقة */
+        .stat-section { background: rgba(0,0,0,0.25); border-radius: 14px; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.02); }
+        .stat-title { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-weight: bold; }
+        .stat-list { max-height: 150px; overflow-y: auto; }
+        .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .stat-row:last-child { border-bottom: none; }
+        
+        /* الأوفرلاي واللودر */
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4,6,14,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; }
+        .loader { border: 4px solid rgba(0,243,255,0.1); border-top: 4px solid var(--neon-cyan); border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .xo-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; pointer-events: none; opacity: 0.5; }
-        .xo-board.active { pointer-events: auto; opacity: 1; }
-        .xo-cell { background: rgba(255,255,255,0.05); border: 1px solid var(--neon-cyan); height: 80px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; border-radius: 10px; cursor: pointer; color: #fff; }
-        .xo-cell.x { color: var(--neon-pink); }
-        .xo-cell.o { color: var(--neon-gold); }
+        /* لعبة X-O المحسنة */
+        .xo-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; pointer-events: none; opacity: 0.4; transform: scale(0.98); }
+        .xo-board.active { pointer-events: auto; opacity: 1; transform: scale(1); }
+        .xo-cell { background: rgba(255,255,255,0.02); border: 1px solid rgba(0,243,255,0.2); height: 85px; display: flex; justify-content: center; align-items: center; font-size: 38px; font-weight: 900; border-radius: 14px; cursor: pointer; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+        .xo-cell:hover { background: rgba(0,243,255,0.03); border-color: var(--neon-cyan); }
+        .xo-cell.x { color: var(--neon-pink); text-shadow: 0 0 10px rgba(255,0,85,0.3); }
+        .xo-cell.o { color: var(--neon-gold); text-shadow: 0 0 10px rgba(255,170,0,0.3); }
 
-        /* ستايل الرادار وإشعارات العمليات */
-        .live-feed-item { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; text-align: center; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .live-feed-item { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 12px; text-align: center; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div id="loading" class="loading-overlay hidden">
     <div class="loader"></div>
-    <p style="margin-top: 15px; color: var(--neon-cyan); font-weight: bold;" id="loading-text">جاري المعالجة...</p>
+    <p style="margin-top: 15px; color: var(--neon-cyan); font-weight: bold; font-size: 14px;" id="loading-text">جاري المعالجة...</p>
 </div>
 
 <div class="wrapper">
     <div id="auth-screen" class="glass-card">
         <h2 class="title">XXSB PLATFORM</h2>
         <div class="tabs">
-            <button id="tab-login" class="tab active" onclick="switchTab('login')">دخول</button>
-            <button id="tab-register" class="tab" onclick="switchTab('register')">حساب جديد</button>
+            <button id="tab-login" class="tab active" onclick="switchTab('login')">🔑 دخول</button>
+            <button id="tab-register" class="tab" onclick="switchTab('register')">✨ حساب جديد</button>
         </div>
         <input type="email" id="email" placeholder="البريد الإلكتروني">
         <input type="password" id="password" placeholder="كلمة المرور">
         <input type="text" id="referral-code" class="hidden" placeholder="كود إحالة صديقك (اختياري)">
         
         <button id="btn-submit" class="btn-action" onclick="handleAuth()">تسجيل الدخول</button>
-        <p id="err" style="color:var(--neon-pink); text-align:center; margin-top:10px;"></p>
+        <p id="err" style="color:var(--neon-pink); text-align:center; margin-top:10px; font-size:13px;"></p>
     </div>
 
     <div id="main-screen" class="glass-card hidden">
-        <p style="color:var(--text-muted); text-align:center;">👤 مرحباً: <span id="user-welcome" style="color:#fff; font-weight:bold;"></span></p>
-        
-        <div class="balance-box">
-            <p style="color:var(--text-muted); font-size:14px;">رصيد الحساب المتاح</p>
-            <div id="balance" class="balance-amount">0 ج.م</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 13px; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 12px;">
+            <span>👤 <span id="user-welcome" style="color:#fff; font-weight:bold;"></span></span>
+            <span>رصيدك الحالي: <b id="balance" style="color:var(--neon-green)">0 ج.م</b></span>
         </div>
 
-        <div class="wallet-info" style="border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05);">
-            📌 كود الإحالة الخاص بك: <span id="my-ref-code" style="color: var(--neon-cyan); font-size: 16px;">-</span>
-            <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">شارك الكود! أي شخص يسجل من خلاله ستربح 1000 ج.م بونص فوراً.</p>
+        <div class="main-nav">
+            <button id="nav-play" class="nav-btn active" onclick="switchMainTab('play')">🎮 ساحة اللعب</button>
+            <button id="nav-wallet" class="nav-btn" onclick="switchMainTab('wallet')">💰 شحن وسحب</button>
+            <button id="nav-stats" class="nav-btn" onclick="switchMainTab('stats')">📊 فريقي وتقاريري</button>
         </div>
 
-        <h3 style="color:#00ff66; margin-bottom:15px; font-size:16px; text-align:center;">🎮 تحدي X-O</h3>
-        <input type="number" id="xo-bet" placeholder="مبلغ الرهان">
-        <button class="btn-action" id="start-xo-btn" onclick="startXO()">ابدأ اللعب</button>
-        <div class="xo-board" id="xo-board">
-            <div class="xo-cell" onclick="makeMove(0)"></div><div class="xo-cell" onclick="makeMove(1)"></div><div class="xo-cell" onclick="makeMove(2)"></div>
-            <div class="xo-cell" onclick="makeMove(3)"></div><div class="xo-cell" onclick="makeMove(4)"></div><div class="xo-cell" onclick="makeMove(5)"></div>
-            <div class="xo-cell" onclick="makeMove(6)"></div><div class="xo-cell" onclick="makeMove(7)"></div><div class="xo-cell" onclick="makeMove(8)"></div>
-        </div>
-        <p id="xo-msg" style="text-align:center; font-weight:bold; margin-bottom:20px;"></p>
+        <div id="content-play">
+            <div class="balance-box">
+                <p style="color:var(--text-muted); font-size:13px;">رصيد اللعب المتاح</p>
+                <div id="play-balance-display" class="balance-amount" style="font-size:28px;">0 ج.م</div>
+            </div>
+            
+            <h3 style="color:#00ff66; margin-bottom:12px; font-size:15px; text-align:center; font-weight:700;">🎮 تحدي طاولة X-O الذكية</h3>
+            <input type="number" id="xo-bet" placeholder="أدخل مبلغ رهان التحدي">
+            <button class="btn-action" id="start-xo-btn" onclick="startXO()">ابدأ التحدي الفوري</button>
+            
+            <div class="xo-board" id="xo-board" style="margin-top: 15px;">
+                <div class="xo-cell" onclick="makeMove(0)"></div><div class="xo-cell" onclick="makeMove(1)"></div><div class="xo-cell" onclick="makeMove(2)"></div>
+                <div class="xo-cell" onclick="makeMove(3)"></div><div class="xo-cell" onclick="makeMove(4)"></div><div class="xo-cell" onclick="makeMove(5)"></div>
+                <div class="xo-cell" onclick="makeMove(6)"></div><div class="xo-cell" onclick="makeMove(7)"></div><div class="xo-cell" onclick="makeMove(8)"></div>
+            </div>
+            <p id="xo-msg" style="text-align:center; font-weight:bold; margin-bottom:15px; font-size:14px;"></p>
 
-        <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
-
-        <h3 style="color:var(--neon-cyan); margin-bottom:15px; font-size:16px;">📥 إيداع وشحن الرصيد</h3>
-        <select id="wallet-type" onchange="updateWalletInfo()">
-            <option value="">-- اختر المحفظة --</option>
-            <option value="فودافون كاش">فودافون كاش</option>
-            <option value="أورانج كاش">أورانج كاش</option>
-            <option value="اتصالات كاش">اتصالات كاش</option>
-        </select>
-        <div id="wallet-details" class="wallet-info hidden">حول إلى رقم: <span id="target-number"></span></div>
-        <input type="number" id="dep-amt" placeholder="المبلغ الذي حولته">
-        <input type="text" id="sender-number" placeholder="رقم محفظتك الذي أرسلت منه">
-        <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--text-muted);">ارفع صورة التحويل (سكرين شوت):</label>
-        <input type="file" id="receipt-img" accept="image/*">
-        <button class="btn-action" onclick="submitDeposit()">تأكيد وإرسال الإيصال</button>
-
-        <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
-
-        <h3 style="color:var(--neon-gold); margin-bottom:15px; font-size:16px;">📤 طلب سحب رصيد</h3>
-        <input type="number" id="with-amt" placeholder="المبلغ المراد سحبه">
-        <input type="text" id="withdraw-number" placeholder="رقم محفظتك لاستلام كاش">
-        <button class="btn-action btn-withdraw" onclick="submitWithdraw()">تأكيد طلب السحب</button>
-
-        <div style="background: rgba(0,0,0,0.3); border-radius: 12px; margin-top: 25px; padding: 15px;">
-            <h4 style="text-align: center; color: var(--neon-pink); margin-bottom: 10px; font-size: 14px;">🔥 رادار العمليات الفورية بالمنصة</h4>
-            <div id="live-feed-box" style="height: 105px; overflow: hidden;"></div>
+            <div style="background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; border: 1px solid rgba(255,255,255,0.02);">
+                <h4 style="text-align: center; color: var(--neon-pink); margin-bottom: 8px; font-size: 13px; font-weight:800;">🔥 رادار السحوبات والأرباح الفورية للشبكة</h4>
+                <div id="live-feed-box" style="height: 90px; overflow: hidden;"></div>
+            </div>
         </div>
 
-        <button onclick="logout()" style="width:100%; background:transparent; border:1px solid var(--neon-pink); color:var(--neon-pink); padding:10px; border-radius:10px; margin-top:30px; font-weight:bold;">خروج 🚪</button>
+        <div id="content-wallet" class="hidden">
+            <div style="background: rgba(0,243,255,0.02); border: 1px solid rgba(0,243,255,0.08); padding: 15px; border-radius: 16px; margin-bottom: 20px;">
+                <h3 style="color:var(--neon-cyan); margin-bottom:12px; font-size:15px; font-weight:700;">📥 إيداع وشحن الرصيد</h3>
+                <select id="wallet-type" onchange="updateWalletInfo()">
+                    <option value="">-- اختر محفظة التحويل --</option>
+                    <option value="فودافون كاش">فودافون كاش</option>
+                    <option value="أورانج كاش">أورانج كاش</option>
+                    <option value="اتصالات كاش">اتصالات كاش</option>
+                </select>
+                <div id="wallet-details" class="wallet-info hidden">حول بدقة إلى الرقم التالي: <span id="target-number"></span></div>
+                <input type="number" id="dep-amt" placeholder="المبلغ الذي قمت بتحويله">
+                <input type="text" id="sender-number" placeholder="رقم المحفظة الذي أرسلت منه">
+                <label style="display:block; margin-bottom:6px; font-size:12px; color:var(--text-muted); text-align:right; padding-right:5px;">ارفه صورة إيصال التحويل الناجح:</label>
+                <input type="file" id="receipt-img" accept="image/*">
+                <button class="btn-action" onclick="submitDeposit()">تأكيد وإرسال إيصال الإيداع</button>
+            </div>
+
+            <div style="background: rgba(255,170,0,0.02); border: 1px solid rgba(255,170,0,0.08); padding: 15px; border-radius: 16px;">
+                <h3 style="color:var(--neon-gold); margin-bottom:5px; font-size:15px; font-weight:700;">📤 طلب سحب رصيد مالي</h3>
+                <p style="font-size:11px; color:var(--neon-pink); margin-bottom:12px; text-align:center;">⚠️ الحد الأدنى لأي عملية سحب هو 10,000 ج.م</p>
+                <input type="number" id="with-amt" placeholder="المبلغ المراد سحبه (أقل شيء 10000)">
+                <input type="text" id="withdraw-number" placeholder="رقم محفظتك لاستقبال الأموال عليها">
+                <button class="btn-action btn-withdraw" onclick="submitWithdraw()">تأكيد وإرسال طلب السحب</button>
+            </div>
+        </div>
+
+        <div id="content-stats" class="hidden">
+            <div class="wallet-info" style="border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.03); margin-bottom:15px;">
+                🔗 كود الإحالة الفريد لحسابك: <span id="my-ref-code" style="color: var(--neon-cyan); font-size: 18px; text-shadow:0 0 10px rgba(0,243,255,0.2)">-</span>
+                <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">انسخه وانشره! ستحصل على بونص بقيمة 1,000 ج.م لكل تسجيل جديد من خلالك.</p>
+            </div>
+
+            <div class="stat-section">
+                <div class="stat-title">👥 أعضاء سجلوا عبر كود الإحالة الخاص بك</div>
+                <div class="stat-list" id="referred-users-list">
+                    <p style="color:var(--text-muted); font-size:12px; text-align:center; padding:10px;">جاري تحميل القائمة...</p>
+                </div>
+            </div>
+
+            <div class="stat-section">
+                <div class="stat-title">🏆 متصدري أرباح تحديات X-O الفورية</div>
+                <div class="stat-list" id="xo-winners-list">
+                    </div>
+            </div>
+
+            <div class="stat-section" style="border-color: rgba(255, 0, 85, 0.15);">
+                <div class="stat-title" style="color: var(--neon-pink);">💎 رادار السحوبات الكبرى المعتمدة (≥ 25,000 ج.م)</div>
+                <div class="stat-list" id="vip-withdrawals-list">
+                    <p style="color:var(--text-muted); font-size:12px; text-align:center; padding:10px;">لا توجد سحوبات كبرى جارية حالياً.</p>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="logout()" style="width:100%; background:transparent; border:1px solid rgba(255,0,85,0.3); color:var(--neon-pink); padding:12px; border-radius:12px; margin-top:20px; font-weight:bold; font-size:13px; cursor: pointer;">تسجيل الخروج من الحساب 🚪</button>
     </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, addDoc, collection, increment, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, addDoc, collection, increment, query, where, getDocs, limit, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCyiLPBJ0qDVZhAtW5r0psuvz8iyIy8VLI",
@@ -143,17 +210,29 @@
     let currentBalance = 0;
 
     const wallets = {
-        "فودافون كاش": "01012345678", // غير الرقم هنا
-        "أورانج كاش": "01212345678",  // غير الرقم هنا
-        "اتصالات كاش": "01112345678"  // غير الرقم هنا
+        "فودافون كاش": "01012345678", 
+        "أورانج كاش": "01212345678",  
+        "اتصالات كاش": "01112345678"  
     };
 
+    // تبديل شاشات الدخول والتسجيل
     window.switchTab = function(t) {
         mode = t;
         document.getElementById('tab-login').classList.toggle('active', t==='login');
         document.getElementById('tab-register').classList.toggle('active', t==='register');
-        document.getElementById('referral-code').classList.toggle('hidden', t==='login'); // إظهار/إخفاء حقل الإحالة
-        document.getElementById('btn-submit').innerText = t==='login' ? 'دخول' : 'إنشاء حساب';
+        document.getElementById('referral-code').classList.toggle('hidden', t==='login'); 
+        document.getElementById('btn-submit').innerText = t==='login' ? 'تسجيل الدخول' : 'إنشاء حساب جديد بونص';
+    }
+
+    // التنقل الداخلي بين اللعب، المحفظة، والإحصائيات
+    window.switchMainTab = function(tabName) {
+        document.getElementById('content-play').classList.toggle('hidden', tabName !== 'play');
+        document.getElementById('content-wallet').classList.toggle('hidden', tabName !== 'wallet');
+        document.getElementById('content-stats').classList.toggle('hidden', tabName !== 'stats');
+        
+        document.getElementById('nav-play').classList.toggle('active', tabName === 'play');
+        document.getElementById('nav-wallet').classList.toggle('active', tabName === 'wallet');
+        document.getElementById('nav-stats').classList.toggle('active', tabName === 'stats');
     }
 
     window.updateWalletInfo = function() {
@@ -168,13 +247,12 @@
     function showLoading(text) { document.getElementById("loading-text").innerText = text; document.getElementById("loading").classList.remove("hidden"); }
     function hideLoading() { document.getElementById("loading").classList.add("hidden"); }
 
-    // دالة سحب بيانات الجهاز والشبكة
     async function getNetworkInfo() {
         try {
             let res = await fetch('https://ipapi.co/json/');
             let data = await res.json();
-            return { ip: data.ip || "مجهول", provider: data.org || "مجهول", device: navigator.userAgent.includes("Mobile") ? "📱 موبايل" : "💻 كمبيوتر" };
-        } catch(e) { return { ip: "مخفي", provider: "مزود محلي", device: navigator.userAgent.includes("Mobile") ? "📱 موبايل" : "💻 كمبيوتر" }; }
+            return { ip: data.ip || "مخفي", provider: data.org || "مزود محلي", device: navigator.userAgent.includes("Mobile") ? "📱 هاتف محمول" : "💻 جهاز كمبيوتر" };
+        } catch(e) { return { ip: "مخفي", provider: "مزود محلي", device: navigator.userAgent.includes("Mobile") ? "📱 هاتف محمول" : "💻 جهاز كمبيوتر" }; }
     }
 
     window.handleAuth = async function() {
@@ -184,60 +262,53 @@
         
         if(!email || !pass) return;
 
-        showLoading("جاري التحقق...");
+        showLoading("جاري فحص وتأمين البيانات...");
         try {
             if(mode === "login") {
                 await signInWithEmailAndPassword(auth, email, pass);
             } else {
-                // تسجيل حساب جديد مع الإحالة وجمع بيانات الشبكة
                 const netInfo = await getNetworkInfo();
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                
-                // إنشاء كود إحالة خاص باللاعب الجديد
                 const newRefCode = "XXSB-" + Math.random().toString(36).substring(2, 8).toUpperCase();
                 let referredByUid = null;
 
-                // التحقق من كود الإحالة المدخل لإضافة البونص
                 if(refCodeInput) {
                     const q = query(collection(db, "users"), where("referralCode", "==", refCodeInput));
                     const snap = await getDocs(q);
                     if(!snap.empty) {
                         const referrerDoc = snap.docs[0];
                         referredByUid = referrerDoc.id;
-                        // منح 1000 ج.م لصاحب الكود
                         await updateDoc(doc(db, "users", referrerDoc.id), { balance: increment(1000) });
                     }
                 }
 
-                // حفظ بيانات المستخدم الجديد
                 await setDoc(doc(db, "users", cred.user.uid), { 
-                    email: email, 
-                    balance: 0, 
-                    referralCode: newRefCode,
-                    referredBy: referredByUid,
-                    ipAddress: netInfo.ip,
-                    networkProvider: netInfo.provider,
-                    deviceType: netInfo.device,
-                    createdAt: new Date().toISOString() 
+                    email: email, balance: 0, referralCode: newRefCode, referredBy: referredByUid,
+                    ipAddress: netInfo.ip, networkProvider: netInfo.provider, deviceType: netInfo.device, createdAt: new Date().toISOString() 
                 });
             }
             document.getElementById("err").innerText = "";
-        } catch(e) { document.getElementById("err").innerText = "خطأ في التسجيل أو كلمة المرور."; }
+        } catch(e) { document.getElementById("err").innerText = "خطأ بالتحقق، يرجى مراجعة البيانات والاتصال بالشبكة."; }
         finally { hideLoading(); }
     }
 
+    // مراقبة الجلسة وحالة المستخدم وإحضار البيانات الحية والشركاء
     onAuthStateChanged(auth, user => {
         if(user) {
             document.getElementById("auth-screen").classList.add("hidden");
             document.getElementById("main-screen").classList.remove("hidden");
-            document.getElementById("user-welcome").innerText = user.email;
+            document.getElementById("user-welcome").innerText = user.email.split('@')[0];
             
             onSnapshot(doc(db, "users", user.uid), docSnap => {
                 if(docSnap.exists()) {
                     currentBalance = docSnap.data().balance;
                     document.getElementById("balance").innerText = `${currentBalance} ج.م`;
-                    // عرض كود الإحالة الخاص باللاعب
-                    document.getElementById("my-ref-code").innerText = docSnap.data().referralCode || "غير متوفر";
+                    document.getElementById("play-balance-display").innerText = `${currentBalance} ج.م`;
+                    document.getElementById("my-ref-code").innerText = docSnap.data().referralCode || "-";
+                    
+                    // استدعاء جلب قوائم الإحصائيات بعد التحقق من الحساب المفتوح
+                    loadReferredUsers(user.uid);
+                    loadVipWithdrawalsAndWinners();
                 }
             });
         } else {
@@ -246,6 +317,69 @@
         }
     });
 
+    // جلب اللاعبين المسجلين من خلال كود إحالة هذا المستخدم المحدّد
+    async function loadReferredUsers(uid) {
+        try {
+            const q = query(collection(db, "users"), where("referredBy", "==", uid));
+            const snap = await getDocs(q);
+            const container = document.getElementById("referred-users-list");
+            container.innerHTML = "";
+            if(snap.empty) {
+                container.innerHTML = `<p style="color:var(--text-muted); text-align:center; font-size:12px; padding:8px;">لم يسجل أحد عبر كودك حتى الآن.</p>`;
+                return;
+            }
+            snap.forEach(d => {
+                const data = d.data();
+                let row = document.createElement("div");
+                row.className = "stat-row";
+                row.innerHTML = `<span>👤 ${data.email.split('@')[0]}</span><span style="color:var(--neon-green)">مفعّل (+1000ج)</span>`;
+                container.appendChild(row);
+            });
+        } catch(e) { console.error(e); }
+    }
+
+    // تحميل وتحديث السحوبات الكبرى (>= 25000) وقائمة متصدري الأرباح
+    async function loadVipWithdrawalsAndWinners() {
+        try {
+            // جلب عينة من طلبات السحب الكبرى لتحديث اللوحة دائمًا ببيانات حقيقية آمنة بدون مشاكل فهارس
+            const q = query(collection(db, "requests"), orderBy("date", "desc"), limit(40));
+            const snap = await getDocs(q);
+            
+            const vipContainer = document.getElementById("vip-withdrawals-list");
+            const winnersContainer = document.getElementById("xo-winners-list");
+            
+            vipContainer.innerHTML = "";
+            winnersContainer.innerHTML = "";
+            
+            let hasVip = false;
+            // حلقة بيانات وهمية مبدئية لمتصدري ألعاب XO لتنظيم الواجهة وجعل مظهرها غني جداً بالبيانات
+            const defaultWinners = [
+                {name: "Mido_Player", profit: "18,000 ج.م"},
+                {name: "Captain_Alex", profit: "14,500 ج.م"},
+                {name: "Kimo_XXSB", profit: "11,000 ج.م"}
+            ];
+            defaultWinners.forEach(w => {
+                winnersContainer.innerHTML += `<div class="stat-row"><span>🎮 اللاعب: <b>${w.name}</b></span><span style="color:var(--neon-cyan)">+${w.profit}</span></div>`;
+            });
+
+            snap.forEach(d => {
+                const data = d.data();
+                // تصفية السحوبات الكبرى التي تبدأ من 25 ألف فما فوق
+                if(data.type === "withdraw" && data.amount >= 25000) {
+                    hasVip = true;
+                    let row = document.createElement("div");
+                    row.className = "stat-row";
+                    row.innerHTML = `<span>💎 حوت مالي: <b>${data.email.split('@')[0]}</b></span><span style="color:var(--neon-pink); font-weight:bold;">${data.amount} ج.م</span>`;
+                    vipContainer.appendChild(row);
+                }
+            });
+
+            if(!hasVip) {
+                vipContainer.innerHTML = `<p style="color:var(--text-muted); text-align:center; font-size:12px; padding:8px;">لا توجد سحوبات كبرى مؤكدة تبدأ من 25,000 ج.م حالياً.</p>`;
+            }
+        } catch(e) { console.log(e); }
+    }
+
     window.submitDeposit = async function() {
         const walletType = document.getElementById("wallet-type").value;
         const amt = parseInt(document.getElementById("dep-amt").value);
@@ -253,9 +387,9 @@
         const fileInput = document.getElementById("receipt-img");
         const user = auth.currentUser;
 
-        if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات وارفع صورة الإيصال أولاً."); return; }
+        if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات أولاً وأرفق صورة التحويل."); return; }
         
-        showLoading("جاري إرسال البيانات...");
+        showLoading("جاري إرسال البيانات وتأكيد الإيصال...");
         try {
             const formData = new FormData();
             formData.append("chat_id", CHAT_ID);
@@ -268,11 +402,11 @@
                 uid: user.uid, email: user.email, type: "deposit", amount: amt, senderNumber: senderNum, wallet: walletType, status: "pending", date: new Date().getTime()
             });
 
-            // الجملة اللي طلبتها بالملي
+            // جملة التنبيه الأصلية المحفوظة بالملي كما هي
             alert("جاري مراجعة بيانات التحويل وإضافة الأموال إلى حسابك.");
             
             document.getElementById("dep-amt").value = ""; document.getElementById("sender-number").value = ""; fileInput.value = "";
-        } catch(e) { alert("حدث خطأ أثناء الإرسال."); } 
+        } catch(e) { alert("حدث خطأ أثناء الإرسال المالي."); } 
         finally { hideLoading(); }
     }
 
@@ -281,23 +415,40 @@
         const wNum = document.getElementById("withdraw-number").value.trim();
         const user = auth.currentUser;
 
-        if(!amt || !wNum) return;
-        if(currentBalance < amt) { alert("رصيدك الحالي غير كافٍ!"); return; }
+        if(!amt || !wNum) { alert("يرجى ملء جميع حقول السحب."); return; }
+        
+        // التحقق الدقيق من الحد الأدنى الجديد للسحب (10,000 جنيه)
+        if(amt < 10000) { 
+            alert("⚠️ خطأ في السحب: الحد الأدنى المسموح به لتقديم طلب سحب هو 10,000 ج.م."); 
+            return; 
+        }
+        
+        if(currentBalance < amt) { alert("رصيدك الحالي بالمحفظة غير كافٍ لإتمام هذه المعاملة!"); return; }
 
-        showLoading("جاري تقديم الطلب...");
+        showLoading("جاري مراجعة الأرصدة وتقديم الطلب الإداري...");
         try {
+            // تحديث الرصيد للمستخدم فوراً بالسالب وتثبيت الطلب بالداتابيز
             await updateDoc(doc(db, "users", user.uid), { balance: increment(-amt) });
+            
+            // تمييز طلبات السحب الكبرى (25 ألف فأكثر) في كابشن وبينات تليجرام للتنبيه الفوري الخاص بك
+            let telegramNotificationTag = (amt >= 25000) ? "🚨 [سحب VIP ضخم بقيمة 25 ألف فما فوق] 🚨\n" : "";
+
             await addDoc(collection(db, "requests"), {
                 uid: user.uid, email: user.email, type: "withdraw", amount: amt, targetNumber: wNum, status: "pending", date: new Date().getTime()
             });
-            alert("تم إرسال طلب السحب وهو قيد المراجعة الآن من قبل الإدارة.");
+
+            // إرسال إشعار السحب الإداري إلى تليجرام
+            const msgText = encodeURIComponent(`${telegramNotificationTag}📤 طلب سحب جديد قيد الفحص المباشر:\n👤 اللاعب: ${user.email}\n💵 المبلغ المطلوب: ${amt} ج.م\n📞 رقم محفظة الاستلام: ${wNum}`);
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msgText}`);
+
+            alert("تم إرسال طلب السحب بنجاح، وهو قيد المراجعة والتدقيق الآن.");
             document.getElementById("with-amt").value = ""; document.getElementById("withdraw-number").value = "";
-        } catch(e) { alert("خطأ في السحب."); }
+        } catch(e) { alert("خطأ بنظام السحب المالي."); }
         finally { hideLoading(); }
     }
 
-    // --- نظام الرادار الوهمي / الحي ---
-    const radarPlayers = ["بودا_الزعيم", "Abdo_Fx", "Mido_VIP", "Kareem_X", "Sayed_Pro", "Omar_Bet"];
+    // رادار تغذية العمليات الفورية (Live Radar System)
+    const radarPlayers = ["بودا_الزعيم", "Abdo_Fx", "Mido_VIP", "Kareem_X", "Sayed_Pro", "Omar_Bet", "Kimo_99", "Ayman_Max"];
     const radarActions = ["كسب الضعف في لعبة XO 🔥", "سحب أرباحه للمحفظة 💸", "شحن حسابه بونص 💳", "حصل على مكافأة إحالة 🚀"];
     setInterval(() => {
         const box = document.getElementById("live-feed-box");
@@ -306,49 +457,63 @@
         item.className = "live-feed-item";
         let p = radarPlayers[Math.floor(Math.random() * radarPlayers.length)];
         let a = radarActions[Math.floor(Math.random() * radarActions.length)];
-        let amt = Math.floor(Math.random() * 6000) + 1000;
+        let amt = Math.floor(Math.random() * 5000) + 1500;
         item.innerHTML = `اللاعب <b style="color:var(--neon-cyan)">${p}</b> ${a} <b style="color:var(--neon-green)">${amt} ج.م</b>`;
         box.prepend(item);
         if(box.children.length > 3) box.lastChild.remove();
-    }, 3200);
+    }, 3000);
 
-    // --- لعبة X-O ---
+    // ================= لعبة X-O الأصلية والثابتة بالميزات والرهان المعتمد =================
     let board = ["", "", "", "", "", "", "", "", ""];
     let gameActive = false; let betAmount = 0;
+    
     window.startXO = async function() {
         betAmount = parseInt(document.getElementById("xo-bet").value);
-        if(!betAmount || betAmount <= 0 || currentBalance < betAmount) { alert("الرصيد لا يكفي أو الرهان غير صحيح"); return; }
+        if(!betAmount || betAmount <= 0 || currentBalance < betAmount) { alert("الرصيد لا يكفي لبدء التحدي أو مبلغ الرهان غير صحيح."); return; }
         await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(-betAmount) });
         board = ["", "", "", "", "", "", "", "", ""]; gameActive = true;
-        document.querySelectorAll(".xo-cell").forEach(c => c.innerText = "");
+        document.querySelectorAll(".xo-cell").forEach(c => { c.innerText = ""; c.className = "xo-cell"; });
         document.getElementById("xo-board").classList.add("active");
-        document.getElementById("xo-msg").innerText = "دورك الآن (X)";
+        document.getElementById("xo-msg").innerText = "دورك الآن (X) - اختر مربعًا للتحرك";
     }
+    
     window.makeMove = function(i) {
         if(!gameActive || board[i] !== "") return;
-        board[i] = "X"; document.querySelectorAll(".xo-cell")[i].innerText = "X";
+        board[i] = "X"; 
+        let currentCells = document.querySelectorAll(".xo-cell");
+        currentCells[i].innerText = "X";
+        currentCells[i].classList.add("x");
+        
         if(checkWin("X")) { endGame("win"); return; }
         if(!board.includes("")) { endGame("draw"); return; }
+        
         let empty = board.map((v, idx) => v === "" ? idx : null).filter(v => v !== null);
         let move = empty[Math.floor(Math.random() * empty.length)];
-        board[move] = "O"; document.querySelectorAll(".xo-cell")[move].innerText = "O";
+        board[move] = "O"; 
+        currentCells[move].innerText = "O";
+        currentCells[move].classList.add("o");
+        
         if(checkWin("O")) { endGame("lose"); }
     }
+    
     function checkWin(p) {
         const combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
         return combos.some(c => c.every(idx => board[idx] === p));
     }
+    
     async function endGame(r) {
         gameActive = false; document.getElementById("xo-board").classList.remove("active");
         if(r === "win") {
-            document.getElementById("xo-msg").innerText = `فزت بربح: ${betAmount*2} ج.م`;
+            document.getElementById("xo-msg").innerText = `كفو! فزت بالجولة وربحت: ${betAmount*2} ج.م`;
             await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount * 2) });
-        } else if(r === "lose") { document.getElementById("xo-msg").innerText = "خسرت الجولة، حاول مجدداً!"; }
-        else {
-            document.getElementById("xo-msg").innerText = "تعادل! تم رد الرهان.";
+        } else if(r === "lose") { 
+            document.getElementById("xo-msg").innerText = "للأسف خسرت الجولة، حظًا موفقًا المرة القادمة!"; 
+        } else {
+            document.getElementById("xo-msg").innerText = "تعادل مثير! تم رد قيمة الرهان كاملاً.";
             await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount) });
         }
     }
+    
     window.logout = () => signOut(auth);
 </script>
 </body>
