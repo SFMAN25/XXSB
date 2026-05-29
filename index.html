@@ -15,21 +15,17 @@
         body { background: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 15px; overflow-x: hidden; }
         .wrapper { max-width: 480px; margin: 20px auto; }
         
-        /* كروت الجلاس مورفيزم المحسنة */
         .glass-card { background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 22px; box-shadow: 0 25px 60px rgba(0,0,0,0.6); margin-bottom: 20px; }
         h2.title { font-size: 26px; text-align: center; margin-bottom: 20px; color: var(--neon-cyan); font-weight: 800; letter-spacing: 1px; text-shadow: 0 0 15px rgba(0,243,255,0.2); }
         
-        /* نظام التبويبات الرئيسي */
         .tabs { display: flex; background: rgba(0,0,0,0.5); padding: 4px; border-radius: 14px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.03); }
         .tab { flex: 1; padding: 12px 8px; background: transparent; color: var(--text-muted); border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .tab.active { background: rgba(0, 243, 255, 0.08); color: var(--neon-cyan); border: 1px solid rgba(0,243,255,0.2); box-shadow: inset 0 0 8px rgba(0,243,255,0.1); }
         
-        /* تبويبات التنقل داخل الحساب اللوحة الرئيسية */
         .main-nav { display: flex; gap: 8px; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 16px; }
         .nav-btn { flex: 1; padding: 12px 5px; background: transparent; border: none; color: var(--text-muted); font-weight: 700; font-size: 13px; border-radius: 12px; cursor: pointer; }
         .nav-btn.active { background: linear-gradient(135deg, rgba(0,243,255,0.15), rgba(0,168,255,0.05)); color: #fff; border: 1px solid rgba(0,243,255,0.25); }
 
-        /* عناصر الإدخال والأزرار */
         input, select { width: 100%; padding: 14px; background: var(--card-smooth); border: 1px solid var(--glass-border); color: #fff; border-radius: 12px; margin-bottom: 15px; text-align: center; font-size: 14px; font-weight: 600; }
         input:focus, select:focus { border-color: var(--neon-cyan); outline: none; box-shadow: 0 0 10px rgba(0,243,255,0.2); }
         input[type="file"] { padding: 12px; background: rgba(0, 243, 255, 0.02); border: 1px dashed rgba(0,243,255,0.4); cursor: pointer; }
@@ -41,31 +37,26 @@
         
         .hidden { display: none !important; }
         
-        /* الشروط والأحكام */
         .terms-container { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 15px; padding-right: 10px; }
         .terms-container input[type="checkbox"] { width: 18px; height: 18px; margin: 0 0 0 10px; cursor: pointer; }
         .terms-container label { font-size: 13px; color: var(--text-muted); cursor: pointer; }
 
-        /* صناديق العرض والمعلومات */
         .balance-box { background: linear-gradient(180deg, rgba(0,255,102,0.02) 0%, rgba(0,255,102,0.06) 100%); border: 1px solid rgba(0,255,102,0.15); border-radius: 18px; padding: 22px; text-align: center; margin-bottom: 20px; }
         .balance-amount { font-size: 34px; font-weight: 900; color: var(--neon-green); letter-spacing: 0.5px; margin-top: 5px; }
         
         .wallet-info { background: rgba(255,170,0,0.04); border: 1px solid rgba(255,170,0,0.15); padding: 15px; border-radius: 14px; margin-bottom: 15px; font-size: 14px; text-align: center; line-height: 1.6; }
         .wallet-info span { font-weight: 800; font-size: 19px; color: var(--neon-gold); display: block; margin-top: 5px; letter-spacing: 1.5px; }
         
-        /* قوائم وجداول الإحصائيات الدقيقة */
         .stat-section { background: rgba(0,0,0,0.25); border-radius: 14px; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.02); }
         .stat-title { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; font-weight: bold; }
         .stat-list { max-height: 150px; overflow-y: auto; }
         .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); }
         .stat-row:last-child { border-bottom: none; }
         
-        /* الأوفرلاي واللودر */
         .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4,6,14,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; }
         .loader { border: 4px solid rgba(0,243,255,0.1); border-top: 4px solid var(--neon-cyan); border-radius: 50%; width: 45px; height: 45px; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* لعبة X-O المحسنة */
         .xo-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; pointer-events: none; opacity: 0.4; transform: scale(0.98); }
         .xo-board.active { pointer-events: auto; opacity: 1; transform: scale(1); }
         .xo-cell { background: rgba(255,255,255,0.02); border: 1px solid rgba(0,243,255,0.2); height: 85px; display: flex; justify-content: center; align-items: center; font-size: 38px; font-weight: 900; border-radius: 14px; cursor: pointer; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
@@ -75,6 +66,9 @@
 
         .live-feed-item { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 12px; text-align: center; animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* شارة كبار الشخصيات VIP */
+        .vip-badge { background: linear-gradient(135deg, #ffaa00, #ff0055); color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-left: 5px; box-shadow: 0 0 5px rgba(255,170,0,0.5); display: inline-block; }
     </style>
 </head>
 <body>
@@ -106,7 +100,7 @@
 
     <div id="main-screen" class="glass-card hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 13px; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 12px;">
-            <span>👤 <span id="user-welcome" style="color:#fff; font-weight:bold;"></span></span>
+            <span style="display: flex; align-items: center;">👤 <span id="user-welcome" style="color:#fff; font-weight:bold; margin-right:5px;"></span></span>
             <span>رصيدك الحالي: <b id="balance" style="color:var(--neon-green)">0 ج.م</b></span>
         </div>
 
@@ -134,8 +128,8 @@
             <p id="xo-msg" style="text-align:center; font-weight:bold; margin-bottom:15px; font-size:14px;"></p>
 
             <div style="background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; border: 1px solid rgba(255,255,255,0.02);">
-                <h4 style="text-align: center; color: var(--neon-pink); margin-bottom: 8px; font-size: 13px; font-weight:800;">🔥 رادار السحوبات والأرباح الفورية للشبكة</h4>
-                <div id="live-feed-box" style="height: 90px; overflow: hidden;"></div>
+                <h4 style="text-align: center; color: var(--neon-pink); margin-bottom: 8px; font-size: 13px; font-weight:800;">🔥 رادار السحوبات والأرباح الفورية</h4>
+                <div id="live-feed-box" style="height: 110px; overflow: hidden; display: flex; flex-direction: column; justify-content: center;"></div>
             </div>
         </div>
 
@@ -152,7 +146,7 @@
                 <div id="wallet-details" class="wallet-info hidden">حول بدقة إلى الرقم التالي: <span id="target-number"></span></div>
                 <input type="number" id="dep-amt" placeholder="المبلغ المحول (أقل شيء 500)">
                 <input type="text" id="sender-number" placeholder="رقم المحفظة الذي أرسلت منه">
-                <label style="display:block; margin-bottom:6px; font-size:12px; color:var(--text-muted); text-align:right; padding-right:5px;">ارفه صورة إيصال التحويل الناجح:</label>
+                <label style="display:block; margin-bottom:6px; font-size:12px; color:var(--text-muted); text-align:right; padding-right:5px;">ارفع صورة إيصال التحويل الناجح:</label>
                 <input type="file" id="receipt-img" accept="image/*">
                 <button class="btn-action" onclick="submitDeposit()">تأكيد وإرسال إيصال الإيداع</button>
             </div>
@@ -226,7 +220,6 @@
         "اتصالات كاش": "01112345678"  
     };
 
-    // تبديل شاشات الدخول والتسجيل
     window.switchTab = function(t) {
         mode = t;
         document.getElementById('tab-login').classList.toggle('active', t==='login');
@@ -236,7 +229,6 @@
         document.getElementById('btn-submit').innerText = t==='login' ? 'تسجيل الدخول' : 'إنشاء حساب جديد بونص';
     }
 
-    // التنقل الداخلي بين اللعب، المحفظة، والإحصائيات
     window.switchMainTab = function(tabName) {
         document.getElementById('content-play').classList.toggle('hidden', tabName !== 'play');
         document.getElementById('content-wallet').classList.toggle('hidden', tabName !== 'wallet');
@@ -272,7 +264,10 @@
         const pass = document.getElementById("password").value;
         const refCodeInput = document.getElementById("referral-code").value.trim().toUpperCase();
         
-        if(!email || !pass) return;
+        if(!email || !pass) {
+            document.getElementById("err").innerText = "⚠️ يرجى إدخال البريد الإلكتروني وكلمة المرور.";
+            return;
+        }
 
         if (mode === "register" && !document.getElementById("terms-checkbox").checked) {
             document.getElementById("err").innerText = "⚠️ يجب الموافقة على الشروط والأحكام لإنشاء حساب.";
@@ -289,34 +284,40 @@
                 const newRefCode = "XXSB-" + Math.random().toString(36).substring(2, 8).toUpperCase();
                 let referredByUid = null;
 
-                // التحقق من كود الإحالة وإضافة 1000 ج.م لصاحب الكود
                 if(refCodeInput) {
                     const q = query(collection(db, "users"), where("referralCode", "==", refCodeInput));
                     const snap = await getDocs(q);
                     if(!snap.empty) {
                         const referrerDoc = snap.docs[0];
                         referredByUid = referrerDoc.id;
+                        // إضافة 1000 ج.م لصاحب كود الإحالة
                         await updateDoc(doc(db, "users", referrerDoc.id), { balance: increment(1000) });
                     }
                 }
 
-                // إضافة المستخدم الجديد مع بونص تسجيل 500 ج.م
+                // إضافة 500 ج.م هدية إنشاء الحساب للمستخدم الجديد
                 await setDoc(doc(db, "users", cred.user.uid), { 
                     email: email, balance: 500, referralCode: newRefCode, referredBy: referredByUid,
                     ipAddress: netInfo.ip, networkProvider: netInfo.provider, deviceType: netInfo.device, createdAt: new Date().toISOString() 
                 });
             }
             document.getElementById("err").innerText = "";
-        } catch(e) { document.getElementById("err").innerText = "خطأ بالتحقق، يرجى مراجعة البيانات والاتصال بالشبكة."; }
+        } catch(error) { 
+            let errorMsg = "حدث خطأ غير معروف.";
+            if (error.code === 'auth/invalid-email') errorMsg = "⚠️ صيغة البريد الإلكتروني غير صحيحة.";
+            else if (error.code === 'auth/email-already-in-use') errorMsg = "⚠️ هذا الحساب مسجل بالفعل.";
+            else if (error.code === 'auth/weak-password') errorMsg = "⚠️ كلمة المرور ضعيفة جداً.";
+            else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') errorMsg = "⚠️ البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+            else if (error.code === 'auth/network-request-failed') errorMsg = "⚠️ لا يوجد اتصال بالإنترنت.";
+            document.getElementById("err").innerText = errorMsg; 
+        }
         finally { hideLoading(); }
     }
 
-    // مراقبة الجلسة وحالة المستخدم وإحضار البيانات الحية والشركاء
     onAuthStateChanged(auth, user => {
         if(user) {
             document.getElementById("auth-screen").classList.add("hidden");
             document.getElementById("main-screen").classList.remove("hidden");
-            document.getElementById("user-welcome").innerText = user.email.split('@')[0];
             
             onSnapshot(doc(db, "users", user.uid), docSnap => {
                 if(docSnap.exists()) {
@@ -325,7 +326,14 @@
                     document.getElementById("play-balance-display").innerText = `${currentBalance} ج.م`;
                     document.getElementById("my-ref-code").innerText = docSnap.data().referralCode || "-";
                     
-                    // استدعاء جلب قوائم الإحصائيات بعد التحقق من الحساب المفتوح
+                    // إعطاء بادج VIP لو رصيده 25 ألف فما فوق
+                    let username = user.email.split('@')[0];
+                    if (currentBalance >= 25000) {
+                        document.getElementById("user-welcome").innerHTML = `${username} <span class="vip-badge">👑 VIP</span>`;
+                    } else {
+                        document.getElementById("user-welcome").innerText = username;
+                    }
+                    
                     loadReferredUsers(user.uid);
                     loadVipWithdrawalsAndWinners();
                 }
@@ -336,7 +344,6 @@
         }
     });
 
-    // جلب اللاعبين المسجلين من خلال كود إحالة هذا المستخدم المحدّد
     async function loadReferredUsers(uid) {
         try {
             const q = query(collection(db, "users"), where("referredBy", "==", uid));
@@ -357,7 +364,6 @@
         } catch(e) { console.error(e); }
     }
 
-    // تحميل وتحديث السحوبات الكبرى (>= 25000) وقائمة متصدري الأرباح
     async function loadVipWithdrawalsAndWinners() {
         try {
             const q = query(collection(db, "requests"), orderBy("date", "desc"), limit(40));
@@ -371,9 +377,9 @@
             
             let hasVip = false;
             const defaultWinners = [
-                {name: "Mido_Player", profit: "18,000 ج.م"},
+                {name: "Mido_VIP <span class='vip-badge'>👑 VIP</span>", profit: "55,000 ج.م"},
                 {name: "Captain_Alex", profit: "14,500 ج.م"},
-                {name: "Kimo_XXSB", profit: "11,000 ج.م"}
+                {name: "Youssef_Boss <span class='vip-badge'>👑 VIP</span>", profit: "32,000 ج.م"}
             ];
             defaultWinners.forEach(w => {
                 winnersContainer.innerHTML += `<div class="stat-row"><span>🎮 اللاعب: <b>${w.name}</b></span><span style="color:var(--neon-cyan)">+${w.profit}</span></div>`;
@@ -385,7 +391,7 @@
                     hasVip = true;
                     let row = document.createElement("div");
                     row.className = "stat-row";
-                    row.innerHTML = `<span>💎 حوت مالي: <b>${data.email.split('@')[0]}</b></span><span style="color:var(--neon-pink); font-weight:bold;">${data.amount} ج.م</span>`;
+                    row.innerHTML = `<span>💎 حوت مالي: <b>${data.email.split('@')[0]} <span class="vip-badge">👑 VIP</span></b></span><span style="color:var(--neon-pink); font-weight:bold;">${data.amount} ج.م</span>`;
                     vipContainer.appendChild(row);
                 }
             });
@@ -405,7 +411,7 @@
 
         if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات أولاً وأرفق صورة التحويل."); return; }
         
-        // التحقق من الحد الأدنى للإيداع
+        // شروط الإيداع
         if(amt < 500) { 
             alert("⚠️ خطأ: الحد الأدنى المسموح به لعملية الإيداع هو 500 ج.م."); 
             return; 
@@ -437,7 +443,7 @@
 
         if(!amt || !wNum) { alert("يرجى ملء جميع حقول السحب."); return; }
         
-        // التحقق من الحد الأدنى للسحب
+        // شروط السحب
         if(amt < 10000) { 
             alert("⚠️ خطأ في السحب: الحد الأدنى المسموح به لتقديم طلب سحب هو 10,000 ج.م."); 
             return; 
@@ -464,21 +470,54 @@
         finally { hideLoading(); }
     }
 
-    // رادار تغذية العمليات الفورية (Live Radar System)
-    const radarPlayers = ["بودا_الزعيم", "Abdo_Fx", "Mido_VIP", "Kareem_X", "Sayed_Pro", "Omar_Bet", "Kimo_99", "Ayman_Max"];
-    const radarActions = ["كسب الضعف في لعبة XO 🔥", "سحب أرباحه للمحفظة 💸", "شحن حسابه بونص 💳", "حصل على مكافأة إحالة 🚀"];
+    // ================= رادار تغذية العمليات الفورية الذكي (Live Radar System) =================
+    const radarPlayers = [
+        "بودا_الزعيم", "Abdo_Fx", "Mido_VIP", "Kareem_X", "Sayed_Pro", "Omar_Bet", "Kimo_99", 
+        "Ayman_Max", "Youssef_Boss", "Fatima_Queen", "Shahd_Pro", "Haneen_Star", "Ali_Gamer", 
+        "Mahmoud_V", "Tarek_B", "Ziad_Crypto", "Khaled_King", "Amr_Sniper"
+    ];
+    
     setInterval(() => {
-        // فحص حالة الاتصال بالإنترنت قبل تحديث الرادار
-        if (!navigator.onLine) return;
-        
         const box = document.getElementById("live-feed-box");
         if(!box) return;
+
+        // التحقق من حالة الإنترنت
+        if (!navigator.onLine) {
+            box.innerHTML = `<div class="live-feed-item" style="color:var(--neon-pink); font-weight:bold; font-size: 14px; padding: 20px;">❌ Error: الرجاء الاتصال بالإنترنت لاستقبال التحديثات</div>`;
+            return;
+        } else {
+            // إزالة رسالة الخطأ إن وُجدت بمجرد عودة الاتصال
+            if(box.innerHTML.includes("❌ Error")) box.innerHTML = "";
+        }
+
         const item = document.createElement("div");
         item.className = "live-feed-item";
         let p = radarPlayers[Math.floor(Math.random() * radarPlayers.length)];
-        let a = radarActions[Math.floor(Math.random() * radarActions.length)];
-        let amt = Math.floor(Math.random() * 5000) + 1500;
-        item.innerHTML = `اللاعب <b style="color:var(--neon-cyan)">${p}</b> ${a} <b style="color:var(--neon-green)">${amt} ج.م</b>`;
+        
+        // تحديد نوع العملية عشوائياً
+        const actionTypes = ["xo", "withdraw", "deposit", "referral"];
+        let type = actionTypes[Math.floor(Math.random() * actionTypes.length)];
+        let a = "";
+        let amt = 0;
+
+        if (type === "xo") {
+            a = "كسب الضعف في لعبة XO 🔥";
+            amt = Math.floor(Math.random() * 75000) + 25000; // أرباح XO تبدأ من 25 ألف
+        } else if (type === "withdraw") {
+            a = "سحب أرباحه للمحفظة 💸";
+            amt = Math.floor(Math.random() * 40000) + 10000; // السحب من 10 آلاف
+        } else if (type === "deposit") {
+            a = "أودع شحن جديد 💳";
+            amt = Math.floor(Math.random() * 19500) + 500; // الإيداع من 500 لـ 20 ألف
+        } else {
+            a = "حصل على مكافأة إحالة 🚀";
+            amt = 1000; // الإحالة ثابتة 1000
+        }
+
+        // إعطاء بادج VIP لو الرقم 25 ألف فأكثر
+        let vipTag = (amt >= 25000) ? '<span class="vip-badge">👑 VIP</span>' : '';
+
+        item.innerHTML = `اللاعب ${vipTag}<b style="color:var(--neon-cyan); margin-right:4px;">${p}</b> ${a} <b style="color:var(--neon-green)">${amt.toLocaleString()} ج.م</b>`;
         box.prepend(item);
         if(box.children.length > 3) box.lastChild.remove();
     }, 3000);
@@ -490,7 +529,6 @@
     window.startXO = async function() {
         betAmount = parseInt(document.getElementById("xo-bet").value);
         
-        // شرط الحد الأدنى للعبة X-O (5000 ج.م)
         if(!betAmount || betAmount < 5000) { 
             alert("⚠️ الحد الأدنى للرهان في التحدي هو 5,000 ج.م."); 
             return; 
