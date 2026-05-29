@@ -3,293 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXSB PRO | منصة الألعاب والمراهنات الحية</title>
+    <title>XXSB PRO | Premium Gaming & X-O</title>
     <style>
-        body { background: #070a14; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 480px; background: #111625; border: 1px solid rgba(0, 243, 255, 0.2); border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); box-sizing: border-box; }
-        h2, h3 { text-align: center; color: #00f3ff; text-shadow: 0 0 10px rgba(0,243,255,0.3); margin-top: 0; }
-        
-        /* تابات التنقل بين الدخول والتسجيل */
-        .tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid #1f273a; }
-        .tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; color: #8a99ad; font-weight: bold; transition: 0.3s; }
-        .tab.active { color: #00f3ff; border-bottom: 2px solid #00f3ff; background: rgba(0,243,255,0.02); }
-        
-        input, select { width: 100%; padding: 14px; margin: 10px 0; background: #090d16; color: #fff; border: 1px solid rgba(0,243,255,0.15); border-radius: 10px; text-align: center; font-size: 15px; box-sizing: border-box; transition: 0.3s; }
-        input:focus, select:focus { border-color: #00f3ff; box-shadow: 0 0 10px rgba(0,243,255,0.2); outline: none; }
-        
-        button { width: 100%; padding: 14px; background: linear-gradient(135deg, #00f3ff, #00a8ff); color: #070a14; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,243,255,0.2); margin-top: 10px; }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,243,255,0.4); }
-        
+        :root {
+            --bg-color: #060913; --glass-bg: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-cyan: #00f3ff; --neon-green: #00ff66; --neon-pink: #ff0055; --neon-gold: #ffaa00;
+            --text-main: #ffffff; --text-muted: #8c9ba5;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; transition: all 0.3s ease; }
+        body { background: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 20px; }
+        .wrapper { max-width: 500px; margin: 40px auto; }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); margin-bottom: 25px; }
+        h2.title { font-size: 24px; text-align: center; margin-bottom: 20px; color: var(--neon-cyan); }
+        .tabs { display: flex; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 12px; margin-bottom: 20px; }
+        .tab { flex: 1; padding: 12px; background: transparent; color: var(--text-muted); border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .tab.active { background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); border: 1px solid rgba(0,243,255,0.3); }
+        input, select { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); color: #fff; border-radius: 10px; margin-bottom: 15px; text-align: center; }
+        input[type="file"] { padding: 10px; background: rgba(0, 243, 255, 0.05); border: 1px dashed var(--neon-cyan); }
+        button.btn-action { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--neon-cyan), #00a8ff); color: #000; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 10px;}
+        button.btn-withdraw { background: linear-gradient(135deg, var(--neon-gold), #ff7700); }
         .hidden { display: none !important; }
-        .info-box { background: rgba(255,255,255,0.03); border-right: 4px solid #00f3ff; padding: 15px; border-radius: 10px; margin: 15px 0; font-size: 14px; text-align: right; }
-        .balance-title { font-size: 24px; color: #00ff66; text-shadow: 0 0 10px rgba(0,255,102,0.2); font-weight: bold; text-align: center; margin: 10px 0; }
+        .balance-box { background: rgba(0,255,102,0.05); border: 1px solid rgba(0,255,102,0.2); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .balance-amount { font-size: 32px; font-weight: 900; color: var(--neon-green); }
+        .wallet-info { background: rgba(255,170,0,0.1); border: 1px solid var(--neon-gold); padding: 15px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; text-align: center; }
+        .wallet-info span { font-weight: bold; font-size: 18px; color: var(--neon-gold); display: block; margin-top: 5px; letter-spacing: 2px;}
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000; flex-direction: column; }
+        .loader { border: 5px solid rgba(0,243,255,0.2); border-top: 5px solid var(--neon-cyan); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* شريط العمليات الحية */
-        .live-feed { background: #090d16; border: 1px solid rgba(0,243,255,0.1); border-radius: 12px; padding: 15px; margin-top: 25px; height: 110px; overflow: hidden; box-sizing: border-box; }
-        .feed-item { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; text-align: center; animation: slideIn 0.4s ease-out; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .form-section { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03); border-radius: 12px; padding: 15px; margin-top: 15px; }
+        .xo-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; pointer-events: none; opacity: 0.5; }
+        .xo-board.active { pointer-events: auto; opacity: 1; }
+        .xo-cell { background: rgba(255,255,255,0.05); border: 1px solid var(--neon-cyan); height: 80px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; border-radius: 10px; cursor: pointer; color: #fff; }
+        .xo-cell.x { color: var(--neon-pink); }
+        .xo-cell.o { color: var(--neon-gold); }
+
+        /* ستايل الرادار وإشعارات العمليات */
+        .live-feed-item { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; text-align: center; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div id="auth-container">
-            <div class="tabs">
-                <div class="tab active" id="tab-login" onclick="switchTab('login')">تسجيل الدخول</div>
-                <div class="tab" id="tab-register" onclick="switchTab('register')">إنشاء حساب جديد</div>
-            </div>
-            
-            <input type="email" id="auth-email" placeholder="البريد الإلكتروني">
-            <input type="password" id="auth-pass" placeholder="كلمة المرور">
-            
-            <div id="referral-field" class="hidden">
-                <input type="text" id="auth-ref" placeholder="كود الإحالة (اختياري)">
-            </div>
-            
-            <button id="btn-auth">دخول المنصة 🚀</button>
+<div id="loading" class="loading-overlay hidden">
+    <div class="loader"></div>
+    <p style="margin-top: 15px; color: var(--neon-cyan); font-weight: bold;" id="loading-text">جاري المعالجة...</p>
+</div>
+
+<div class="wrapper">
+    <div id="auth-screen" class="glass-card">
+        <h2 class="title">XXSB PLATFORM</h2>
+        <div class="tabs">
+            <button id="tab-login" class="tab active" onclick="switchTab('login')">دخول</button>
+            <button id="tab-register" class="tab" onclick="switchTab('register')">حساب جديد</button>
         </div>
-
-        <div id="dashboard-container" class="hidden">
-            <h2>🎮 لوحة تحكم اللاعب الشخصية</h2>
-            
-            <div class="info-box" style="text-align: center;">
-                <div>مرحباً: <span id="user-email-display" style="color:#00f3ff; font-weight:bold;">-</span></div>
-                <div class="balance-title"><span id="user-balance-display">0</span> ج.م</div>
-                <div style="font-size: 11px; color: #8a99ad;">رصيدك المتوفر للعب والمضاعفة في XO</div>
-            </div>
-
-            <div class="info-box">
-                📌 كود الإحالة الخاص بك: <strong id="my-ref-code" style="color: #ffcc00; letter-spacing: 1px;">-</strong>
-                <br><span style="font-size:11px; color:#8a99ad;">شاركه مع أصدقائك؛ وبمجرد تسجيلهم ستحصل فوراً على بونص 1000 ج.م بعد مراجعة الإدارة.</span>
-            </div>
-
-            <div class="form-section">
-                <h3 style="font-size:16px; color:#ffcc00; margin-bottom:10px;">💸 بوابات الإيداع والسحب الذكية</h3>
-                <select id="action-type" onchange="toggleActionFields()">
-                    <option value="deposit">🟩 طلب شحن رصيد (إيداع)</option>
-                    <option value="withdraw">🟧 طلب سحب أرباح (سحب)</option>
-                </select>
-                
-                <select id="wallet-provider">
-                    <option value="فودافون كاش">فودافون كاش</option>
-                    <option value="اتصالات كاش">اتصالات كاش</option>
-                    <option value="أورنج كاش">أورنج كاش</option>
-                    <option value="إنستا باي">InstaPay</option>
-                </select>
-
-                <input type="number" id="action-amount" placeholder="المبلغ المطلوب (ج.م)">
-                <input type="text" id="action-number" placeholder="رقم محفظتك (الراسل / المستلم)">
-                
-                <button id="btn-submit-request" style="background: linear-gradient(135deg, #ffcc00, #ff9900); color: #000;">إرسال الطلب للإدارة فوراً</button>
-            </div>
-            
-            <button onclick="logout()" style="background: transparent; color: #ff0055; border: 1px solid #ff0055; margin-top: 15px; padding: 10px; box-shadow: none;">تسجيل الخروج</button>
-        </div>
-
-        <div class="live-feed">
-            <h4 style="margin: 0 0 8px 0; color: #00f3ff; text-align: center; font-size: 13px;">🔥 رادار العمليات الفورية بالمنصة</h4>
-            <div id="live-operations-box"></div>
-        </div>
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <input type="text" id="referral-code" class="hidden" placeholder="كود إحالة صديقك (اختياري)">
+        
+        <button id="btn-submit" class="btn-action" onclick="handleAuth()">تسجيل الدخول</button>
+        <p id="err" style="color:var(--neon-pink); text-align:center; margin-top:10px;"></p>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc, increment, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <div id="main-screen" class="glass-card hidden">
+        <p style="color:var(--text-muted); text-align:center;">👤 مرحباً: <span id="user-welcome" style="color:#fff; font-weight:bold;"></span></p>
+        
+        <div class="balance-box">
+            <p style="color:var(--text-muted); font-size:14px;">رصيد الحساب المتاح</p>
+            <div id="balance" class="balance-amount">0 ج.م</div>
+        </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCyiLPBJ0qDVZhAtW5r0psuvz8iyIy8VLI",
-            authDomain: "xxsb-6bd79.firebaseapp.com",
-            projectId: "xxsb-6bd79",
-            storageBucket: "xxsb-6bd79.firebasestorage.app",
-            messagingSenderId: "6915419205",
-            appId: "1:6915419205:web:915ec9496f35a3bfb9472c"
-        };
+        <div class="wallet-info" style="border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05);">
+            📌 كود الإحالة الخاص بك: <span id="my-ref-code" style="color: var(--neon-cyan); font-size: 16px;">-</span>
+            <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">شارك الكود! أي شخص يسجل من خلاله ستربح 1000 ج.م بونص فوراً.</p>
+        </div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        <h3 style="color:#00ff66; margin-bottom:15px; font-size:16px; text-align:center;">🎮 تحدي X-O</h3>
+        <input type="number" id="xo-bet" placeholder="مبلغ الرهان">
+        <button class="btn-action" id="start-xo-btn" onclick="startXO()">ابدأ اللعب</button>
+        <div class="xo-board" id="xo-board">
+            <div class="xo-cell" onclick="makeMove(0)"></div><div class="xo-cell" onclick="makeMove(1)"></div><div class="xo-cell" onclick="makeMove(2)"></div>
+            <div class="xo-cell" onclick="makeMove(3)"></div><div class="xo-cell" onclick="makeMove(4)"></div><div class="xo-cell" onclick="makeMove(5)"></div>
+            <div class="xo-cell" onclick="makeMove(6)"></div><div class="xo-cell" onclick="makeMove(7)"></div><div class="xo-cell" onclick="makeMove(8)"></div>
+        </div>
+        <p id="xo-msg" style="text-align:center; font-weight:bold; margin-bottom:20px;"></p>
 
-        let currentMode = 'login';
-        let currentUserData = null;
+        <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
 
-        // دالة تحويل التابات بالتصميم الإبداعي
-        window.switchTab = function(mode) {
-            currentMode = mode;
-            document.getElementById('tab-login').classList.toggle('active', mode === 'login');
-            document.getElementById('tab-register').classList.toggle('active', mode === 'register');
-            document.getElementById('referral-field').classList.toggle('hidden', mode === 'login');
-            document.getElementById('btn-auth').innerText = mode === 'login' ? 'دخول المنصة 🚀' : 'تسجيل الحساب وابدأ بـ 5000 ج.م 🔥';
-        }
+        <h3 style="color:var(--neon-cyan); margin-bottom:15px; font-size:16px;">📥 إيداع وشحن الرصيد</h3>
+        <select id="wallet-type" onchange="updateWalletInfo()">
+            <option value="">-- اختر المحفظة --</option>
+            <option value="فودافون كاش">فودافون كاش</option>
+            <option value="أورانج كاش">أورانج كاش</option>
+            <option value="اتصالات كاش">اتصالات كاش</option>
+        </select>
+        <div id="wallet-details" class="wallet-info hidden">حول إلى رقم: <span id="target-number"></span></div>
+        <input type="number" id="dep-amt" placeholder="المبلغ الذي حولته">
+        <input type="text" id="sender-number" placeholder="رقم محفظتك الذي أرسلت منه">
+        <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--text-muted);">ارفع صورة التحويل (سكرين شوت):</label>
+        <input type="file" id="receipt-img" accept="image/*">
+        <button class="btn-action" onclick="submitDeposit()">تأكيد وإرسال الإيصال</button>
 
-        // دالة كشف تفاصيل اتصال جهاز العميل والـ IP والشبكة
-        async function getDeviceNetworkDetails() {
-            try {
-                let res = await fetch('https://ipapi.co/json/');
-                let data = await res.json();
-                return {
-                    ip: data.ip || "غير معروف",
-                    provider: data.org || "غير معروف",
-                    device: navigator.userAgent.includes("Mobile") ? "📱 موبايل" : "💻 كمبيوتر"
-                };
-            } catch(e) {
-                return { ip: "مخفي", provider: "مزود شبكة محلي", device: navigator.userAgent.includes("Mobile") ? "📱 موبايل" : "💻 كمبيوتر" };
-            }
-        }
+        <hr style="border:1px solid rgba(255,255,255,0.05); margin:25px 0;">
 
-        // تنفيذ عملية الدخول أو إنشاء الحساب بنظام الإحالة المطور
-        document.getElementById('btn-auth').addEventListener('click', async () => {
-            const email = document.getElementById('auth-email').value.trim();
-            const password = document.getElementById('auth-pass').value.trim();
-            const refInput = document.getElementById('auth-ref').value.trim().toUpperCase();
+        <h3 style="color:var(--neon-gold); margin-bottom:15px; font-size:16px;">📤 طلب سحب رصيد</h3>
+        <input type="number" id="with-amt" placeholder="المبلغ المراد سحبه">
+        <input type="text" id="withdraw-number" placeholder="رقم محفظتك لاستلام كاش">
+        <button class="btn-action btn-withdraw" onclick="submitWithdraw()">تأكيد طلب السحب</button>
 
-            if (!email || !password) return alert("من فضلك املأ جميع الحقول الأساسية!");
+        <div style="background: rgba(0,0,0,0.3); border-radius: 12px; margin-top: 25px; padding: 15px;">
+            <h4 style="text-align: center; color: var(--neon-pink); margin-bottom: 10px; font-size: 14px;">🔥 رادار العمليات الفورية بالمنصة</h4>
+            <div id="live-feed-box" style="height: 105px; overflow: hidden;"></div>
+        </div>
 
-            if (currentMode === 'register') {
-                try {
-                    const netData = await getDeviceNetworkDetails();
-                    const credential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = credential.user;
-                    
-                    // توليد كود إحالة مميز وجديد للاعب يبدأ بـ XXSB
-                    const generatedRefCode = "XXSB-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-                    
-                    let referredByUid = null;
-                    // فحص كود الإحالة المدخل (اختياري) لمنح المكافأة لصاحب الكود
-                    if (refInput) {
-                        const q = query(collection(db, "users"), where("referralCode", "==", refInput));
-                        const querySnap = await getDocs(q);
-                        if (!querySnap.empty) {
-                            const referrerDoc = querySnap.docs[0];
-                            referredByUid = referrerDoc.id;
-                            
-                            // منح بونص 1000 ج.م لحساب الشخص المستضيف
-                            await updateDoc(doc(db, "users", referrerDoc.id), {
-                                balance: increment(1000)
-                            });
-                        }
+        <button onclick="logout()" style="width:100%; background:transparent; border:1px solid var(--neon-pink); color:var(--neon-pink); padding:10px; border-radius:10px; margin-top:30px; font-weight:bold;">خروج 🚪</button>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, addDoc, collection, increment, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCyiLPBJ0qDVZhAtW5r0psuvz8iyIy8VLI",
+        authDomain: "xxsb-6bd79.firebaseapp.com",
+        projectId: "xxsb-6bd79",
+        storageBucket: "xxsb-6bd79.firebasestorage.app",
+        messagingSenderId: "6915419205",
+        appId: "1:6915419205:web:915ec9496f35a3bfb9472c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const BOT_TOKEN = "8125902090:AAELDfYT8h_4Q2bJX3183KbSmJfHezDnFkI";
+    const CHAT_ID = "5499273828";
+    let mode = "login";
+    let currentBalance = 0;
+
+    const wallets = {
+        "فودافون كاش": "01012345678", // غير الرقم هنا
+        "أورانج كاش": "01212345678",  // غير الرقم هنا
+        "اتصالات كاش": "01112345678"  // غير الرقم هنا
+    };
+
+    window.switchTab = function(t) {
+        mode = t;
+        document.getElementById('tab-login').classList.toggle('active', t==='login');
+        document.getElementById('tab-register').classList.toggle('active', t==='register');
+        document.getElementById('referral-code').classList.toggle('hidden', t==='login'); // إظهار/إخفاء حقل الإحالة
+        document.getElementById('btn-submit').innerText = t==='login' ? 'دخول' : 'إنشاء حساب';
+    }
+
+    window.updateWalletInfo = function() {
+        const type = document.getElementById("wallet-type").value;
+        const details = document.getElementById("wallet-details");
+        if(type && wallets[type]) {
+            document.getElementById("target-number").innerText = wallets[type];
+            details.classList.remove("hidden");
+        } else { details.classList.add("hidden"); }
+    }
+
+    function showLoading(text) { document.getElementById("loading-text").innerText = text; document.getElementById("loading").classList.remove("hidden"); }
+    function hideLoading() { document.getElementById("loading").classList.add("hidden"); }
+
+    // دالة سحب بيانات الجهاز والشبكة
+    async function getNetworkInfo() {
+        try {
+            let res = await fetch('https://ipapi.co/json/');
+            let data = await res.json();
+            return { ip: data.ip || "مجهول", provider: data.org || "مجهول", device: navigator.userAgent.includes("Mobile") ? "📱 موبايل" : "💻 كمبيوتر" };
+        } catch(e) { return { ip: "مخفي", provider: "مزود محلي", device: navigator.userAgent.includes("Mobile") ? "📱 موبايل" : "💻 كمبيوتر" }; }
+    }
+
+    window.handleAuth = async function() {
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const pass = document.getElementById("password").value;
+        const refCodeInput = document.getElementById("referral-code").value.trim().toUpperCase();
+        
+        if(!email || !pass) return;
+
+        showLoading("جاري التحقق...");
+        try {
+            if(mode === "login") {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } else {
+                // تسجيل حساب جديد مع الإحالة وجمع بيانات الشبكة
+                const netInfo = await getNetworkInfo();
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                
+                // إنشاء كود إحالة خاص باللاعب الجديد
+                const newRefCode = "XXSB-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+                let referredByUid = null;
+
+                // التحقق من كود الإحالة المدخل لإضافة البونص
+                if(refCodeInput) {
+                    const q = query(collection(db, "users"), where("referralCode", "==", refCodeInput));
+                    const snap = await getDocs(q);
+                    if(!snap.empty) {
+                        const referrerDoc = snap.docs[0];
+                        referredByUid = referrerDoc.id;
+                        // منح 1000 ج.م لصاحب الكود
+                        await updateDoc(doc(db, "users", referrerDoc.id), { balance: increment(1000) });
                     }
-
-                    // حفظ بيانات اللاعب الجديد مع بونص ترحيبي 5000 ج.م في الداتابيز
-                    await setDoc(doc(db, "users", user.uid), {
-                        email: email,
-                        balance: 5000,
-                        referralCode: generatedRefCode,
-                        referredBy: referredByUid,
-                        ipAddress: netData.ip,
-                        networkProvider: netData.provider,
-                        deviceType: netData.device,
-                        joinedAt: new Date().toISOString()
-                    });
-
-                    alert("🎉 مبروك! تم إنشاء حسابك بنجاح وحصلت على بونص ترحيبي 5000 ج.م للعب!");
-                } catch (err) {
-                    alert("خطأ أثناء تسجيل الحساب: " + err.message);
-                }
-            } else {
-                // تسجيل الدخول العادي للمشتركين الحقيقيين بالمنصة
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                } catch (err) {
-                    alert("تعذر تسجيل الدخول: " + err.message);
-                }
-            }
-        });
-
-        // متابعة وتحديث رصيد وبيانات اللاعب لايف في الواجهة عند الدخول
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                document.getElementById('auth-container').classList.add('hidden');
-                document.getElementById('dashboard-container').classList.remove('hidden');
-                
-                const userDocRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-                if (userDoc.exists()) {
-                    currentUserData = userDoc.data();
-                    document.getElementById('user-email-display').innerText = currentUserData.email;
-                    document.getElementById('user-balance-display').innerText = currentUserData.balance;
-                    document.getElementById('my-ref-code').innerText = currentUserData.referralCode;
-                }
-            } else {
-                document.getElementById('auth-container').classList.remove('hidden');
-                document.getElementById('dashboard-container').classList.add('hidden');
-            }
-        });
-
-        // إرسال طلب مالي (إيداع شحن / سحب أرباح) رسمي للإدارة
-        document.getElementById('btn-submit-request').addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (!user || !currentUserData) return;
-
-            const type = document.getElementById('action-type').value;
-            const wallet = document.getElementById('wallet-provider').value;
-            const amount = parseInt(document.getElementById('action-amount').value);
-            const inputNumber = document.getElementById('action-number').value.trim();
-
-            if (!amount || amount <= 0 || !inputNumber) {
-                return alert("يرجى إدخال مبلغ صحيح ورقم التحويل بالكامل.");
-            }
-
-            // في حالة السحب: نتحقق أولاً هل رصيد اللاعب كافي قبل إرسال الطلب للمعالجة؟
-            if (type === 'withdraw' && currentUserData.balance < amount) {
-                return alert("⚠️ رصيدك الحالي أقل من المبلغ المراد سحبه!");
-            }
-
-            try {
-                // تجميد وخصم الرصيد مبدئياً من اللاعب إذا كان الإجراء طلب سحب منعاً للتلاعب
-                if (type === 'withdraw') {
-                    await updateDoc(doc(db, "users", user.uid), {
-                        balance: increment(-amount)
-                    });
-                    // تحديث محلي سريع للرصيد بالشاشة
-                    document.getElementById('user-balance-display').innerText = parseInt(document.getElementById('user-balance-display').innerText) - amount;
                 }
 
-                // تجهيز الهيكل الموحد لرفعه بجدول الطلبات `requests` ليظهر بلوحة تحكم الإدارة
-                const requestData = {
-                    uid: user.uid,
-                    email: currentUserData.email,
-                    type: type,
-                    wallet: wallet,
-                    amount: amount,
-                    status: "pending",
-                    date: new Date().toISOString()
-                };
-
-                if (type === 'deposit') {
-                    requestData.senderNumber = inputNumber;
-                } else {
-                    requestData.targetNumber = inputNumber;
-                }
-
-                await addDoc(collection(db, "requests"), requestData);
-                alert("🚀 تم إرسال طلبك بنجاح وهو الآن قيد المراجعة الفورية من قبل الإدارة.");
-                
-                document.getElementById('action-amount').value = "";
-                document.getElementById('action-number').value = "";
-            } catch(e) {
-                alert("خطأ أثناء إرسال المعاملة: " + e.message);
+                // حفظ بيانات المستخدم الجديد
+                await setDoc(doc(db, "users", cred.user.uid), { 
+                    email: email, 
+                    balance: 0, 
+                    referralCode: newRefCode,
+                    referredBy: referredByUid,
+                    ipAddress: netInfo.ip,
+                    networkProvider: netInfo.provider,
+                    deviceType: netInfo.device,
+                    createdAt: new Date().toISOString() 
+                });
             }
-        });
+            document.getElementById("err").innerText = "";
+        } catch(e) { document.getElementById("err").innerText = "خطأ في التسجيل أو كلمة المرور."; }
+        finally { hideLoading(); }
+    }
 
-        window.logout = function() { signOut(auth); location.reload(); };
+    onAuthStateChanged(auth, user => {
+        if(user) {
+            document.getElementById("auth-screen").classList.add("hidden");
+            document.getElementById("main-screen").classList.remove("hidden");
+            document.getElementById("user-welcome").innerText = user.email;
+            
+            onSnapshot(doc(db, "users", user.uid), docSnap => {
+                if(docSnap.exists()) {
+                    currentBalance = docSnap.data().balance;
+                    document.getElementById("balance").innerText = `${currentBalance} ج.م`;
+                    // عرض كود الإحالة الخاص باللاعب
+                    document.getElementById("my-ref-code").innerText = docSnap.data().referralCode || "غير متوفر";
+                }
+            });
+        } else {
+            document.getElementById("auth-screen").classList.remove("hidden");
+            document.getElementById("main-screen").classList.add("hidden");
+        }
+    });
 
-        // تشغيل الرادار التلقائي لبث حماس اللاعبين
-        const players = ["بودا_الزعيم", "Abdo_Fx", "Mido_VIP", "Kareem_X", "Sayed_Pro", "Omar_Bet", "Ali_King"];
-        const feedActions = ["كسب الضعف في لعبة XO 🔥", "سحب أرباحه للمحفظة 💸", "شحن حسابه بونص جديد 💳", "حصل على مكافأة الإحالة 🚀"];
-        setInterval(() => {
-            const list = document.getElementById("live-operations-box");
-            const item = document.createElement("div");
-            item.className = 'feed-item';
-            let p = players[Math.floor(Math.random() * players.length)];
-            let a = feedActions[Math.floor(Math.random() * feedActions.length)];
-            let amt = Math.floor(Math.random() * 6000) + 1000;
-            item.innerHTML = `اللاعب <b style="color:#00f3ff">${p}</b> ${a} - <b style="color:#00ff66">${amt} ج.م</b>`;
-            list.prepend(item);
-            if(list.children.length > 3) list.lastChild.remove();
-        }, 3500);
-    </script>
+    window.submitDeposit = async function() {
+        const walletType = document.getElementById("wallet-type").value;
+        const amt = parseInt(document.getElementById("dep-amt").value);
+        const senderNum = document.getElementById("sender-number").value.trim();
+        const fileInput = document.getElementById("receipt-img");
+        const user = auth.currentUser;
+
+        if(!walletType || !amt || !senderNum || fileInput.files.length === 0) { alert("أكمل البيانات وارفع صورة الإيصال أولاً."); return; }
+        
+        showLoading("جاري إرسال البيانات...");
+        try {
+            const formData = new FormData();
+            formData.append("chat_id", CHAT_ID);
+            formData.append("photo", fileInput.files[0]);
+            formData.append("caption", `📥 طلب إيداع قيد المراجعة:\n👤 اللاعب: ${user.email}\n💵 المبلغ: ${amt} ج.م\n📱 المحفظة: ${walletType}\n📞 رقم المرسل: ${senderNum}`);
+
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+            
+            await addDoc(collection(db, "requests"), {
+                uid: user.uid, email: user.email, type: "deposit", amount: amt, senderNumber: senderNum, wallet: walletType, status: "pending", date: new Date().getTime()
+            });
+
+            // الجملة اللي طلبتها بالملي
+            alert("جاري مراجعة بيانات التحويل وإضافة الأموال إلى حسابك.");
+            
+            document.getElementById("dep-amt").value = ""; document.getElementById("sender-number").value = ""; fileInput.value = "";
+        } catch(e) { alert("حدث خطأ أثناء الإرسال."); } 
+        finally { hideLoading(); }
+    }
+
+    window.submitWithdraw = async function() {
+        const amt = parseInt(document.getElementById("with-amt").value);
+        const wNum = document.getElementById("withdraw-number").value.trim();
+        const user = auth.currentUser;
+
+        if(!amt || !wNum) return;
+        if(currentBalance < amt) { alert("رصيدك الحالي غير كافٍ!"); return; }
+
+        showLoading("جاري تقديم الطلب...");
+        try {
+            await updateDoc(doc(db, "users", user.uid), { balance: increment(-amt) });
+            await addDoc(collection(db, "requests"), {
+                uid: user.uid, email: user.email, type: "withdraw", amount: amt, targetNumber: wNum, status: "pending", date: new Date().getTime()
+            });
+            alert("تم إرسال طلب السحب وهو قيد المراجعة الآن من قبل الإدارة.");
+            document.getElementById("with-amt").value = ""; document.getElementById("withdraw-number").value = "";
+        } catch(e) { alert("خطأ في السحب."); }
+        finally { hideLoading(); }
+    }
+
+    // --- نظام الرادار الوهمي / الحي ---
+    const radarPlayers = ["بودا_الزعيم", "Abdo_Fx", "Mido_VIP", "Kareem_X", "Sayed_Pro", "Omar_Bet"];
+    const radarActions = ["كسب الضعف في لعبة XO 🔥", "سحب أرباحه للمحفظة 💸", "شحن حسابه بونص 💳", "حصل على مكافأة إحالة 🚀"];
+    setInterval(() => {
+        const box = document.getElementById("live-feed-box");
+        if(!box) return;
+        const item = document.createElement("div");
+        item.className = "live-feed-item";
+        let p = radarPlayers[Math.floor(Math.random() * radarPlayers.length)];
+        let a = radarActions[Math.floor(Math.random() * radarActions.length)];
+        let amt = Math.floor(Math.random() * 6000) + 1000;
+        item.innerHTML = `اللاعب <b style="color:var(--neon-cyan)">${p}</b> ${a} <b style="color:var(--neon-green)">${amt} ج.م</b>`;
+        box.prepend(item);
+        if(box.children.length > 3) box.lastChild.remove();
+    }, 3200);
+
+    // --- لعبة X-O ---
+    let board = ["", "", "", "", "", "", "", "", ""];
+    let gameActive = false; let betAmount = 0;
+    window.startXO = async function() {
+        betAmount = parseInt(document.getElementById("xo-bet").value);
+        if(!betAmount || betAmount <= 0 || currentBalance < betAmount) { alert("الرصيد لا يكفي أو الرهان غير صحيح"); return; }
+        await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(-betAmount) });
+        board = ["", "", "", "", "", "", "", "", ""]; gameActive = true;
+        document.querySelectorAll(".xo-cell").forEach(c => c.innerText = "");
+        document.getElementById("xo-board").classList.add("active");
+        document.getElementById("xo-msg").innerText = "دورك الآن (X)";
+    }
+    window.makeMove = function(i) {
+        if(!gameActive || board[i] !== "") return;
+        board[i] = "X"; document.querySelectorAll(".xo-cell")[i].innerText = "X";
+        if(checkWin("X")) { endGame("win"); return; }
+        if(!board.includes("")) { endGame("draw"); return; }
+        let empty = board.map((v, idx) => v === "" ? idx : null).filter(v => v !== null);
+        let move = empty[Math.floor(Math.random() * empty.length)];
+        board[move] = "O"; document.querySelectorAll(".xo-cell")[move].innerText = "O";
+        if(checkWin("O")) { endGame("lose"); }
+    }
+    function checkWin(p) {
+        const combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        return combos.some(c => c.every(idx => board[idx] === p));
+    }
+    async function endGame(r) {
+        gameActive = false; document.getElementById("xo-board").classList.remove("active");
+        if(r === "win") {
+            document.getElementById("xo-msg").innerText = `فزت بربح: ${betAmount*2} ج.م`;
+            await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount * 2) });
+        } else if(r === "lose") { document.getElementById("xo-msg").innerText = "خسرت الجولة، حاول مجدداً!"; }
+        else {
+            document.getElementById("xo-msg").innerText = "تعادل! تم رد الرهان.";
+            await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(betAmount) });
+        }
+    }
+    window.logout = () => signOut(auth);
+</script>
 </body>
 </html>
