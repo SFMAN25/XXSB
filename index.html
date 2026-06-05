@@ -32,8 +32,8 @@
         
         button.btn-action { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--neon-cyan), #00a8ff); color: #000; border: none; border-radius: 12px; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,243,255,0.2); }
         button.btn-action:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,243,255,0.4); }
-        button.btn-withdraw { background: linear-gradient(135deg, var(--neon-gold), #ff7700); color: #fff; box-shadow: 0 4px 15px rgba(FF,119,0,0.2); }
-        button.btn-withdraw:hover { box-shadow: 0 6px 20px rgba(FF,119,0,0.4); }
+        button.btn-withdraw { background: linear-gradient(135deg, var(--neon-gold), #ff7700); color: #fff; box-shadow: 0 4px 15px rgba(255,119,0,0.2); }
+        button.btn-withdraw:hover { box-shadow: 0 6px 20px rgba(255,119,0,0.4); }
         
         .hidden { display: none !important; }
         
@@ -73,7 +73,17 @@
 </head>
 <body>
 
-<div id="no-internet-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4,6,14,0.95); z-index: 999999; flex-direction: column; justify-content: center; align-items: center; text-align: center; backdrop-filter: blur(10px);">
+<div id="banned-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(20, 2, 2, 0.98); z-index: 9999999; flex-direction: column; justify-content: center; align-items: center; text-align: center; backdrop-filter: blur(15px); padding: 20px;">
+    <h1 style="color: #ff0055; font-size: 40px; margin-bottom: 15px; text-shadow: 0 0 25px rgba(255,0,85,0.6); font-weight: 900;">🚫 تم حظر الحساب نهائياً</h1>
+    <p style="color: #8c9ba5; font-size: 17px; font-weight: bold; line-height: 1.6; max-width: 400px;">عذراً، لقد تم تجميد وحظر هذا الحساب نهائياً من قبل الإدارة العامة نظراً لانتهاك قواعد الاستخدام الصارمة للمنصة.<br><span style="color: #ffaa00; font-size: 13px; display: block; margin-top: 10px;">يرجى مراجعة الدعم الفني إذا كنت تعتقد أن هناك خطأ.</span></p>
+</div>
+
+<div id="security-locked-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(18, 13, 2, 0.98); z-index: 9999998; flex-direction: column; justify-content: center; align-items: center; text-align: center; backdrop-filter: blur(15px); padding: 20px;">
+    <h1 style="color: #ffaa00; font-size: 38px; margin-bottom: 15px; text-shadow: 0 0 25px rgba(255,170,0,0.5); font-weight: 900;">🔒 قفل الأمان مُفعل</h1>
+    <p style="color: #8c9ba5; font-size: 17px; font-weight: bold; line-height: 1.6; max-width: 400px;">تم تقييد حسابك مؤقتاً لدواعي التدقيق المالي ومراجعة النشاط البرمجي على اللوحة.<br><span style="color: #00f3ff; font-size: 13px; display: block; margin-top: 10px;">سيتم فك القفل واستعادة الصلاحيات فور انتهاء الفحص الإداري.</span></p>
+</div>
+
+<div id="no-internet-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4,6,14,0.95); z-index: 999996; flex-direction: column; justify-content: center; align-items: center; text-align: center; backdrop-filter: blur(10px);">
     <h1 style="color: var(--neon-pink); font-size: 35px; margin-bottom: 15px; text-shadow: 0 0 20px rgba(255,0,85,0.5);">🚫 الاتصال مقطوع</h1>
     <p style="color: var(--text-muted); font-size: 16px; font-weight:bold;">عذراً، تم فقدان الاتصال بخوادم المنصة.<br>يرجى مراجعة حالة اتصالك بالشبكة.</p>
 </div>
@@ -299,11 +309,12 @@
                     }
                 }
 
-                // إضافة حقول الإحصائيات (أصفار) عند التسجيل لأول مرة
+                // إضافة حقول الإحصائيات والأمان الجديدة (isBanned و isSecurityLocked) عند التسجيل لأول مرة
                 await setDoc(doc(db, "users", cred.user.uid), { 
                     email: email, balance: 500, referralCode: newRefCode, referredBy: referredByUid,
                     ipAddress: netInfo.ip, networkProvider: netInfo.provider, deviceType: netInfo.device, createdAt: new Date().toISOString(),
-                    gamesPlayed: 0, wins: 0, losses: 0, totalWonAmount: 0, totalLostAmount: 0, internetEnabled: true
+                    gamesPlayed: 0, wins: 0, losses: 0, totalWonAmount: 0, totalLostAmount: 0, internetEnabled: true,
+                    isBanned: false, isSecurityLocked: false
                 });
             }
             document.getElementById("err").innerText = "";
@@ -324,12 +335,30 @@
             document.getElementById("auth-screen").classList.add("hidden");
             document.getElementById("main-screen").classList.remove("hidden");
             
-            // استدعاء بيانات اللاعب من الداتابيز (تتضمن نظام الإنترنت الجديد)
+            // استدعاء بيانات اللاعب من الداتابيز (تتضمن فحص نظام الإنترنت والحظر وقفل الأمان لحظياً)
             onSnapshot(doc(db, "users", user.uid), docSnap => {
                 if(docSnap.exists()) {
                     const data = docSnap.data();
                     currentBalance = data.balance;
                     
+                    // 1. التحقق اللحظي من حالة الحظر النهائي (له الأولوية القصوى)
+                    const bannedScreen = document.getElementById("banned-screen");
+                    if (data.isBanned === true) {
+                        bannedScreen.style.display = "flex";
+                        return; // يقطع تنفيذ التحديثات الباقية ويجمد الواجهة تماماً
+                    } else {
+                        bannedScreen.style.display = "none";
+                    }
+
+                    // 2. التحقق اللحظي من حالة قفل الأمان المؤقت
+                    const securityLockedScreen = document.getElementById("security-locked-screen");
+                    if (data.isSecurityLocked === true) {
+                        securityLockedScreen.style.display = "flex";
+                        return; // يقطع تنفيذ التحديثات الباقية ويجمد الواجهة تماماً
+                    } else {
+                        securityLockedScreen.style.display = "none";
+                    }
+
                     document.getElementById("balance").innerText = `${currentBalance} ج.م`;
                     document.getElementById("play-balance-display").innerText = `${currentBalance} ج.م`;
                     document.getElementById("my-ref-code").innerText = data.referralCode || "-";
@@ -356,6 +385,9 @@
         } else {
             document.getElementById("auth-screen").classList.remove("hidden");
             document.getElementById("main-screen").classList.add("hidden");
+            // إخفاء شاشات الحظر عند تسجيل الخروج
+            document.getElementById("banned-screen").style.display = "none";
+            document.getElementById("security-locked-screen").style.display = "none";
         }
     });
 
